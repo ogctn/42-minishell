@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/30 20:55:03 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:29:50 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,34 @@ void	free_data(t_data *d)
 	}
 }
 
+static void	suppress_output(void)
+{
+	struct termios	termios_p;
+
+	if (tcgetattr(0, &termios_p) != 0)
+		perror("Minishell: tcgetattr");
+	termios_p.c_lflag &= ~ECHOCTL;
+	if (tcsetattr(0, 0, &termios_p) != 0)
+		perror("Minishell: tcsetattr");
+}
+
+void	sig_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(1, "\n",1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (signal == SIGQUIT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		return ;
+	}
+}
+
 int main(int ac, char **av, char **env)
 {
 	t_data	*data;
@@ -328,26 +356,34 @@ int main(int ac, char **av, char **env)
 	
 	if (ac != 1 || av[1] != NULL || !env) // to check if there is no argument
 		return (1);
+	suppress_output();
+	signal(SIGINT, &sig_handler);
+	signal(SIGQUIT, &sig_handler);
 	while (1)
 	{
 		i = 0;
-		if (line)
-			free(line); // to free the line from the previous iteration
 		line = readline("minishell$ ");
-		if (!line) // to check if the line is empty
+		if (!line) // to check if SIGQUIT is pressed
 			exit(1);
 		data = NULL;
 		ft_parser(line, &data);
+		// pause();
 		printit(data);	// to print the linked list
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
 			continue ; // to continue the loop if there are missing quotes or null
 		add_history(line);
+		free(line); // to free the line from the previous iteration
 		executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		//system("leaks minishell");  // cumulative leaks from ft_parser [NOT SURE]
 	}
 	return (0);
 }
+
+// void	__attribute__((destructor)) a(void)
+// {
+// 	// pause();
+// }
 //#################################################################################################
 //#########################			[ADDED PART END]			###################################
 //#################################################################################################

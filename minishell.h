@@ -6,19 +6,21 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/30 20:55:05 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:36:42 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define  MINISHELL_H
 
+#include "./libft/libft.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+
+#include <termios.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "libft/libft.h"
 
 typedef struct s_data
 {
