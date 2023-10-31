@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/10/31 20:11:44 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 02:16:10 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	is_missing_quoted(char *str)
 	if (quote != 0)
 	{
 		printf("minishell$ parse error near `%c`\n", quote);
+		add_history(str);
 		free(str);
 	}
 	return (quote != 0);
