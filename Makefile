@@ -49,6 +49,9 @@ clean:
 	$(RM) $(LIBFT)
 	$(RM) $(READLINE)
 
+tn: all clean
+	./$(NAME)
+
 re:	fclean all
 
 .PHONY: all clean fclean re
