@@ -6,11 +6,11 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/31 18:39:31 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 01:22:28 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 t_data	*ft_last(t_data *lst)
 {
@@ -53,3 +53,15 @@ int is_quote(char *s)
 	return(0);
 }
 
+int	ft_lstsize(t_data *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
+}

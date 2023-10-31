@@ -2,6 +2,11 @@
 	"files.associations": {
 		"readline.h": "c",
 		"signal.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"minishell.h": "c",
+		"stdio.h": "c",
+		"termios.h": "c",
+		"history.h": "c",
+		"rltypedefs.h": "c"
 	}
 }

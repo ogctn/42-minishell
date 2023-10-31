@@ -6,11 +6,11 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/30 20:00:26 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:11:35 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 static int	ft_counter(char const	*s)
 {

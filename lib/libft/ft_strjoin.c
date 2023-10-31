@@ -6,13 +6,13 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/27 20:42:49 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/10/30 18:49:53 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 01:25:48 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2, void *freeable)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	len;
 	char	*ret;
@@ -25,7 +25,5 @@ char	*ft_strjoin(char const *s1, char const *s2, void *freeable)
 		return (0);
 	ft_strlcpy(ret, s1, ft_strlen(s1) + 1);
 	ft_strlcat(ret, s2, len);
-	if (freeable)
-		free(freeable);
 	return (ret);
 }

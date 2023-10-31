@@ -6,12 +6,11 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/31 18:28:07 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:11:38 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "minishell.h"
+#include "../inc/minishell.h"
 
 void ft_split_2(char *str, t_data **total_line)
 {

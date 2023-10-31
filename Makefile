@@ -1,42 +1,53 @@
-NAME = minishell
-CC = gcc
-FLAGS = -Wall -Wextra -Werror -lreadline -g
-SRCS = ./main.c ./utils.c ./parse.c ./own_split.c
-OBJ = $(SRCS:.c=.o)
-RM = rm -rf
-LIBFT = libft/libft.a
-READLINE = readline
+NAME 		=	minishell
+CC 			=	gcc
+FLAGS 		=	-Wall -Wextra -Werror -lreadline -g -fsanitize=address
+RM 			=	rm -rf
+LIBFT 		=	lib/libft/libft.a
+READLINE 	=	lib/readline
+
+SRC_PATH	=	./src/
+SRCS		=	$(SRC_PATH)main.c \
+				$(SRC_PATH)utils.c \
+				$(SRC_PATH)parse.c \
+				$(SRC_PATH)own_split.c \
+				$(SRC_PATH)signals.c \
+				$(SRC_PATH)builtin1.c \
+				$(SRC_PATH)utils_line.c \
+				$(SRC_PATH)path_finder.c \
+				$(SRC_PATH)exec1.c \
+
+OBJ 		=	$(SRCS:.c=.o)
 
 all: $(READLINE) $(LIBFT) $(NAME)
 
 $(READLINE):
-	@curl -O https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
-	@tar -xvf readline-8.2.tar.gz
-	@${RM} readline-8.2.tar.gz
-	@cd readline-8.2 && ./configure --prefix=${PWD}/readline
-	@cd readline-8.2 && make install
-	@${RM} readline-8.2
+	@cd lib && curl -O https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
+	@tar -xvf lib/readline-8.2.tar.gz -C lib/
+	@$(RM) lib/readline-8.2.tar.gz
+	@cd lib/readline-8.2 && ./configure --prefix=${PWD}/lib/readline
+	@cd lib/readline-8.2 && make install
+	@$(RM) lib/readline-8.2
 	@echo "****   readline ok!    ****"
 
 $(LIBFT):
-	@make -C libft/
+	@make -C lib/libft
 	@echo "****   libft ok!    ****"
 
 $(NAME):$(LIBFT) $(OBJ)
-	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -L${PWD}/readline/lib  -I${PWD}/readline/include/ -lreadline -o $(NAME)
+	@$(CC) $(FLAGS) $(OBJ) $(LIBFT) -L${PWD}/lib/readline/lib  -I${PWD}/lib/readline/include/ -lreadline -o $(NAME)
 	@echo "****   minishell ok!    ****"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I${PWD}/readline/include/
+	$(CC) $(CFLAGS) -c $< -o $@ -I${PWD}/lib/readline/include/
 
 clean:
-	make clean -C libft/
-	${RM} $(OBJ)
+	make clean -C lib/libft
+	$(RM) $(OBJ)
 
  fclean: clean
-	${RM} ${NAME}
-	${RM} $(LIBFT)
-	${RM} $(READLINE)
+	$(RM) $(NAME)
+	$(RM) $(LIBFT)
+	$(RM) $(READLINE)
 
 re:	fclean all
 
