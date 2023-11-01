@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 11:47:18 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:17:47 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define  MINISHELL_H
@@ -67,6 +68,9 @@ char	**list_to_double_arr(t_data *d);
 void	exec_simple(t_data *d, char **env);
 void	count_char(char *read_line, char c, int *counter);
 int		executer(t_data *data, char **env);
+int		exec_builtin(t_data *data, char **env);
+
+int		ft_echo(t_data *d);
 
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 08:25:58 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:17:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int main(int ac, char **av, char **env)
 			exit(1);
 		data = NULL;
 		ft_parser(line, &data);
-		printit(data);	// to print the linked list
+		//printit(data);	// to print the linked list
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
 			continue ;
 		// to continue the loop if there are missing quotes or null

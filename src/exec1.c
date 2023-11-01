@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/01 01:23:53 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 12:41:35 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,17 @@ void	exec_simple(t_data *d, char **env)
 	char	**args;
 	pid_t	pid;
 	char 	*cmd_path;
-	//int		builtin_flag;
 	
-	//builtin_flag = is_buitin(line);
 	pid = fork();
 	if (pid == 0)
 	{
+		if (is_buitin(d->content))
+		{
+			exec_builtin(d, env);
+			exit(1);
+		}
 		args = list_to_double_arr(d);
 		execve(path_finder(args[0], env), args, env);	
-		exit(1);
 	}
 	wait(NULL);
 }
