@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 02:16:24 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 08:25:58 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	printit(t_data *d)
 	while (d)
 	{
 		printf("\neleman:%d --->\t%s\n", i, d->content);
-		printf("type: %d\n", d->type);
+		if(!(d->content) || !(*(d->content)))
+			printf("selam");
+		//printf("type: %d\n", d->type);
 		d = d->next;
 		i++;
 	}

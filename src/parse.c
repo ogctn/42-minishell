@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/31 20:11:38 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:06:07 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void ft_split_2(char *str, t_data **total_line)
 	int start = 0;
 	int j = 0;
 	t_data *tmp;
-	if(is_quote(str))
+	if(in_quote(str))
 	{
 		if(ft_strlen(str) > 2)
 		{
@@ -78,7 +78,6 @@ void ft_split_2(char *str, t_data **total_line)
 				}
 				else
 					(*total_line) = ft_create(ft_substr(str,i,1));
-			tmp->next->type = 1;
 		}
 		start = i+1;
 		}
@@ -102,13 +101,11 @@ void ft_parser(char *str,t_data **total_line)
 	char **ptr;
 	int i;
 
-	i = 0;
+	i = -1;
 	ptr = ft_spc_split(str);
-	while(ptr[i])
-	{
+	while(ptr[++i])
 		ft_split_2(ptr[i],total_line);
-		i++;
-	}
+	free_2d(ptr);
 }
 
 

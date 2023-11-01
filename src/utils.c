@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 01:22:28 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:05:21 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,13 @@ int is_operate(char s)
 		return(1);
 	return(0);
 }
-int is_quote(char *s)
+int is_quote(char s)
+{
+	if ( s == '\'' || s == '"')
+		return(1);
+	return(0);
+}
+int in_quote(char *s)
 {
 	int i = 0;
 	while (s[i])

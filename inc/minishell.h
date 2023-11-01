@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 01:23:51 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:05:53 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_data	*ft_create(char *str);
 int		ft_lstsize(t_data *lst);
 char	**ft_spc_split(char const *s);
 int 	is_operate(char s);
-int 	is_quote(char *s);
+int 	is_quote(char s);
+int 	in_quote(char *s);
 
 void	suppress_output(void);
 void	sig_handler(int signal);

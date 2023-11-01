@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   own_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/10/31 20:11:35 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 11:07:04 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,59 +16,57 @@ static int	ft_counter(char const	*s)
 {
 	int		i;
 	int		count;
-	char	c;
-	int		end;
 
 	i = 0;
 	count = 0;
-	end = 0;
 	while (s[i])
 	{
-		if (s[i] == '"' || s[i] == '\'')
+		if (is_quote(s[i]))
 		{
-			end = i+1;
-			c = s[i];
-			while(s[end]!=c && s[end])
-				end++;
+			while( s[i+1] && s[i+1]!=s[i] )
+				i++;
 			count++;
-			i = end - 1;
 		}
-		else if (s[i] == ' ' && s[i+1] != ' ' && s[i+1] != '\'' && s[i+1] != '"' && s[i+1])
+		else if (s[i] == ' ' && s[i+1] != ' ' && !is_quote(s[i + 1]))
 			count++;
 		i++;
 	}
-	if (s[0] == '"' || s[0] == '\'' || s[0] == ' ')
+	if (is_quote(s[0]) || s[0] == ' ')
 		return (count);
 	return (count + 1);
 }
 
-static void ft_update(const char *s, int start2, int *end)
+static void ft_update(const char *s, int start, int *end)
 {
-	int end2 = *end;
-	char c = s[end2];
-	if(s[start2]!= '"'&& s[start2] != '\'')
+	int end_idx;
+	char c;
+
+	end_idx = *end;
+	c = s[end_idx];
+	if(!is_quote(s[start]))
 	{
-		while (!is_operate(s[start2]) && s[start2] != c)
-			start2++;
-		if(end2 != start2)
+		while (!is_operate(s[start]) && s[start] != c)
+			start++;
+		if(end_idx != start)
 		{
-			(*end) = start2 + 1;
+			(*end) = start + 1;
 			return;
 		}
 	}
-	start2++;
-	while(s[start2] && s[start2] != c)
-		start2++;
-	start2++;
-	if(s[start2]== '"'|| s[start2] == '\'')
-		ft_update(s,start2,end);
-	else
+	start++;
+	while(s[start] && s[start] != c)
+		start++;
+	start++;
+	while (s[start] && s[start] != ' ' && !is_operate(s[start]))
 	{
-	while (s[start2] && s[start2] != ' ' && !is_operate(s[start2]))
-		start2++;
-	(*end) = start2;
+		if(is_quote(s[start]))
+		{
+			ft_update(s,start,end);
+			return;
+		}
+		start++;
 	}
-
+	(*end) = start;
 }
 
 static char	**ft_string(char const *s, char **ptr)
