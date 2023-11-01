@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 11:47:18 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:04:41 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ typedef struct s_path
 }			t_path;
 
 void 	ft_parser(char *str,t_data **total_line);
+char	**ft_spc_split(char const *s);
 void 	ft_split_2(char *str, t_data **total_line);
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
-int		ft_lstsize(t_data *lst);
 void 	list_add(char *str, t_data **total_line);
-char	**ft_spc_split(char const *s);
+int		ft_lstsize(t_data *lst);
 int 	is_operate(char s);
 int 	is_quote(char s);
 int 	in_quote(char *s);
@@ -53,6 +53,7 @@ void	sig_handler(int signal);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
+int		operator_control(t_data **total_line);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
