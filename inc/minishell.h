@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 11:05:53 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:47:18 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void 	ft_split_2(char *str, t_data **total_line);
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
 int		ft_lstsize(t_data *lst);
+void 	list_add(char *str, t_data **total_line);
 char	**ft_spc_split(char const *s);
 int 	is_operate(char s);
 int 	is_quote(char s);

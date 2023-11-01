@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 11:05:21 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 11:46:14 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,15 @@ int	ft_lstsize(t_data *lst)
 		lst = lst->next;
 	}
 	return (i);
+}
+void list_add(char *str, t_data **total_line)
+{
+	t_data *tmp;
+	if((*total_line))
+	{
+		tmp = ft_last(*total_line);
+		tmp->next = ft_create(str);
+	}
+	else
+		(*total_line) = ft_create(str);
 }
