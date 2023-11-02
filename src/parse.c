@@ -54,7 +54,7 @@ void	printit(t_data *d)
 	while (d)
 	{
 		printf("\neleman:%d --->\t%s\n", i, d->content);
-		//printf("type: %d\n", d->type);
+		printf("type: %d\n", d->type);
 		d = d->next;
 		i++;
 	}
@@ -70,6 +70,7 @@ int ft_parser(char *str,t_data **total_line)
 	while(ptr[++i])
 		ft_split_2(ptr[i],total_line);
 	free_2d(ptr);
+	assign_type(total_line);
 	printit(*total_line);
 	return(operator_err_control(*total_line));
 }

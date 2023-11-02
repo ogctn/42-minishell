@@ -15,6 +15,7 @@ SRCS		=	$(SRC_PATH)main.c \
 				$(SRC_PATH)utils_line.c \
 				$(SRC_PATH)path_finder.c \
 				$(SRC_PATH)exec1.c \
+				$(SRC_PATH)assign_type.c \
 
 OBJ 		=	$(SRCS:.c=.o)
 
