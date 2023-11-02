@@ -38,9 +38,13 @@ typedef struct s_path
 	char	*full_path;
 }			t_path;
 
-void 	ft_parser(char *str,t_data **total_line);
+int 	ft_parser(char *str,t_data **total_line);
 char	**ft_spc_split(char const *s);
 void 	ft_split_2(char *str, t_data **total_line);
+
+void 	assign_type(t_data **total_line);
+int		which_operator(char *a);
+int		operator_err_control(t_data *data);
 
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
@@ -56,7 +60,6 @@ void	sig_handler(int signal);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
-int		operator_err_control(t_data *data);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
