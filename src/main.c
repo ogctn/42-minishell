@@ -12,18 +12,6 @@
 
 #include "../inc/minishell.h"
 
-void	printit(t_data *d)
-{
-	int i = 0;
-	while (d)
-	{
-		printf("\neleman:%d --->\t%s\n", i, d->content);
-		//printf("type: %d\n", d->type);
-		d = d->next;
-		i++;
-	}
-}
-
 int main(int ac, char **av, char **env)
 {
 	t_data	*data;
@@ -43,15 +31,12 @@ int main(int ac, char **av, char **env)
 			exit(1);
 		data = NULL;
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
-			continue ;
+			continue ;// to continue the loop if there are missing quotes or null
 		add_history(line);
-		ft_parser(line, &data);
-		printit(data);	// to print the linked list
-		// to continue the loop if there are missing quotes or null
-		if(operator_err_control(data))
+		if(ft_parser(line, &data))
 			executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
 	}
-	return (0);
+	return (0); 
 }

@@ -37,7 +37,7 @@ typedef struct s_path
 	char	*full_path;
 }			t_path;
 
-void 	ft_parser(char *str,t_data **total_line);
+int 	ft_parser(char *str,t_data **total_line);
 char	**ft_spc_split(char const *s);
 void 	ft_split_2(char *str, t_data **total_line);
 
