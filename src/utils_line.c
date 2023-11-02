@@ -61,35 +61,7 @@ void	free_data(t_data *d)
 		d = tmp;
 	}
 }
-int operator_control(t_data **total_line)
-{
-	t_data *tmp_1;
-	t_data *tmp_2;
-	char	operator;
 
-	tmp_1 = *total_line;
-	while (tmp_1)
-	{
-		if(*(tmp_1->content) == '|' || *(tmp_1->content) == '<' || *(tmp_1->content) == '>')
-		{
-			tmp_2=tmp_1->next;
-			if(tmp_2 && *(tmp_1->content) == *(tmp_2->content))
-			{
-				tmp_2 = tmp_2->next;
-				if(tmp_2 && (*(tmp_1->content) == *(tmp_2->content) || *(tmp_1->content) =='|'))
-					printf("minishell$ parse error near \n");
-			}
-			else
-			{
-				if(tmp_2 && (*(tmp_2->content) == '|' || *(tmp_2->content) == '<' || *(tmp_2->content) == '>'))
-					printf("minishell$ parse error near \n");
-			}
-		}
-		tmp_1= tmp_1->next;
-	}
-	return(0);
-	free_data((*total_line));
-}
 int operator_control(t_data **total_line)
 {
 	t_data *tmp_1;
@@ -99,20 +71,16 @@ int operator_control(t_data **total_line)
 
 	while (tmp_1)
 	{
-		if(*(tmp_1->content) == '|' || *(tmp_1->content) == '<' || *(tmp_1->content) == '>')
+		if(is_operate(*(tmp_1->content)))
 		{
 			tmp_2=tmp_1->next;
-			if(tmp_2 && *(tmp_1->content) == *(tmp_2->content))
+			if(!ft_strncmp(tmp_1->content,"||",2) || (tmp_2 && is_operate(*(tmp_2->content))))
 			{
-				printf("syntax error\n");
+				printf("minishell$ syntax error near %s\n",tmp_1->content);
+				return(0);
 			}
-			else if(!ft_strncmp(tmp_1->content,"||",2))
-				printf("syntax error\n");
-			else if(*(tmp_1->content)== '>' && *(tmp_1->next->content) == '<')
-				printf("syntax error\n");
 		}
 		tmp_1= tmp_1->next;
-
 	}
-
+	return(1);
 }

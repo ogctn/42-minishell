@@ -53,7 +53,7 @@ void	sig_handler(int signal);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
-int		operator_control(t_data **total_line);
+int 	operator_control(t_data **total_line);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);

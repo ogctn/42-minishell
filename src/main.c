@@ -50,8 +50,8 @@ int main(int ac, char **av, char **env)
 		printit(data);	// to print the linked list
 		// to continue the loop if there are missing quotes or null
 		add_history(line);
-		operator_control(&data);
-		executer(data, env); // to execute the command
+		if(operator_control(&data))
+			executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
 	}
