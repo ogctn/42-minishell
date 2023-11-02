@@ -18,8 +18,6 @@ void	printit(t_data *d)
 	while (d)
 	{
 		printf("\neleman:%d --->\t%s\n", i, d->content);
-		if(!(d->content) || !(*(d->content)))
-			printf("selam");
 		//printf("type: %d\n", d->type);
 		d = d->next;
 		i++;
@@ -46,11 +44,11 @@ int main(int ac, char **av, char **env)
 		data = NULL;
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
 			continue ;
+		add_history(line);
 		ft_parser(line, &data);
 		printit(data);	// to print the linked list
 		// to continue the loop if there are missing quotes or null
-		add_history(line);
-		if(operator_control(&data))
+		if(operator_err_control(data))
 			executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration

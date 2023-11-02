@@ -62,12 +62,12 @@ void	free_data(t_data *d)
 	}
 }
 
-int operator_control(t_data **total_line)
+int operator_err_control(t_data *data)
 {
 	t_data *tmp_1;
 	t_data *tmp_2;
 
-	tmp_1 = *total_line;
+	tmp_1 = data;
 
 	while (tmp_1)
 	{
