@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/01 02:16:10 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/01 13:30:11 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,27 @@ void	free_data(t_data *d)
 		free(d);
 		d = tmp;
 	}
+}
+
+int operator_err_control(t_data *data)
+{
+	t_data *tmp_1;
+	t_data *tmp_2;
+
+	tmp_1 = data;
+
+	while (tmp_1)
+	{
+		if(is_operate(*(tmp_1->content)))
+		{
+			tmp_2=tmp_1->next;
+			if(!ft_strncmp(tmp_1->content,"||",2) || (tmp_2 && is_operate(*(tmp_2->content))))
+			{
+				printf("minishell$ syntax error near %s\n",tmp_1->content);
+				return(0);
+			}
+		}
+		tmp_1= tmp_1->next;
+	}
+	return(1);
 }

@@ -12,44 +12,12 @@
 
 #include "../inc/minishell.h"
 
-void ft_control(t_data **total_line)
-{
-	t_data *tmp_1;
-	t_data *tmp_2;
-
-	tmp_1 = *total_line;
-
-	while (tmp_1)
-	{
-		if(*(tmp_1->content) == '|' || *(tmp_1->content) == '<' || *(tmp_1->content) == '>')
-		{
-			tmp_2=tmp_1->next;
-			if(tmp_2 && *(tmp_1->content) == *(tmp_2->content))
-			{
-				tmp_2 = tmp_2->next;
-				if(tmp_2 && (*(tmp_1->content) == *(tmp_2->content) || *(tmp_1->content) =='|'))
-					printf("error 1\n");
-			}
-			else
-			{
-				if(tmp_2 && (*(tmp_2->content) == '|' || *(tmp_2->content) == '<' || *(tmp_2->content) == '>'))
-					printf("error 2\n");
-			}
-		}
-		tmp_1= tmp_1->next;
-
-	}
-
-}
-
 void	printit(t_data *d)
 {
 	int i = 0;
 	while (d)
 	{
 		printf("\neleman:%d --->\t%s\n", i, d->content);
-		if(!(d->content) || !(*(d->content)))
-			printf("selam");
 		//printf("type: %d\n", d->type);
 		d = d->next;
 		i++;
@@ -74,13 +42,14 @@ int main(int ac, char **av, char **env)
 		if (!line) // to check if SIGQUIT is pressed
 			exit(1);
 		data = NULL;
-		ft_parser(line, &data);
-		//printit(data);	// to print the linked list
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
 			continue ;
-		// to continue the loop if there are missing quotes or null
 		add_history(line);
-		executer(data, env); // to execute the command
+		ft_parser(line, &data);
+		printit(data);	// to print the linked list
+		// to continue the loop if there are missing quotes or null
+		if(operator_err_control(data))
+			executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
 	}
