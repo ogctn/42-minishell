@@ -7,6 +7,10 @@
 		"stdio.h": "c",
 		"termios.h": "c",
 		"history.h": "c",
-		"rltypedefs.h": "c"
+		"rltypedefs.h": "c",
+		"stdlib.h": "c",
+		"sstream": "c",
+		"unistd.h": "c",
+		"iterator": "c"
 	}
 }

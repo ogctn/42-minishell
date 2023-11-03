@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/01 02:16:10 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/02 16:13:57 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,5 @@ void	free_data(t_data *d)
 		free(d);
 		d = tmp;
 	}
+	d = NULL;
 }

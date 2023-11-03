@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 13:17:21 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 03:18:09 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,47 +42,35 @@ void ft_control(t_data **total_line)
 
 }
 
-void	printit(t_data *d)
-{
-	int i = 0;
-	while (d)
-	{
-		printf("\neleman:%d --->\t%s\n", i, d->content);
-		if(!(d->content) || !(*(d->content)))
-			printf("selam");
-		//printf("type: %d\n", d->type);
-		d = d->next;
-		i++;
-	}
-}
+// DEGİSTİRİLECEK SEVGİ İLE
+// DEGİSTİRİLECEK SEVGİ İLE
+// DEGİSTİRİLECEK SEVGİ İLE
 
-int main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
+	t_env	*env_list;
 	t_data	*data;
 	char	*line;
-	int 	i;
 
-	if (ac != 1 || av[1] != NULL || !env) // to check if there is no argument
+	if (ac != 1 || av[1] != NULL || !env || !(*env))
 		return (1);
 	suppress_output();
 	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, &sig_handler);
+	get_default_env(&env_list, env);
 	while (1)
 	{
-		i = 0;
-		line = readline("minishell$ ");
-		if (!line) // to check if SIGQUIT is pressed
-			exit(1);
 		data = NULL;
-		ft_parser(line, &data);
-		//printit(data);	// to print the linked list
-		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
+		line = readline("\033[0;36mminishell$ \033[0m");
+		if (!line)
+			exit(1);
+		if (check_if_null(line) || is_missing_quoted(line))
 			continue ;
-		// to continue the loop if there are missing quotes or null
-		add_history(line);
-		executer(data, env); // to execute the command
-		free_data(data); // to free the linked list
-		free(line); // to free the line from the previous iteration
+		ft_parser(line, &data, env_list);
+		executer(data);
+		free(line);
+		free_data(data);
 	}
+	//free(env_list);
 	return (0);
 }

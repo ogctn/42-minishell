@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 12:04:20 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/03 03:19:35 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void ft_split_2(char *str, t_data **total_line)
 	int start = 0;
 	int j = 0;
 	t_data *tmp;
+
 	if(in_quote(str))
 	{
 		if(ft_strlen(str) > 2)
@@ -48,17 +49,16 @@ void ft_split_2(char *str, t_data **total_line)
 
 }
 
-
-void ft_parser(char *str,t_data **total_line)
+void	ft_parser(char *str, t_data **total_line, t_env *env_list)
 {
-	char **ptr;
-	int i;
+	char	**ptr;
+	int		i;
 
 	i = -1;
 	ptr = ft_spc_split(str);
-	while(ptr[++i])
+	while (ptr[++i])
 		ft_split_2(ptr[i],total_line);
 	free_2d(ptr);
+	init_all_env_data_nodes(total_line, env_list);
+	add_history(str);
 }
-
-

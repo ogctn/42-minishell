@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 13:17:47 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 02:57:40 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,18 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+typedef struct s_env
+{
+	char			*content;
+	int				is_exported;
+	struct s_env	*next;
+}					t_env;
 
 typedef struct s_data
 {
 	char			*content;
 	int				type;
+	t_env			*env;
 	struct s_data	*next;
 }					t_data;
 
@@ -38,7 +45,7 @@ typedef struct s_path
 	char	*full_path;
 }			t_path;
 
-void 	ft_parser(char *str,t_data **total_line);
+void	ft_parser(char *str, t_data **total_line, t_env *env_list);
 void 	ft_split_2(char *str, t_data **total_line);
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
@@ -60,17 +67,28 @@ int		ft_strcmp(char *s1, char *s2);
 int		is_buitin(char	*cmd);
 
 char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable);
-char	**split_env(char **env);
+char	**split_env_path(t_env *env);
 void	free_2d(char **d);
-char	*path_finder(char *full_cmd, char **env);
+char	*path_finder(char *full_cmd, t_env *env);
+void	get_default_env(t_env **env_list, char **env);
+
+t_env	*node_get_last(t_env *env);
+t_env	*node_new(void *content);
+void	node_add_back(t_env **lst, char *content);
+void	init_all_env_data_nodes(t_data **d, t_env *env);
 
 char	**list_to_double_arr(t_data *d);
-void	exec_simple(t_data *d, char **env);
+int		exec_simple(t_data *d);
 void	count_char(char *read_line, char c, int *counter);
-int		executer(t_data *data, char **env);
-int		exec_builtin(t_data *data, char **env);
+int		executer(t_data *data);
+int		exec_builtin(t_data *data);
 
 int		ft_echo(t_data *d);
+void	print_env(t_env *env_list);
+int		ft_env(t_data *data);
+int		ft_exit(t_data *d);
+int		ft_pwd(void);
+int		ft_unset(t_data *d);
 
 
 #endif

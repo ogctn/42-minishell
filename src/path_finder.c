@@ -6,24 +6,24 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/01 01:22:53 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/02 19:30:43 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	**split_env(char **env)
+char	**split_env_path(t_env *env)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env)
 	{
-		tmp = ft_strnstr(env[i], "PATH=", 5);
+		tmp = ft_strnstr(env->content, "PATH=", 5);
 		if (tmp)
-			return (ft_split(env[i] + 5, ':'));
-		i++;
+			return (ft_split(env->content + 5, ':'));
+		env = env->next;
 	}
 	return (NULL);
 }
@@ -58,12 +58,12 @@ void	free_2d(char **d)
 	free(d);
 }
 
-char	*path_finder(char *full_cmd, char **env)
+char	*path_finder(char *full_cmd, t_env *env)
 {
 	t_path	path;
 	int		i;
 
-	path.sp_env = split_env(env);
+	path.sp_env = split_env_path(env);
 	path.sp_cmd = ft_split(full_cmd, ' ');
 	i = -1;
 	while (path.sp_env[++i])
