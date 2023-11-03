@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 02:46:00 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 02:48:04 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,20 +112,20 @@ int	is_env_exist(t_env *env, char *content)
 	}
 	return (0);
 }
-int	update_env_content(t_env *env, char content)
-{
-	while (env)
-	{
-		if (!ft_strncmp(env->content, content, ft_strlen(content)))
-		{
-			free(env->content);
-			env->content = ft_strdup(content);
-			return (0);
-		}
-		env = env->next;
-	}
-	return (1);
-}
+// int	update_env_content(t_env *env, char content)
+// {
+// 	while (env)
+// 	{
+// 		if (!ft_strncmp(env->content, content, ft_strlen(content)))
+// 		{
+// 			free(env->content);
+// 			env->content = ft_strdup(content);
+// 			return (0);
+// 		}
+// 		env = env->next;
+// 	}
+// 	return (1);
+// }
 
 // int	add_to_env(t_data *d)
 // {
