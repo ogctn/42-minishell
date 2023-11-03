@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/03 06:55:30 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:33:48 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ int		ft_env(t_data *data);
 int		ft_exit(t_data *d);
 int		ft_pwd(void);
 int		ft_unset(t_data *d);
-
+char	*get_env_value(t_env *env, char *key);
+int		set_env_value(t_env *env, char *key, char *value);
+int		ft_cd(t_data *d);
 
 #endif
