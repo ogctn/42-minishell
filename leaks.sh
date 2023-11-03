@@ -1,5 +1,5 @@
 while	true
-	do
-	leaks $(pgrep minishell)
+do
+	leaks minishell
 	sleep 1
-	done
+done

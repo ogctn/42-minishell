@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 14:33:33 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 00:00:05 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_there_oldpwd_in_env(t_env *env)
 		env = env->next;
 	}
 	printf("minishell: cd: OLDPWD not set\n");
-	return (0);	
+	return (0);
 }
 
 static int	is_there_home_in_env(t_env *env)
@@ -35,7 +35,6 @@ static int	is_there_home_in_env(t_env *env)
 	printf("minishell: cd: HOME not set\n");
 	return (0);
 }
-
 
 int	are_valid_cd_params(t_data *d)
 {
@@ -54,14 +53,14 @@ int	are_valid_cd_params(t_data *d)
 				printf("minishell: cd: -%c: invalid option\n\
 cd: [tnoyan] No parameters supported in minishell\n", d->next->content[1]);
 				printf("cd: usage: cd [dir]\n");
-				return (1);
+				return (0);
 			}
 		}
 	}
-	return (0);
+	return (is_there_home_in_env(d->env));
 }
 
-static char	*goo(t_data *d)
+static char	*expand_special_chars(t_data *d)
 {
 	char	*path;
 
@@ -72,17 +71,16 @@ static char	*goo(t_data *d)
 			if (d->next->content[1] == '-' && !d->next->content[2])
 				path = get_env_value(d->env, "HOME");
 			else
+			{
 				path = get_env_value(d->env, "OLDPWD");
+				printf("%s\n", path);
+			}
 		}
 		else
 			path = d->next->content;
 	}
 	else
-	{
-		if (!is_there_home_in_env(d->env))
-			return (NULL);
 		path = get_env_value(d->env, "HOME");
-	}
 	return (path);
 }
 
@@ -90,23 +88,22 @@ int	ft_cd(t_data *d)
 {
 	char	*path;
 	char	*tmp;
-	int		ret;
 
 	if (!are_valid_cd_params(d))
 		return (1);
-	path = goo(d);
+	path = expand_special_chars(d);
 	if (!path)
 		return (1);
 	tmp = getcwd(NULL, 0);
-	ret = chdir(path);
-	if (ret == -1)
+	if (chdir(path) == -1)
 	{
 		printf("minishell: Error at cd: %s\n", path);
 		return (free(tmp), 1);
 	}
-	//set_env_value(d->env, "OLDPWD", tmp);
-	//tmp = getcwd(NULL, 0);
-	//set_env_value(d->env, "PWD", tmp);
-	//free(tmp);
+	set_env_value(d->env, "OLDPWD", tmp);
+	free(tmp);
+	tmp = getcwd(NULL, 0);
+	set_env_value(d->env, "PWD", tmp);
+	free(tmp);
 	return (0);
 }
