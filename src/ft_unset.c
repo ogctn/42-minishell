@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 03:17:41 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 06:59:57 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,32 +59,31 @@ not a valid identifier\n", d->content);
 	return (1);
 }
 
-int	unset_one_argument(t_env **env, char *target)
+int	unset_single_env(t_data *data, char *target)
 {
 	t_env	*tmp;
 	t_env	*prev;
-	char	*find;
+	char	*to_find;
 
-	tmp = *env;
+	to_find = ft_strjoin_null(target, "=", NULL);
+	tmp = data->env;
 	prev = NULL;
 	while (tmp)
 	{
-		find = ft_strjoin_null(target, "=", NULL);
-		if (ft_strncmp(tmp->content, find, ft_strlen(target) + 1))
+		if (!ft_strncmp(tmp->content, to_find, ft_strlen(target) + 1))
 		{
 			if (prev)
 				prev->next = tmp->next;
 			else
-				*env = tmp->next;
-			free(tmp->content);
-			free(tmp);
-			free(find);
+				data->env = data->env->next;
+			free(to_find);
+			init_env_all_data_nodes(&data, data->env);
 			return (0);
 		}
-		free(find);
 		prev = tmp;
 		tmp = tmp->next;
 	}
+	free(to_find);
 	return (1);
 }
 
@@ -95,7 +94,7 @@ int	ft_unset(t_data *d)
 	d = d->next;
 	while (d && !is_operate(d->content[0]))
 	{
-		if (unset_one_argument(&d->env, d->content))
+		if (unset_single_env(d, d->content))
 			return (1);
 		d = d->next;
 	}

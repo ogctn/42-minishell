@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 03:11:02 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 06:42:47 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@ int	ft_env(t_data *data)
 {
 	if (data->next)
 	{
-		printf("minishell: env: %s:\
-			 No such file or directory\n", data->next->content);
+		printf("minishell: env: %s: \
+No such file or directory\n", data->next->content);
 		return (127);
 	}
-	print_env(data->env);
+	if (data->env)
+		print_env(data->env);
 	return (0);
 }

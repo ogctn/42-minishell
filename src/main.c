@@ -6,46 +6,41 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/03 03:18:09 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 07:09:49 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-void ft_control(t_data **total_line)
+void	ft_control(t_data **total_line)
 {
-	t_data *tmp_1;
-	t_data *tmp_2;
+	t_data	*tmp_1;
+	t_data	*tmp_2;
 
 	tmp_1 = *total_line;
-
 	while (tmp_1)
 	{
-		if(*(tmp_1->content) == '|' || *(tmp_1->content) == '<' || *(tmp_1->content) == '>')
+		if (*(tmp_1->content) == '|' || *(tmp_1->content) == '<' \
+					|| *(tmp_1->content) == '>')
 		{
-			tmp_2=tmp_1->next;
-			if(tmp_2 && *(tmp_1->content) == *(tmp_2->content))
+			tmp_2 = tmp_1->next;
+			if (tmp_2 && *(tmp_1->content) == *(tmp_2->content))
 			{
 				tmp_2 = tmp_2->next;
-				if(tmp_2 && (*(tmp_1->content) == *(tmp_2->content) || *(tmp_1->content) =='|'))
+				if (tmp_2 && (*(tmp_1->content) == *(tmp_2->content) \
+					|| *(tmp_1->content) == '|'))
 					printf("error 1\n");
 			}
 			else
-			{
-				if(tmp_2 && (*(tmp_2->content) == '|' || *(tmp_2->content) == '<' || *(tmp_2->content) == '>'))
+				if (tmp_2 && (*(tmp_2->content) == '|' \
+					|| *(tmp_2->content) == '<' || *(tmp_2->content) == '>'))
 					printf("error 2\n");
-			}
 		}
-		tmp_1= tmp_1->next;
-
+		tmp_1 = tmp_1->next;
 	}
-
 }
 
-// DEGİSTİRİLECEK SEVGİ İLE
-// DEGİSTİRİLECEK SEVGİ İLE
-// DEGİSTİRİLECEK SEVGİ İLE
-
+// FREE_ENV_LIST UNUTMA
 int	main(int ac, char **av, char **env)
 {
 	t_env	*env_list;
@@ -71,6 +66,5 @@ int	main(int ac, char **av, char **env)
 		free(line);
 		free_data(data);
 	}
-	//free(env_list);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   own_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 11:07:04 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/03 07:14:42 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ static int	ft_counter(char const	*s)
 	{
 		if (is_quote(s[i]))
 		{
-			while( s[i+1] && s[i+1]!=s[i] )
+			while (s[i + 1] && s[i + 1] != s[i])
 				i++;
 			count++;
 		}
-		else if (s[i] == ' ' && s[i+1] != ' ' && !is_quote(s[i + 1]))
+		else if (s[i] == ' ' && s[i + 1] != ' ' && !is_quote(s[i + 1]))
 			count++;
 		i++;
 	}
@@ -36,33 +36,33 @@ static int	ft_counter(char const	*s)
 	return (count + 1);
 }
 
-static void ft_update(const char *s, int start, int *end)
+static void	ft_update(const char *s, int start, int *end)
 {
-	int end_idx;
-	char c;
+	int		end_idx;
+	char	c;
 
 	end_idx = *end;
 	c = s[end_idx];
-	if(!is_quote(s[start]))
+	if (!is_quote(s[start]))
 	{
 		while (!is_operate(s[start]) && s[start] != c)
 			start++;
-		if(end_idx != start)
+		if (end_idx != start)
 		{
 			(*end) = start + 1;
-			return;
+			return ;
 		}
 	}
 	start++;
-	while(s[start] && s[start] != c)
+	while (s[start] && s[start] != c)
 		start++;
 	start++;
 	while (s[start] && s[start] != ' ' && !is_operate(s[start]))
 	{
-		if(is_quote(s[start]))
+		if (is_quote(s[start]))
 		{
-			ft_update(s,start,end);
-			return;
+			ft_update(s, start, end);
+			return ;
 		}
 		start++;
 	}
@@ -82,16 +82,16 @@ static char	**ft_string(char const *s, char **ptr)
 		while (s[start] == ' ')
 			start++;
 		end = start;
-		if(s[start] == '"' || s[start] == '\'')
-			ft_update(s,start,&end);
+		if (s[start] == '"' || s[start] == '\'')
+			ft_update(s, start, &end);
 		else
 		{
 			while (s[end] != ' ' && s[end])
 			{
-				if(s[end] == '"' || s[end] == '\'')
+				if (s[end] == '"' || s[end] == '\'')
 				{
-					ft_update(s,start,&end);
-					break;
+					ft_update(s, start, &end);
+					break ;
 				}
 				end++;
 			}
@@ -117,5 +117,5 @@ char	**ft_spc_split(char const *s)
 	ptr = (char **)malloc(sizeof(char *) * (ft_counter(s) + 1));
 	if (!ptr)
 		return (NULL);
-	return (ft_string(s,ptr));
+	return (ft_string(s, ptr));
 }

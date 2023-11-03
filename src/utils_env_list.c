@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 03:23:17 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 06:55:58 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	node_add_back(t_env **lst, char *content)
 	last->next = new;
 }
 
-void	init_all_env_data_nodes(t_data **d, t_env *env_list)
+void	init_env_all_data_nodes(t_data **d, t_env *env_list)
 {
 	t_data	*iter;
 

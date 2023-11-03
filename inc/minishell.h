@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/03 02:57:40 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/03 06:55:30 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	get_default_env(t_env **env_list, char **env);
 t_env	*node_get_last(t_env *env);
 t_env	*node_new(void *content);
 void	node_add_back(t_env **lst, char *content);
-void	init_all_env_data_nodes(t_data **d, t_env *env);
+void	init_env_all_data_nodes(t_data **d, t_env *env);
 
 char	**list_to_double_arr(t_data *d);
 int		exec_simple(t_data *d);
