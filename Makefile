@@ -23,6 +23,7 @@ SRCS		=	$(SRC_PATH)main.c \
 				$(SRC_PATH)ft_pwd.c \
 				$(SRC_PATH)ft_unset.c \
 				$(SRC_PATH)ft_cd.c \
+				$(SRC_PATH)ft_export.c \
 
 OBJ 		=	$(SRCS:.c=.o)
 

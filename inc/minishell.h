@@ -6,22 +6,21 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/03 23:33:15 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 02:30:17 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef MINISHELL_H
-# define  MINISHELL_H
+# define MINISHELL_H
 
-#include <termios.h>
+# include <termios.h>
 
-#include "../lib/libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+# include "../lib/libft/libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 
 typedef struct s_env
 {
@@ -46,15 +45,15 @@ typedef struct s_path
 }			t_path;
 
 void	ft_parser(char *str, t_data **total_line, t_env *env_list);
-void 	ft_split_2(char *str, t_data **total_line);
+void	ft_split_2(char *str, t_data **total_line);
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
 int		ft_lstsize(t_data *lst);
-void 	list_add(char *str, t_data **total_line);
+void	list_add(char *str, t_data **total_line);
 char	**ft_spc_split(char const *s);
-int 	is_operate(char s);
-int 	is_quote(char s);
-int 	in_quote(char *s);
+int		is_operate(char s);
+int		is_quote(char s);
+int		in_quote(char *s);
 
 void	suppress_output(void);
 void	sig_handler(int signal);
@@ -88,9 +87,11 @@ void	print_env(t_env *env_list);
 int		ft_env(t_data *data);
 int		ft_exit(t_data *d);
 int		ft_pwd(void);
+int		are_valid_params(t_data *d, char *cmd);
 int		ft_unset(t_data *d);
 char	*get_env_value(t_env *env, char *key);
 void	set_env_value(t_env *env, char *key, char *value);
 int		ft_cd(t_data *d);
+int		ft_export(t_data *d);
 
 #endif

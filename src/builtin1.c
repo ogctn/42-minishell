@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:03:49 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 14:32:45 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 00:48:28 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ int	exec_builtin(t_data *data)
 		return (ft_cd(data));
 	else if (ft_strcmp(data->content, "pwd") == 0)
 		return (ft_pwd());
-	// else if (ft_strcmp(cmd, "export") == 0)
-	// 	return (ft_export(data));
+	else if (ft_strcmp(data->content, "export") == 0)
+		return (ft_export(data));
 	else if (ft_strcmp(data->content, "unset") == 0)
 		return (ft_unset(data));
 	else if (ft_strcmp(data->content, "env") == 0)

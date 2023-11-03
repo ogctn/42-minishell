@@ -6,19 +6,19 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 06:59:57 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 02:29:45 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	is_there_problem(char *content)
+int	is_there_problem(char *content, char *cmd)
 {
 	int	i;
 
 	if (!content[0] || (!ft_isalpha(content[0]) && content[0] != '_'))
 	{
-		printf("minishell: unset: `%s': not a valid identifier\n", content);
+		printf("minishell: %s: `%s': not a valid identifier\n", cmd, content);
 		return (1);
 	}
 	i = 1;
@@ -26,7 +26,7 @@ int	is_there_problem(char *content)
 	{
 		if (!ft_isalnum(content[0]) && content[0] != '_')
 		{
-			printf("minishell: unset: `%s': not a valid identifier\n", content);
+			printf("minishell: %s: `%s': not a valid identifier\n", cmd, content);
 			return (1);
 		}
 		i++;
@@ -34,7 +34,7 @@ int	is_there_problem(char *content)
 	return (0);
 }
 
-int	are_valid_unset_params(t_data *d)
+int	are_valid_params(t_data *d, char *cmd)
 {
 	if (!((d->next) && (d->next->content)))
 		return (0);
@@ -43,16 +43,17 @@ int	are_valid_unset_params(t_data *d)
 	{
 		if (!d->content[1])
 		{
-			printf("minishell: unset: `%s': \
-not a valid identifier\n", d->content);
+			printf("minishell: %s: `%s': \
+not a valid identifier\n", cmd, d->content);
 			return (1);
 		}
-		printf("minishell: unset: [tnoyan] there are no parameter option!\n");
+		printf("minishell: %s: [tnoyan] there are \
+no parameter option!\n", cmd);
 		return (0);
 	}
 	while (d && !is_operate(d->content[0]))
 	{
-		if (is_there_problem(d->content))
+		if (is_there_problem(d->content, cmd))
 			return (0);
 		d = d->next;
 	}
@@ -89,7 +90,7 @@ int	unset_single_env(t_data *data, char *target)
 
 int	ft_unset(t_data *d)
 {
-	if (!are_valid_unset_params(d))
+	if (!are_valid_params(d, "unset"))
 		return (1);
 	d = d->next;
 	while (d && !is_operate(d->content[0]))

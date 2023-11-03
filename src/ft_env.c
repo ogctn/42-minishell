@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 06:42:47 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 02:37:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	print_env(t_env *env_list)
 {
 	while (env_list)
 	{
-		printf("%s\n", env_list->content);
+		if (ft_strchr(env_list->content, '='))
+			printf("%s\n", env_list->content);
 		env_list = env_list->next;
 	}
 }
