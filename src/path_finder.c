@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/02 19:30:43 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:42:08 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,28 @@ void	free_2d(char **d)
 	free(d);
 }
 
+int	is_there_a_slash(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i++] == '/')
+			return (1);
+	}
+	return (0);
+}
+
 char	*path_finder(char *full_cmd, t_env *env)
 {
 	t_path	path;
 	int		i;
 
+	if (is_there_a_slash(full_cmd))
+		return (full_cmd);
 	path.sp_env = split_env_path(env);
 	path.sp_cmd = ft_split(full_cmd, ' ');
 	i = -1;

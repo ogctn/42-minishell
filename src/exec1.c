@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 19:50:35 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:44:45 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,16 @@ int	exec_simple(t_data *d)
 		if (pid == 0)
 		{
 			args = data_to_double_arr(d);
-			execve(path_finder(args[0], d->env), \
-					args, env_to_double_arr(d->env));
-			return (0);
+			cmd_path = path_finder(args[0], d->env);
+			if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
+ 			{
+				if (file_or_dir_exists(cmd_path, args[0]))
+					return (1);
+				exit (1);
+			}
 		}
-		wait(NULL);
+		else
+			wait(NULL);
 		return (0);
 	}
 }

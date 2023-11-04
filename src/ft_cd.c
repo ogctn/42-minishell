@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 19:58:11 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:45:08 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ static int	is_there_oldpwd_in_env(t_env *env)
 
 static int	is_there_home_in_env(t_env *env)
 {
-	// while (env)
-	// {
-	// 	if (ft_strncmp(env->content, "HOME=", 5) == 0)
-	// 		return (1);
-	// 	env = env->next;
-	// }
 	if (!get_env_value(env, "HOME"))
 	{
 		printf("minishell: cd: HOME not set\n");
@@ -89,16 +83,16 @@ static char	*expand_special_chars(t_data *d)
 	return (path);
 }
 
-int	directory_exists(char *path, char *tmp)
+int	file_or_dir_exists(char *path, char *cmd)
 {
-	char	*abs_path;
-
-	abs_path = ft_strjoin_null("/", path, 0);
-	abs_path = ft_strjoin_null(tmp, abs_path, abs_path);
-	if (access(abs_path, F_OK) == 0)
+	if (access(path, F_OK) == 0)
 		return (1);
-	printf("minishell: cd: %s: No such file or directory\n", path);
-	free(abs_path);
+	if (!ft_strcmp(cmd, "cd"))
+		printf("minishell: cd: %s: No such file or directory\n", path);
+	if (!is_there_a_slash(path))
+		ft_putstr_fd("minishell: command not found\n", 2);
+	else if (is_there_a_slash(path))
+		printf("minishell: %s: No such file or directory\n", cmd);
 	return (0);
 }
 
@@ -114,7 +108,7 @@ int	ft_cd(t_data *d)
 	if (!path)
 		return (1);
 	tmp = getcwd(NULL, 0);
-	if (!directory_exists(path, tmp))
+	if (!file_or_dir_exists(path, "cd"))
 		return (free(tmp), 1);
 	if (chdir(path) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/04 19:26:40 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:45:20 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ void	sig_handler(int signal);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
+int		is_there_a_slash(char *str);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
 int		is_buitin(char	*cmd);
+int		file_or_dir_exists(char *path, char *cmd);
 
 char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable);
 char	**split_env_path(t_env *env);
