@@ -33,7 +33,7 @@ int main(int ac, char **av, char **env)
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
 			continue ;// to continue the loop if there are missing quotes or null
 		add_history(line);
-		if(ft_parser(line, &data))
+		if(ft_parser(line, &data,env))
 			executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
