@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/02 16:13:57 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:35:55 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,21 @@ void	free_data(t_data *d)
 		d = tmp;
 	}
 	d = NULL;
+}
+void	mini_clear(t_env *env)
+{
+	pid_t	pid;
+	char	*clear_path; 
+	char	*envp[2];
+
+	pid = fork();
+	if (pid == -1)
+		exit(1);
+	if (pid == 0)
+	{
+		clear_path = path_finder("clear", env);
+		execve(clear_path, NULL, env_to_double_arr(env));
+	}
+	else
+		wait(NULL);
 }

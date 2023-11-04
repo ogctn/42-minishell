@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 02:29:45 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 16:00:53 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ not a valid identifier\n", cmd, d->content);
 no parameter option!\n", cmd);
 		return (0);
 	}
-	while (d && !is_operate(d->content[0]))
+	while (d && !(is_operate(d->content[0]) && !d->content[1]))
 	{
 		if (is_there_problem(d->content, cmd))
 			return (0);
@@ -93,7 +93,7 @@ int	ft_unset(t_data *d)
 	if (!are_valid_params(d, "unset"))
 		return (1);
 	d = d->next;
-	while (d && !is_operate(d->content[0]))
+	while (d && !(is_operate(d->content[0]) && !d->content[1]))
 	{
 		if (unset_single_env(d, d->content))
 			return (1);

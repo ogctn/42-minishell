@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 03:28:34 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:50:35 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ int	exec_simple(t_data *d)
 			args = data_to_double_arr(d);
 			execve(path_finder(args[0], d->env), \
 					args, env_to_double_arr(d->env));
+			return (0);
 		}
 		wait(NULL);
+		return (0);
 	}
-	return (0);
 }
 
 int	executer(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/04 02:33:23 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:25:17 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int ac, char **av, char **env)
 	signal(SIGINT, &sig_handler);
 	signal(SIGQUIT, &sig_handler);
 	get_default_env(&env_list, env);
+	mini_clear(env_list);
 	while (1)
 	{
 		data = NULL;

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/04 11:56:14 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 19:26:40 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		is_operate(char s);
 int		is_quote(char s);
 int		in_quote(char *s);
 
+void	mini_clear(t_env *env);
 void	suppress_output(void);
 void	sig_handler(int signal);
 
@@ -70,6 +71,7 @@ char	**split_env_path(t_env *env);
 void	free_2d(char **d);
 char	*path_finder(char *full_cmd, t_env *env);
 void	get_default_env(t_env **env_list, char **env);
+char	**env_to_double_arr(t_env *env);
 
 t_env	*node_get_last(t_env *env);
 t_env	*node_new(void *content);
