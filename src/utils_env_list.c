@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/03 06:55:58 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 12:32:42 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,28 @@ void	init_env_all_data_nodes(t_data **d, t_env *env_list)
 	{
 		iter->env = env_list;
 		iter = iter->next;
+	}
+}
+
+void	dup_env_list(t_env **dest_env, t_env *src_env)
+{
+	t_env	*new_env;
+	t_env	*last_env;
+
+	*dest_env = NULL;
+	last_env = NULL;
+	while (src_env)
+	{
+		new_env = malloc(sizeof(t_env));
+		if (!new_env)
+			return ;
+		new_env->content = strdup(src_env->content);
+		new_env->next = NULL;
+		if (*dest_env == NULL)
+			*dest_env = new_env;
+		else
+			last_env->next = new_env;
+		last_env = new_env;
+		src_env = src_env->next;
 	}
 }

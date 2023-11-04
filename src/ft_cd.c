@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 00:00:05 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 12:18:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,18 @@ static int	is_there_oldpwd_in_env(t_env *env)
 
 static int	is_there_home_in_env(t_env *env)
 {
-	while (env)
+	// while (env)
+	// {
+	// 	if (ft_strncmp(env->content, "HOME=", 5) == 0)
+	// 		return (1);
+	// 	env = env->next;
+	// }
+	if (!get_env_value(env, "HOME"))
 	{
-		if (ft_strncmp(env->content, "HOME=", 5) == 0)
-			return (1);
-		env = env->next;
+		printf("minishell: cd: HOME not set\n");
+		return (0);
 	}
-	printf("minishell: cd: HOME not set\n");
-	return (0);
+	return (1);
 }
 
 int	are_valid_cd_params(t_data *d)
@@ -56,6 +60,7 @@ cd: [tnoyan] No parameters supported in minishell\n", d->next->content[1]);
 				return (0);
 			}
 		}
+		return (1);
 	}
 	return (is_there_home_in_env(d->env));
 }
