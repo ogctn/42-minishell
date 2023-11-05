@@ -72,5 +72,6 @@ int ft_parser(char *str,t_data **total_line, char **env)
 	assign_type(total_line);
 	env_variable(total_line, env);
 	printit(*total_line);
+	delete_quotes(total_line);
 	return(operator_err_control(*total_line));
 }

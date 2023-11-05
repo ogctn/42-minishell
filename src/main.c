@@ -15,7 +15,6 @@
 int main(int ac, char **av, char **env)
 {
 	t_data	*data;
-	t_table *table;
 	char	*line;
 	int 	i;
 
@@ -35,11 +34,7 @@ int main(int ac, char **av, char **env)
 			continue ;// to continue the loop if there are missing quotes or null
 		add_history(line);
 		if(ft_parser(line, &data,env))
-		{
-			table = re_shape(&data);
 			executer(data, env); // to execute the command
-
-		}
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
 	}

@@ -56,7 +56,7 @@ int		operator_err_control(t_data *data);
 void 	env_variable(t_data **data,char **env);
 char 	*re_create_content(char *str,char **env);
 
-t_table *re_shape(t_data **data);
+void 	delete_quotes(t_data **data);
 
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
