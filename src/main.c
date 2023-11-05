@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/04 19:25:17 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/05 12:10:05 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,17 @@ int	main(int ac, char **av, char **env)
 		free(line);
 		free_data(data);
 	}
-	return (0);
+
+	// struct stat	buf;
+
+	// if (stat("/Users/fsoymaz/Desktop/", &buf) == 0)
+	// {
+	// 	if (buf.st_mode & S_IFDIR)
+	// 		printf("it is a directory\n");
+	// 	else if (buf.st_mode & S_IFREG)
+	// 		printf("it is a file\n");
+	// }
+	// else
+	// 	printf("file does not exist\n");	
+	// return (0);
 }

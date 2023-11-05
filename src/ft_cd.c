@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 22:45:08 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/05 00:16:38 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,17 @@ static char	*expand_special_chars(t_data *d)
 	return (path);
 }
 
-int	file_or_dir_exists(char *path, char *cmd)
+int	file_or_dir_exists(char *path, int flag_case)
 {
 	if (access(path, F_OK) == 0)
 		return (1);
-	if (!ft_strcmp(cmd, "cd"))
+	if (flag_case == 1)
 		printf("minishell: cd: %s: No such file or directory\n", path);
-	if (!is_there_a_slash(path))
+	if (flag_case == 2 && !is_there_a_slash(path))
 		ft_putstr_fd("minishell: command not found\n", 2);
-	else if (is_there_a_slash(path))
-		printf("minishell: %s: No such file or directory\n", cmd);
+	else if (flag_case == 2 && is_there_a_slash(path))
+		printf("minishell: %s: No such file or directory\n", path);
+	
 	return (0);
 }
 
@@ -108,7 +109,7 @@ int	ft_cd(t_data *d)
 	if (!path)
 		return (1);
 	tmp = getcwd(NULL, 0);
-	if (!file_or_dir_exists(path, "cd"))
+	if (!file_or_dir_exists(path, 1))
 		return (free(tmp), 1);
 	if (chdir(path) == -1)
 	{

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 22:44:45 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/05 00:12:12 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,22 @@ char	**env_to_double_arr(t_env *env)
 	return (ret);
 }
 
+int	cd_err_is_file_or_permission(char *cmd_path)
+{
+	struct stat	sb;
+
+	if (stat(cmd_path, &sb) == 0)
+	{
+		if (sb.st_mode & S_IFDIR)
+			printf("minishell: cd: %s: Permission denied\n", cmd_path);
+		else
+			printf("minishell: cd: %s: Not a directory\n", cmd_path);
+	}
+	else
+		printf("minishell: cd: %s: No such file or directory\n", cmd_path);
+	return (1);	
+}
+
 int	exec_simple(t_data *d)
 {
 	char	**args;
@@ -74,8 +90,8 @@ int	exec_simple(t_data *d)
 			cmd_path = path_finder(args[0], d->env);
 			if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
  			{
-				if (file_or_dir_exists(cmd_path, args[0]))
-					return (1);
+				if (file_or_dir_exists(cmd_path, 2))
+					return (cd_err_is_file_or_permission(cmd_path));
 				exit (1);
 			}
 		}
@@ -92,18 +108,8 @@ int	executer(t_data *data)
 	//int		redir_type;
 
 	pipe_count = 0;
-	//count_char(read_line, '|', &pipe_count);	// will be changed
+	//count_char(read_line, '|', &pipe_count);
 	if (pipe_count == 0)
-	{
-		//if (redir_type == 0)
 			return (exec_simple(data));
-		// else if (redir_type == 1)
-		// 	exec_redir_out(data);
-		// else if (redir_type == 2)
-		// 	exec_redir_in(data);
-	}
-	//else
-		//if (exec_pipe(data))
-	//		return (-1);
 	return (0);
 }

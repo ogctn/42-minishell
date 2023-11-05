@@ -38,6 +38,7 @@
 		"tuple": "c",
 		"type_traits": "c",
 		"utility": "c",
-		"vector": "c"
+		"vector": "c",
+		"stat.h": "c"
 	}
 }
