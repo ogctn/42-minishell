@@ -70,7 +70,7 @@ int ft_parser(char *str,t_data **total_line, char **env)
 		ft_split_2(ptr[i],total_line);
 	free_2d(ptr);
 	assign_type(total_line);
-	//printit(*total_line);
 	env_variable(total_line, env);
+	printit(*total_line);
 	return(operator_err_control(*total_line));
 }

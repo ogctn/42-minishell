@@ -31,6 +31,13 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
+typedef struct s_table
+{
+	char			**command;
+	int				type;
+	struct s_data	*next;
+}	t_table;
+
 typedef struct s_path
 {
 	char	**sp_env;
@@ -48,6 +55,8 @@ int		operator_err_control(t_data *data);
 
 void 	env_variable(t_data **data,char **env);
 char 	*re_create_content(char *str,char **env);
+
+t_table *re_shape(t_data **data);
 
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);

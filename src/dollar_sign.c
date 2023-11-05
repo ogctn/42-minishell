@@ -79,7 +79,6 @@ void env_variable(t_data **data,char **env)
             a = re_create_content(tmp->content,env);
             free(tmp->content);
             tmp->content = a;
-			printf("%s\n",tmp->content);
         }
 		else
             tmp = tmp->next;
