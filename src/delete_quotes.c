@@ -42,7 +42,6 @@ void delete_quotes(t_data **data)
         if(in_quote(tmp->content))
         {
             re_create_quote(tmp->content,&new,0);
-            printf("lalala %s\n",new);
             free(tmp->content);
             tmp->content = new;
         }
