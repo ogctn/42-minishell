@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/06 04:52:52 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/06 11:19:28 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	is_env_exist(t_env *env, char *content)
 	return (0);
 }
 
-void	update_env_content(t_env **env, char *new_content)
+void	update_env_content(t_env **env, char *new)
 {
 	int	len_to_equal;
 
@@ -118,10 +118,12 @@ void	update_env_content(t_env **env, char *new_content)
 			len_to_equal = ft_strchr((*env)->content, '=') - (*env)->content;
 		else
 			len_to_equal = ft_strlen((*env)->content);
-		if (ft_strncmp((*env)->content, new_content, len_to_equal) == 0)
+		if (ft_strncmp((*env)->content, new, len_to_equal) == 0)
 		{
+			if (ft_strchr((*env)->content, '=') && !ft_strchr(new, '='))
+				return ;
 			free((*env)->content);
-			(*env)->content = ft_strdup(new_content);
+			(*env)->content = ft_strdup(new);
 			return ;
 		}
 		*env = (*env)->next;
