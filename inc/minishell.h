@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/05 00:02:56 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/06 04:32:37 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,16 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/stat.h>
 
+# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m-->\e[0m "
+
 typedef struct s_env
 {
 	char			*content;
-	int				is_exported;
 	struct s_env	*next;
 }					t_env;
 
@@ -67,7 +69,7 @@ void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
 int		is_buitin(char	*cmd);
-int		file_or_dir_exists(char *path, int flag_case);
+int		file_or_dir_exists(char *path);
 
 char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable);
 char	**split_env_path(t_env *env);
@@ -93,7 +95,8 @@ void	print_env(t_env *env_list);
 int		ft_env(t_data *data);
 int		ft_exit(t_data *d);
 int		ft_pwd(void);
-int		are_valid_params(t_data *d, char *cmd);
+int		is_valid_unset_parameter(char *content);
+int		is_valid_export_parameter(char *content);
 int		ft_unset(t_data *d);
 char	*get_env_value(t_env *env, char *key);
 void	set_env_value(t_env *env, char *key, char *value);

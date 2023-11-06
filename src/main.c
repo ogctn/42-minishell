@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/05 12:10:05 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/05 19:56:56 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		data = NULL;
-		line = readline("\033[0;36mminishell$ \033[0m");
+		line = readline(MINISHELL);
 		if (!line)
 			exit(1);
 		if (check_if_null(line) || is_missing_quoted(line))
@@ -67,17 +67,5 @@ int	main(int ac, char **av, char **env)
 		free(line);
 		free_data(data);
 	}
-
-	// struct stat	buf;
-
-	// if (stat("/Users/fsoymaz/Desktop/", &buf) == 0)
-	// {
-	// 	if (buf.st_mode & S_IFDIR)
-	// 		printf("it is a directory\n");
-	// 	else if (buf.st_mode & S_IFREG)
-	// 		printf("it is a file\n");
-	// }
-	// else
-	// 	printf("file does not exist\n");	
-	// return (0);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 16:57:17 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/06 04:52:52 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,9 @@ void	env_swap(t_env *a, t_env *b, int *swap_flag)
 {
 	char	*tmp;
 
-	tmp = ft_strdup(a->content);
-	free(a->content);
-	a->content = ft_strdup(b->content);
-	free(b->content);
-	b->content = ft_strdup(tmp);
-	free(tmp);
+	tmp = a->content;
+	a->content = b->content;
+	b->content = tmp;
 	*swap_flag = 1;
 }
 
@@ -56,6 +53,8 @@ t_env	*get_listed_env(t_env *env)
 	t_env	*tmp;
 	t_env	*ret;
 
+	if (!env)
+		return (NULL);
 	tmp = NULL;
 	dup_env_list(&tmp, env);
 	if (!tmp)
@@ -109,7 +108,7 @@ int	is_env_exist(t_env *env, char *content)
 	return (0);
 }
 
-int	update_env_content(t_env **env, char *new_content)
+void	update_env_content(t_env **env, char *new_content)
 {
 	int	len_to_equal;
 
@@ -123,20 +122,40 @@ int	update_env_content(t_env **env, char *new_content)
 		{
 			free((*env)->content);
 			(*env)->content = ft_strdup(new_content);
-			return (0);
+			return ;
 		}
 		*env = (*env)->next;
 	}
-	return (1);
 }
 
-int	add_to_env(t_env **env, char *content)
+void	add_to_env(t_env **env, char *content)
 {
 	if (is_env_exist(*env, content))
-		return (update_env_content(env, content));
+		update_env_content(env, content);
 	else
 		node_add_back(env, content);
-	return (0);
+}
+
+int	is_valid_export_parameter(char *str)
+{
+	int	i;
+
+	if (!str[0] || (!ft_isalpha(str[0]) && str[0] != '_'))
+	{
+		printf("minishell: export: `%s': not a valid identifier\n", str);
+		return (0);
+	}
+	i = 1;
+	while (str[i] && str[i] != '=')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+		{
+			printf("minishell: export: `%s': not a valid identifier\n", str);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 int	ft_export(t_data *d)
@@ -146,17 +165,18 @@ int	ft_export(t_data *d)
 		print_export(d->env);
 		return (0);
 	}
-	else
+	d = d->next;
+	if (d && d->content[0] == '-' && d->content[1])
 	{
-		if (!are_valid_params(d, "export"))
-			return (1);
+		printf("minishell: export: %s: [tnoyan] there are \
+no parameter option!\n", d->content);
 		d = d->next;
-		while (d && !(is_operate(d->content[0]) && d->content[1]))
-		{
-			if (add_to_env(&d->env, ft_strdup(d->content)))
-				return (1);
-			d = d->next;
-		}
+	}
+	while (d && !(is_operate(d->content[0]) && !d->content[1]))
+	{
+		if (is_valid_export_parameter(d->content))
+			add_to_env(&d->env, ft_strdup(d->content));
+		d = d->next;
 	}
 	return (0);
 }

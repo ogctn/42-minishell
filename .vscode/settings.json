@@ -39,6 +39,8 @@
 		"type_traits": "c",
 		"utility": "c",
 		"vector": "c",
-		"stat.h": "c"
+		"stat.h": "c",
+		"__config": "c",
+		"__functional_base": "c"
 	}
 }

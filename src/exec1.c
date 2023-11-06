@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/05 00:12:12 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/06 04:51:23 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,40 @@ char	**env_to_double_arr(t_env *env)
 	return (ret);
 }
 
-int	cd_err_is_file_or_permission(char *cmd_path)
+int	get_reason(char *path)
 {
-	struct stat	sb;
+	struct stat	buffer;
 
-	if (stat(cmd_path, &sb) == 0)
+	if (access(path, F_OK) != 0)
 	{
-		if (sb.st_mode & S_IFDIR)
-			printf("minishell: cd: %s: Permission denied\n", cmd_path);
-		else
-			printf("minishell: cd: %s: Not a directory\n", cmd_path);
+		if (!is_there_a_slash(path))
+			printf("minishell: %s: command not found\n", path);
+		else if (is_there_a_slash(path))
+			printf("minishell: %s: No such file or directory\n", path);
 	}
 	else
-		printf("minishell: cd: %s: No such file or directory\n", cmd_path);
-	return (1);	
+	{
+		if (stat(path, &buffer) == 0)
+		{
+			if (buffer.st_mode & S_IFDIR)
+				printf("minishell: %s: is a directory\n", path);
+			else if (!(buffer.st_mode & S_IXUSR))
+				printf("minishell: cd: %s: Permission denied\n", path);
+			else
+				return (0);
+		}
+		else
+			printf("minishell: cd: %s: No such file or directory\n", path);
+		return (1);
+	}
+	return (0);
 }
 
 int	exec_simple(t_data *d)
 {
 	char	**args;
-	pid_t	pid;
 	char	*cmd_path;
+	pid_t	pid;
 
 	if (is_buitin(d->content))
 		return (exec_builtin(d));
@@ -88,11 +101,12 @@ int	exec_simple(t_data *d)
 		{
 			args = data_to_double_arr(d);
 			cmd_path = path_finder(args[0], d->env);
+			if (!cmd_path)
+				cmd_path = args[0];
 			if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
- 			{
-				if (file_or_dir_exists(cmd_path, 2))
-					return (cd_err_is_file_or_permission(cmd_path));
-				exit (1);
+			{
+				get_reason(cmd_path);
+				exit(1);
 			}
 		}
 		else
