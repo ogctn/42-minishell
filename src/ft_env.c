@@ -1,52 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 11:36:30 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 19:51:49 by ogcetin          ###   ########.fr       */
+/*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
+/*   Updated: 2023/11/04 02:37:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	is_only_flag(char *arg, int *flag)
+void	print_env(t_env *env_list)
 {
-	int	i;
-
-	if (arg[0] != '-' || arg[1] != 'n')
-		return (0);
-	i = 2;
-	while (arg[i])
+	while (env_list)
 	{
-		if (arg[i] != 'n')
-			return (0);
-		i++;
+		if (ft_strchr(env_list->content, '='))
+			printf("%s\n", env_list->content);
+		env_list = env_list->next;
 	}
-	*flag = 1;
-	return (1);
 }
 
-int	ft_echo(t_data *d)
+int	ft_env(t_data *data)
 {
-	int	flag;
-
-	flag = 0;
-	d = d->next;
-	while (d && is_only_flag(d->content, &flag))
-		d = d->next;
-	if (!d)
-		return (1);
-	while (d)
+	if (data->next)
 	{
-		printf("%s", d->content);
-		d = d->next;
-		if (d)
-			printf(" ");
+		printf("minishell: env: %s: \
+No such file or directory\n", data->next->content);
+		return (127);
 	}
-	if (!flag)
-		printf("\n");
+	if (data->env)
+		print_env(data->env);
 	return (0);
 }

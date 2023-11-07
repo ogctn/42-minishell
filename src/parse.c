@@ -60,7 +60,7 @@ void	printit(t_data *d)
 	}
 }
 
-int ft_parser(char *str,t_data **total_line, char **env)
+int ft_parser(char *str,t_data **total_line, t_env *env_list)
 {
 	char **ptr;
 	int i;
@@ -70,8 +70,10 @@ int ft_parser(char *str,t_data **total_line, char **env)
 		ft_split_2(ptr[i],total_line);
 	free_2d(ptr);
 	assign_type(total_line);
-	env_variable(total_line, env);
+	init_env_all_data_nodes(total_line, env_list);
+	env_variable(total_line, env_list->content);
 	delete_quotes(total_line);
 	printit(*total_line);
+	add_history(str);
 	return(operator_err_control(*total_line));
 }

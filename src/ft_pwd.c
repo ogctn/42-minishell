@@ -1,52 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/01 11:36:30 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/04 19:51:49 by ogcetin          ###   ########.fr       */
+/*   Created: 2023/11/02 19:42:44 by ogcetin           #+#    #+#             */
+/*   Updated: 2023/11/03 03:14:51 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	is_only_flag(char *arg, int *flag)
+int	ft_pwd(void)
 {
-	int	i;
+	char	*cwd;
 
-	if (arg[0] != '-' || arg[1] != 'n')
-		return (0);
-	i = 2;
-	while (arg[i])
+	cwd = NULL;
+	cwd = getcwd(cwd, 0);
+	if (!cwd)
 	{
-		if (arg[i] != 'n')
-			return (0);
-		i++;
-	}
-	*flag = 1;
-	return (1);
-}
-
-int	ft_echo(t_data *d)
-{
-	int	flag;
-
-	flag = 0;
-	d = d->next;
-	while (d && is_only_flag(d->content, &flag))
-		d = d->next;
-	if (!d)
+		printf("minishell: pwd: \
+An error occurred in the getcwd() function call.\n");
 		return (1);
-	while (d)
-	{
-		printf("%s", d->content);
-		d = d->next;
-		if (d)
-			printf(" ");
 	}
-	if (!flag)
-		printf("\n");
+	printf("%s\n", cwd);
+	free(cwd);
 	return (0);
 }

@@ -50,22 +50,22 @@ int	is_buitin(char	*cmd)
 	return (0);
 }
 
-int	exec_builtin(t_data *data, char **env)
+int	exec_builtin(t_data *data)
 {
-	if (ft_strcmp(data->content, "echo") == 0)	// -n -n -n -n -n , -nnnn, -n-n ->çalışmaz
+	if (ft_strcmp(data->content, "echo") == 0)
 		return (ft_echo(data));
-	// else if (ft_strcmp(cmd, "cd") == 0)
-	// 	return (ft_cd(data, env));
-	// else if (ft_strcmp(cmd, "pwd") == 0)
-	// 	return (ft_pwd(data, env));
-	// else if (ft_strcmp(cmd, "export") == 0)
-	// 	return (ft_export(data, env));
-	// else if (ft_strcmp(cmd, "unset") == 0)	// path unset atınca komut çalışmasın (accsess bulamasın)
-	// 	return (ft_unset(data, env));
-	// else if (ft_strcmp(cmd, "env") == 0)
-	// 	return (ft_env(data, env));
-	// else if (ft_strcmp(cmd, "exit") == 0)
-	// 	return (ft_exit(data));
+	else if (ft_strcmp(data->content, "cd") == 0)
+		return (ft_cd(data));
+	else if (ft_strcmp(data->content, "pwd") == 0)
+		return (ft_pwd());
+	else if (ft_strcmp(data->content, "export") == 0)
+		return (ft_export(data));
+	else if (ft_strcmp(data->content, "unset") == 0)
+		return (ft_unset(data));
+	else if (ft_strcmp(data->content, "env") == 0)
+		return (ft_env(data));
+	else if (ft_strcmp(data->content, "exit") == 0)
+		return (ft_exit(data));
 	return (0);
 }
 

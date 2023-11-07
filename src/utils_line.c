@@ -84,3 +84,20 @@ int operator_err_control(t_data *data)
 	}
 	return(1);
 }
+void	mini_clear(t_env *env)
+{
+	pid_t	pid;
+	char	*clear_path; 
+	char	*envp[2];
+
+	pid = fork();
+	if (pid == -1)
+		exit(1);
+	if (pid == 0)
+	{
+		clear_path = path_finder("clear", env);
+		execve(clear_path, NULL, env_to_double_arr(env));
+	}
+	else
+		wait(NULL);
+}

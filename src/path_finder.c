@@ -6,24 +6,24 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/01 01:22:53 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/04 22:42:08 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	**split_env(char **env)
+char	**split_env_path(t_env *env)
 {
 	char	*tmp;
 	int		i;
 
 	i = 0;
-	while (env[i])
+	while (env)
 	{
-		tmp = ft_strnstr(env[i], "PATH=", 5);
+		tmp = ft_strnstr(env->content, "PATH=", 5);
 		if (tmp)
-			return (ft_split(env[i] + 5, ':'));
-		i++;
+			return (ft_split(env->content + 5, ':'));
+		env = env->next;
 	}
 	return (NULL);
 }
@@ -58,12 +58,29 @@ void	free_2d(char **d)
 	free(d);
 }
 
-char	*path_finder(char *full_cmd, char **env)
+int	is_there_a_slash(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i++] == '/')
+			return (1);
+	}
+	return (0);
+}
+
+char	*path_finder(char *full_cmd, t_env *env)
 {
 	t_path	path;
 	int		i;
 
-	path.sp_env = split_env(env);
+	if (is_there_a_slash(full_cmd))
+		return (full_cmd);
+	path.sp_env = split_env_path(env);
 	path.sp_cmd = ft_split(full_cmd, ' ');
 	i = -1;
 	while (path.sp_env[++i])
