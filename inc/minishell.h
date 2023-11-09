@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/09 23:43:13 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 00:43:33 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void 	assign_type(t_data **total_line);
 int		which_operator(char *a);
 int		operator_err_control(t_data *data);
 
-void 	env_variable(t_data **data,char **env);
-char 	*re_create_content(char *str,char **env);
+void 	env_variable(t_data **data,t_env *env);
+char 	*re_create_content(char *str,t_env *env);
 
 void 	delete_quotes(t_data **data);
 

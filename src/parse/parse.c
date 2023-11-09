@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/09 18:54:00 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 01:11:34 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	printit(t_data *d)
 	int i = 0;
 	while (d)
 	{
-		printf("\neleman:%d --->\t%s\n", i, d->content);
+		printf("\neleman:%d --->\t_%s_\n", i, d->content);
 		printf("type: %d\n", d->type);
 		d = d->next;
 		i++;
@@ -71,7 +71,7 @@ int ft_parser(char *str,t_data **total_line, t_env *env_list)
 	free_2d(ptr);
 	assign_type(total_line);
 	init_env_all_data_nodes(total_line, env_list);
-	env_variable(total_line, env_list->content);
+	env_variable(total_line, env_list);
 	delete_quotes(total_line);
 	printit(*total_line);
 	add_history(str);
