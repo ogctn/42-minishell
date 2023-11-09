@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 13:17:47 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 18:49:13 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+# include <sys/stat.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-# include <sys/stat.h>
 
 typedef struct s_env
 {
