@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:03:49 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 16:57:08 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:08:06 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ int	exec_builtin(t_data *data)
 		return (ft_exit(data));
 	return (0);
 }
-

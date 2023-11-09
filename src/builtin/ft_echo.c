@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 11:36:30 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 16:55:08 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:04:57 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int	ft_echo(t_data *d)
 
 	flag = 0;
 	d = d->next;
+	if (!d)
+		return (printf("\n"), 0);
 	while (d && is_only_flag(d->content, &flag))
 		d = d->next;
-	if (!d)
-		return (1);
 	while (d)
 	{
 		printf("%s", d->content);

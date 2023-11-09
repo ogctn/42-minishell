@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:53:52 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 17:04:57 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:03:09 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	get_default_env(t_env **env_list, char **env)
 		if (!new_env)
 			exit(127);
 		new_env->content = strdup(env[i]);
-		new_env->is_exported = 0;
 		new_env->next = NULL;
 		if (*env_list == NULL)
 			*env_list = new_env;

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/09 18:49:13 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 23:43:13 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 
 #include <termios.h>
 
-#include "../lib/libft/libft.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include "../lib/libft/libft.h"
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <sys/stat.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+
+# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
 
 typedef struct s_env
 {
 	char			*content;
-	int				is_exported;
 	struct s_env	*next;
 }					t_env;
 
@@ -47,7 +49,7 @@ typedef struct s_path
 	char	*full_path;
 }			t_path;
 
-int ft_parser(char *str,t_data **total_line, t_env *env_list);
+int		ft_parser(char *str,t_data **total_line, t_env *env_list);
 char	**ft_spc_split(char const *s);
 void 	ft_split_2(char *str, t_data **total_line);
 
@@ -96,7 +98,7 @@ void	init_env_all_data_nodes(t_data **d, t_env *env);
 void	dup_env_list(t_env **dest_env, t_env *src_env);
 
 char	**list_to_double_arr(t_data *d);
-int	exec_simple(t_data *d);
+int		exec_simple(t_data *d);
 void	count_char(char *read_line, char c, int *counter);
 int		executer(t_data *data);
 int		exec_builtin(t_data *data);
@@ -106,12 +108,12 @@ void	print_env(t_env *env_list);
 int		ft_env(t_data *data);
 int		ft_exit(t_data *d);
 int		ft_pwd(void);
-int		are_valid_params(t_data *d, char *cmd);
+int		is_valid_unset_parameter(char *content);
+int		is_valid_export_parameter(char *content);
 int		ft_unset(t_data *d);
 char	*get_env_value(t_env *env, char *key);
 void	set_env_value(t_env *env, char *key, char *value);
 int		ft_cd(t_data *d);
 int		ft_export(t_data *d);
-
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 17:05:06 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:07:46 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ t_env	*node_new(void *content)
 	if (!element)
 		return (NULL);
 	element->content = content;
-	element->is_exported = 0;
 	element->next = NULL;
 	return (element);
 }

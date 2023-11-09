@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 17:08:22 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 23:42:16 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	**split_env_path(t_env *env)
 {
+	char	**ret;
 	char	*tmp;
 	int		i;
 
@@ -22,7 +23,13 @@ char	**split_env_path(t_env *env)
 	{
 		tmp = ft_strnstr(env->content, "PATH=", 5);
 		if (tmp)
-			return (ft_split(env->content + 5, ':'));
+		{
+			free(tmp);
+			tmp = ft_strdup(env->content + 5);
+			ret = ft_split(tmp, ':');
+			free(tmp);
+			return (ret);
+		}
 		env = env->next;
 	}
 	return (NULL);
@@ -73,30 +80,56 @@ int	is_there_a_slash(char *str)
 	return (0);
 }
 
+// char	*path_finder(char *full_cmd, t_env *env)
+// {
+// 	t_path	path;
+// 	int		i;
+
+// 	if (is_there_a_slash(full_cmd))
+// 		return (full_cmd);
+// 	path.sp_env = split_env_path(env);
+// 	path.sp_cmd = ft_split(full_cmd, ' ');
+// 	i = -1;
+// 	while (path.sp_env[++i])
+// 	{
+// 		path.full_path = ft_strjoin_null(path.sp_env[i], "/", NULL);
+// 		path.full_path = \
+// 			ft_strjoin_null(path.full_path, path.sp_cmd[0], path.full_path);
+// 		if (access(path.full_path, F_OK) == 0)
+// 		{
+// 			free_2d(path.sp_cmd);
+// 			free_2d(path.sp_env);
+// 			return (path.full_path);
+// 		}
+// 		free(path.full_path);
+// 	}
+// 	free_2d(path.sp_cmd);
+// 	free_2d(path.sp_env);
+// 	return (NULL);
+// }
+
 char	*path_finder(char *full_cmd, t_env *env)
 {
-	t_path	path;
+	t_path	p;
 	int		i;
 
-	if (is_there_a_slash(full_cmd))
-		return (full_cmd);
-	path.sp_env = split_env_path(env);
-	path.sp_cmd = ft_split(full_cmd, ' ');
+	p.sp_env = split_env_path(env);
+	p.sp_cmd = ft_split(full_cmd, ' ');
 	i = -1;
-	while (path.sp_env[++i])
+	while (p.sp_env[++i])
 	{
-		path.full_path = ft_strjoin_null(path.sp_env[i], "/", NULL);
-		path.full_path = \
-			ft_strjoin_null(path.full_path, path.sp_cmd[0], path.full_path);
-		if (access(path.full_path, F_OK) == 0)
+		p.full_path = ft_strjoin_null(p.sp_env[i], "/", NULL);
+		p.full_path = \
+			ft_strjoin_null(p.full_path, p.sp_cmd[0], p.full_path);
+		if (access(p.full_path, F_OK) == 0)
 		{
-			free_2d(path.sp_cmd);
-			free_2d(path.sp_env);
-			return (path.full_path);
+			free_2d(p.sp_cmd);
+			free_2d(p.sp_env);
+			return (p.full_path);
 		}
-		free(path.full_path);
+		free(p.full_path);
 	}
-	free_2d(path.sp_cmd);
-	free_2d(path.sp_env);
+	free_2d(p.sp_cmd);
+	free_2d(p.sp_env);
 	return (NULL);
 }

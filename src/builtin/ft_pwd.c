@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 19:42:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 16:55:16 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/09 20:07:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 int	ft_pwd(void)
 {
-	char	*cwd;
+	char	*dir;
 
-	cwd = NULL;
-	cwd = getcwd(cwd, 0);
-	if (!cwd)
+	dir = NULL;
+	dir = getcwd(dir, 0);
+	if (!dir)
 	{
 		printf("minishell: pwd: \
 An error occurred in the getcwd() function call.\n");
 		return (1);
 	}
-	printf("%s\n", cwd);
-	free(cwd);
+	printf("%s\n", dir);
+	free(dir);
 	return (0);
 }
