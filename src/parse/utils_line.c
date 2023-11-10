@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 17:08:46 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 02:14:36 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void	free_data(t_data *d)
 	while (d)
 	{
 		tmp = d->next;
-		free(d->content);
+		if (d->content)
+			free(d->content);
 		free(d);
 		d = tmp;
 	}

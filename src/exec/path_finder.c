@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 23:42:16 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 02:13:16 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	**split_env_path(t_env *env)
 			free(tmp);
 			tmp = ft_strdup(env->content + 5);
 			ret = ft_split(tmp, ':');
-			free(tmp);
+			if (tmp)
+				free(tmp);
 			return (ret);
 		}
 		env = env->next;
@@ -114,22 +115,20 @@ char	*path_finder(char *full_cmd, t_env *env)
 	int		i;
 
 	p.sp_env = split_env_path(env);
-	p.sp_cmd = ft_split(full_cmd, ' ');
 	i = -1;
 	while (p.sp_env[++i])
 	{
 		p.full_path = ft_strjoin_null(p.sp_env[i], "/", NULL);
 		p.full_path = \
-			ft_strjoin_null(p.full_path, p.sp_cmd[0], p.full_path);
+			ft_strjoin_null(p.full_path, full_cmd, p.full_path);
 		if (access(p.full_path, F_OK) == 0)
 		{
-			free_2d(p.sp_cmd);
 			free_2d(p.sp_env);
 			return (p.full_path);
 		}
-		free(p.full_path);
+		if (p.full_path)
+			free(p.full_path);
 	}
-	free_2d(p.sp_cmd);
 	free_2d(p.sp_env);
 	return (NULL);
 }

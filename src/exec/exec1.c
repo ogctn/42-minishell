@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 23:44:46 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 13:28:19 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**env_to_double_arr(t_env *env)
 	return (ret);
 }
 
-int	get_reason(char *path)
+void	get_reason(char *path)
 {
 	struct stat	buffer;
 
@@ -67,6 +67,7 @@ int	get_reason(char *path)
 			printf("minishell: %s: command not found\n", path);
 		else if (is_there_a_slash(path))
 			printf("minishell: %s: No such file or directory\n", path);
+		return ;
 	}
 	else
 	{
@@ -77,42 +78,12 @@ int	get_reason(char *path)
 			else if (!(buffer.st_mode & S_IXUSR))
 				printf("minishell: cd: %s: Permission denied\n", path);
 			else
-				return (0);
+				return ;
 		}
 		else
 			printf("minishell: cd: %s: No such file or directory\n", path);
-		return (1);
 	}
-	return (0);
 }
-
-// int	exec_simple(t_data *d)
-// {
-// 	char	**args;
-// 	pid_t	pid;
-// 	char	*cmd_path;
-
-// 	if (is_buitin(d->content))
-// 		return (exec_builtin(d));
-// 	else
-// 	{
-// 		pid = fork();
-// 		if (pid == 0)
-// 		{
-// 			args = data_to_double_arr(d);
-// 			cmd_path = path_finder(args[0], d->env);
-// 			if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
-//  			{
-// 				if (file_or_dir_exists(cmd_path, 2))
-// 					return (cd_err_is_file_or_permission(cmd_path));
-// 				exit (1);
-// 			}
-// 		}
-// 		else
-// 			wait(NULL);
-// 		return (0);
-// 	}
-// }
 
 int	exec_simple(t_data *d)
 {
@@ -120,32 +91,29 @@ int	exec_simple(t_data *d)
 	char	*cmd_path;
 	pid_t	pid;
 
-	if (is_buitin(d->content))
+	if (is_builtin(d->content))
 		return (exec_builtin(d));
-	else
+	pid = fork();
+	if (pid == 0)
 	{
-		pid = fork();
-		if (pid == 0)
+		args = data_to_double_arr(d);
+		cmd_path = path_finder(d->content, d->env);
+		if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
 		{
-			args = data_to_double_arr(d);
-			cmd_path = d->content;
-			if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
+			if (access(d->content, F_OK) == 0)
 			{
-				cmd_path = path_finder(args[0], d->env);
-				if (cmd_path)
-				{
-					if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
-						get_reason(cmd_path);
-				}
-				else
-					get_reason(cmd_path);
-				exit(1);
+				cmd_path = d->content;
+				if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
+					get_reason(d->content);
 			}
+			else
+				get_reason(d->content);
+			exit(1);
 		}
-		else
-			wait(NULL);
-		return (0);
 	}
+	else
+		wait(NULL);
+	return (0);
 }
 
 int	executer(t_data *data)

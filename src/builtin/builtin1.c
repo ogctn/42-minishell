@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:03:49 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:08:06 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 13:28:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_strcmp(char *s1, char *s2)
 		return (-s2[i]);
 }
 
-int	is_buitin(char	*cmd)
+int	is_builtin(char	*cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);

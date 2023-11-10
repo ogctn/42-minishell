@@ -9,3 +9,12 @@ type numaraları
 4-> <<
 5-> >
 6-> >>
+
+
+Düzenlenecek:
+	Parse: 
+			❍Girdi boyunca quote içinde olmayan boşluklar görmezden gelinir.
+			eğer line'ın sonuna ulaşılırsa token ayrılmaz
+			örnek;____________________________________  -> ayırma işlemi yapma
+	
+	

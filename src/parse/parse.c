@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/10 01:11:34 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 01:59:28 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int ft_parser(char *str,t_data **total_line, t_env *env_list)
 	init_env_all_data_nodes(total_line, env_list);
 	env_variable(total_line, env_list);
 	delete_quotes(total_line);
-	printit(*total_line);
+	//printit(*total_line);
 	add_history(str);
 	return(operator_err_control(*total_line));
 }

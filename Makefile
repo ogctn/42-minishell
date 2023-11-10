@@ -63,7 +63,7 @@ clean:
 fclean	:	clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
-	$(RM) $(RDLINE)
+#	$(RM) $(RDLINE)
 
 re: fclean all
 

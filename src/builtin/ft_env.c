@@ -6,11 +6,39 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:05:22 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 13:40:15 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	are_valid_env_parameters(t_data *d)
+{
+	char	*str;
+	int		i;
+
+	d = d->next;
+	if (!d)
+		return (1);
+	str = d->content;
+	if (str[0] == '-' && str[1])
+	{
+		printf("Illegal option -- %c\n", str[0]);
+		printf("usage: env [name=value ...] [name=value ...] ...\n");
+		return (0);
+	}
+	while (d)
+	{
+		str = d->content;
+		if (!ft_strchr(str, '='))
+		{
+			printf("env: --%s: No such file or directory\n", str);
+			return (0);
+		}
+		d = d->next;
+	}
+	return (1);
+}
 
 void	print_env(t_env *env_list)
 {
@@ -24,13 +52,16 @@ void	print_env(t_env *env_list)
 
 int	ft_env(t_data *data)
 {
-	if (data->next)
+	if (are_valid_env_parameters(data))
 	{
-		printf("minishell: env: %s: \
-No such file or directory\n", data->next->content);
-		return (127);
+		if (data->env)
+			print_env(data->env);
+		while (data->next)
+		{
+			data = data->next;
+			printf("%s\n", data->content);
+		}
+		return (0);
 	}
-	if (data->env)
-		print_env(data->env);
-	return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/10 00:43:33 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/10 13:30:35 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <readline/history.h>
 # include <sys/stat.h>
 
-# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
+# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
 
 typedef struct s_env
 {
@@ -41,11 +41,9 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
-
 typedef struct s_path
 {
 	char	**sp_env;
-	char	**sp_cmd;
 	char	*full_path;
 }			t_path;
 
@@ -72,8 +70,7 @@ int 	is_quote(char s);
 int 	in_quote(char *s);
 
 void	mini_clear(t_env *env);
-void	suppress_output(void);
-void	sig_handler(int signal);
+void	get_signals(void);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
@@ -81,7 +78,7 @@ int		is_there_a_slash(char *str);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
-int		is_buitin(char	*cmd);
+int		is_builtin(char	*cmd);
 int		file_or_dir_exists(char *path, int flag_case);
 
 char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable);
@@ -102,6 +99,8 @@ int		exec_simple(t_data *d);
 void	count_char(char *read_line, char c, int *counter);
 int		executer(t_data *data);
 int		exec_builtin(t_data *data);
+
+void	printit(t_data *d);
 
 int		ft_echo(t_data *d);
 void	print_env(t_env *env_list);
