@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 06:57:13 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/11 19:16:29 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_valid_unset_parameter(char *content)
 {
 	int	i;
 
-	if (!content[0] || (!ft_isalpha(content[0]) && content[0] != '_'))
+	if (!ft_isalpha(content[0]) && content[0] != '_')
 	{
 		printf("minishell: unset: `%s': not a valid identifier\n", content);
 		return (0);
@@ -50,7 +50,9 @@ int	unset_single_env(t_data *data, char *target)
 			if (prev)
 				prev->next = tmp->next;
 			else
-				data->env = data->env->next;
+			{
+				tmp = data->env->next;
+			}
 			free(to_find);
 			return (0);
 		}

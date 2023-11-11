@@ -8,6 +8,7 @@
 		"termios.h": "c",
 		"history.h": "c",
 		"rltypedefs.h": "c",
-		"stdlib.h": "c"
+		"stdlib.h": "c",
+		"sstream": "c"
 	}
 }
