@@ -48,30 +48,17 @@ void ft_split_2(char *str, t_data **total_line)
 
 }
 
-void	printit(t_data *d)
-{
-	int i = 0;
-	while (d)
-	{
-		printf("\neleman:%d --->\t%s\n", i, d->content);
-		printf("type: %d\n", d->type);
-		d = d->next;
-		i++;
-	}
-}
 
-int ft_parser(char *str,t_data **total_line, char **env)
+void ft_parser(char *str,t_data **total_line)
 {
 	char **ptr;
 	int i;
+
 	i = -1;
 	ptr = ft_spc_split(str);
 	while(ptr[++i])
 		ft_split_2(ptr[i],total_line);
 	free_2d(ptr);
-	assign_type(total_line);
-	env_variable(total_line, env);
-	printit(*total_line);
-	delete_quotes(total_line);
-	return(operator_err_control(*total_line));
 }
+
+

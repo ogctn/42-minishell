@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 13:17:47 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 13:04:41 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define  MINISHELL_H
@@ -31,13 +30,6 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
-typedef struct s_table
-{
-	char			**command;
-	int				type;
-	struct s_data	*next;
-}	t_table;
-
 typedef struct s_path
 {
 	char	**sp_env;
@@ -45,24 +37,13 @@ typedef struct s_path
 	char	*full_path;
 }			t_path;
 
-int 	ft_parser(char *str,t_data **total_line, char **env);
+void 	ft_parser(char *str,t_data **total_line);
 char	**ft_spc_split(char const *s);
 void 	ft_split_2(char *str, t_data **total_line);
-
-void 	assign_type(t_data **total_line);
-int		which_operator(char *a);
-int		operator_err_control(t_data *data);
-
-void 	env_variable(t_data **data,char **env);
-char 	*re_create_content(char *str,char **env);
-
-void 	delete_quotes(t_data **data);
-
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
 void 	list_add(char *str, t_data **total_line);
 int		ft_lstsize(t_data *lst);
-
 int 	is_operate(char s);
 int 	is_quote(char s);
 int 	in_quote(char *s);
@@ -72,6 +53,7 @@ void	sig_handler(int signal);
 
 int		check_if_null(char *str);
 int		is_missing_quoted(char *str);
+int		operator_control(t_data **total_line);
 void	free_data(t_data *d);
 
 int		ft_strcmp(char *s1, char *s2);
@@ -86,9 +68,6 @@ char	**list_to_double_arr(t_data *d);
 void	exec_simple(t_data *d, char **env);
 void	count_char(char *read_line, char c, int *counter);
 int		executer(t_data *data, char **env);
-int		exec_builtin(t_data *data, char **env);
-
-int		ft_echo(t_data *d);
 
 
 #endif

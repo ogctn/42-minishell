@@ -15,10 +15,6 @@ SRCS		=	$(SRC_PATH)main.c \
 				$(SRC_PATH)utils_line.c \
 				$(SRC_PATH)path_finder.c \
 				$(SRC_PATH)exec1.c \
-				$(SRC_PATH)ft_echo.c \
-				$(SRC_PATH)assign_type.c \
-				$(SRC_PATH)dollar_sign.c \
-				$(SRC_PATH)delete_quotes.c \
 
 OBJ 		=	$(SRCS:.c=.o)
 

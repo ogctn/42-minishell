@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/01 13:17:21 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/01 13:13:11 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	printit(t_data *d)
+{
+	int i = 0;
+	while (d)
+	{
+		printf("\neleman:%d --->\t%s\n", i, d->content);
+		if(!(d->content) || !(*(d->content)))
+			printf("selam");
+		//printf("type: %d\n", d->type);
+		d = d->next;
+		i++;
+	}
+}
 
 int main(int ac, char **av, char **env)
 {
@@ -31,12 +45,15 @@ int main(int ac, char **av, char **env)
 			exit(1);
 		data = NULL;
 		if (check_if_null(line) || is_missing_quoted(line)) // to check if there are missing quotes or null
-			continue ;// to continue the loop if there are missing quotes or null
+			continue ;
+		ft_parser(line, &data);
+		printit(data);	// to print the linked list
+		// to continue the loop if there are missing quotes or null
 		add_history(line);
-		if(ft_parser(line, &data,env))
-			executer(data, env); // to execute the command
+		operator_control(&data);
+		executer(data, env); // to execute the command
 		free_data(data); // to free the linked list
 		free(line); // to free the line from the previous iteration
 	}
-	return (0); 
+	return (0);
 }
