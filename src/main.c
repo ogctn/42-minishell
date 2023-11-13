@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 17:07:09 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:00:12 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ void	main_loop(t_env *env_list)
 		if (check_if_null(line) || is_missing_quoted(line))
 			continue ;
 		ft_parser(line, &data, env_list);
-		printit(data);
+		//printit(data);
 		//redir_out(data);
-	
-		redir_in(&data);
 
 
-		printit(data);
+		//redir_in(&data);
+
+
+		//printit(data);
 		//executer(data);
 		free(line);
 		free_data(data);

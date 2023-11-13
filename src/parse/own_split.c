@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   own_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 02:31:22 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 19:04:18 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	ft_counter(char const	*s)
 {
 	int		i;
 	int		count;
+	char	c;
 
 	i = 0;
 	count = 0;
@@ -23,11 +24,13 @@ static int	ft_counter(char const	*s)
 	{
 		if (is_quote(s[i]))
 		{
-			while( s[i+1] && s[i+1]!=s[i] )
+			c = s[i];
+			i++;
+			while( s[i] && s[i]!=c )
 				i++;
 			count++;
 		}
-		else if (s[i] == ' ' && s[i+1] != ' ' && !is_quote(s[i + 1]))
+		else if (s[i] == ' ' && s[i+1] && s[i+1] != ' ' && !is_quote(s[i + 1]))
 			count++;
 		i++;
 	}
@@ -82,7 +85,7 @@ static char	**ft_string(char const *s, char **ptr)
 		while (s[start] == ' ')
 			start++;
 		if (!s[start])
-			return(0); 
+			break;
 		end = start;
 		if(s[start] == '"' || s[start] == '\'')
 			ft_update(s,start,&end);

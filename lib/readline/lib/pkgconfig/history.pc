@@ -1,4 +1,4 @@
-prefix=/Users/ogcetin/Desktop/merge_dir/main_branch/lib/readline
+prefix=/Users/sgundogd/Desktop/oguzson/lib/readline
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

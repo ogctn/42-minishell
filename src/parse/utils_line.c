@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 16:34:49 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 18:29:37 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,19 @@ int operator_err_control(t_data *data)
 
 	tmp_1 = data;
 
+	if(tmp_1->type == 1)
+		printf("minishell$ syntax error near unexpected token '%s'\n",tmp_1->content);
+	else if(ft_last(tmp_1)->type <= 5 && ft_last(tmp_1)->type >= 1)
+		printf("minishell$ syntax error near unexpected token '%s'\n",ft_last(tmp_1)->content);
+
 	while (tmp_1)
 	{
-		if(is_operate(*(tmp_1->content)))
+		if(tmp_1->type != 0)
 		{
 			tmp_2=tmp_1->next;
-			if(!ft_strncmp(tmp_1->content,"||",2) || (tmp_2 && is_operate(*(tmp_2->content))))
+			if(!ft_strncmp(tmp_1->content,"||",2) || (tmp_2 && tmp_2->type != 0))
 			{
-				printf("minishell$ syntax error near %s\n",tmp_1->content);
+				printf("minishell$ syntax error near unexpected token '%s'\n",tmp_1->content);
 				return(0);
 			}
 		}
