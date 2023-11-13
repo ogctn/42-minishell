@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 02:16:02 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 20:41:15 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**data_to_double_arr(t_data *d)
 	i = 0;
 	ret = ft_calloc(sizeof(char *), (ft_lstsize(d) + 1));
 	ret[ft_lstsize(d)] = NULL;
-	while (d && !(d->content[0] == '|' && d->content[1]))
+	while (d && d->type != 1)
 	{
 		ret[i++] = ft_strdup(d->content);
 		d = d->next;
@@ -116,15 +116,32 @@ int	exec_simple(t_data *d)
 	return (0);
 }
 
+void	update_pipeline(t_data **d)
+{
+	t_data	*tmp;
+
+	tmp = *d;
+	while (tmp && tmp->type != 1)
+		tmp = tmp->next;
+	if (tmp)
+	{
+		tmp = tmp->next;
+		while (*d && *d != tmp && (*d)->type != 1)
+			*d = (*d)->next;
+		*d = (*d)->next;
+	}
+}
+
 int	executer(t_data *data)
 {
 	int		pipe_count;
 	//int		redir_count;
 	//int		redir_type;
 
-	pipe_count = 0;
-	//count_char(read_line, '|', &pipe_count);
-	if (pipe_count == 0)
-			return (exec_simple(data));
+	
+	//exec_simple(data);
+	printit(data);
+	//update_pipeline(&data);
+
 	return (0);
 }
