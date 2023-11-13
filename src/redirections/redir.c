@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 17:06:45 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 22:46:58 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,54 +14,53 @@
 
 void    unlink_node_pair(t_data **head, t_data *first_pair)
 {
-    t_data  *right_side;
-    t_data  *second_pair;
-    t_data  *prev_node;
+	t_data  *right_side;
+	t_data  *second_pair;
+	t_data  *prev_node;
 
-    second_pair = first_pair->next;
-    right_side = first_pair->next->next;
-    free(second_pair->content);
-    free(first_pair->content);
-    free(second_pair);
-    if (*head == first_pair)
-        *head = right_side;
-    else
-    {
-        prev_node = *head;
-        while (prev_node && prev_node->next != first_pair)
-            prev_node = prev_node->next;
-        if (prev_node)
-            prev_node->next = right_side;
-    }
-    free(first_pair);
+	second_pair = first_pair->next;
+	right_side = first_pair->next->next;
+	free(second_pair->content);
+	free(first_pair->content);
+	free(second_pair);
+	if (*head == first_pair)
+		*head = right_side;
+	else
+	{
+		prev_node = *head;
+		while (prev_node && prev_node->next != first_pair)
+			prev_node = prev_node->next;
+		if (prev_node)
+			prev_node->next = right_side;
+	}
+	free(first_pair);
 }
 
-int redir_in(t_data **d)
+int redir_out(t_data **d)
 {
-    t_data  *tmp;
-    t_data  *to_delete;
-    int fd;
-
-    tmp = *d;
-    while (tmp && tmp->type != 1)
-    {
-        if (tmp->type == 4 || tmp->type == 5)
-        {
-            if (tmp->type == 4)
-                fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_TRUNC, 0644);
-            if (tmp->type == 5)
-                fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_APPEND, 0644);
-            dup2(fd, 0);
-            close(fd);
-            to_delete = tmp;
-            tmp = tmp->next->next;
-            unlink_node_pair(d, to_delete);
-            continue;
-        }
-        else
-            tmp = tmp->next;
-    }
-    return 0;
+	t_data  *tmp;
+	t_data  *to_delete;
+	int fd;
+		tmp = *d;
+	while (tmp && tmp->type != 1)
+	{
+		if (tmp->type == 4 || tmp->type == 5)
+		{
+			if (tmp->type == 4)
+				fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+			if (tmp->type == 5)
+				fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_APPEND, 0644);
+			dup2(fd, 0);
+			close(fd);
+			to_delete = tmp;
+			tmp = tmp->next->next;
+			unlink_node_pair(d, to_delete);
+			continue;
+		}
+		else
+			tmp = tmp->next;
+	}
+	return 0;
 }
 
 // int redir_out(t_data **d)

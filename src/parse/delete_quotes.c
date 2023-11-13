@@ -25,6 +25,7 @@ void re_create_quote(char *str, char **new, int i)
 	{
 		if(is_quote(str[i]))
 		{
+			free(dnm);
 			re_create_quote(str,new,start);
 			return;
 		}
@@ -56,5 +57,4 @@ void delete_quotes(t_data **data)
 		}
 		tmp = tmp->next;
 	}
-	free(new);
 }
