@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:53:52 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:03:09 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:15:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	get_default_env(t_env **env_list, char **env)
 	i = -1;
 	while (env[++i])
 	{
-		new_env = malloc(sizeof(t_env));
+		new_env = ft_calloc(sizeof(t_env), 1);
 		if (!new_env)
 			exit(127);
 		new_env->content = strdup(env[i]);

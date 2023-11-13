@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 02:14:36 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 16:34:49 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,12 @@ void	free_data(t_data *d)
 	while (d)
 	{
 		tmp = d->next;
-		if (d->content)
+		if(d->content)
 			free(d->content);
 		free(d);
 		d = tmp;
 	}
 }
-
 int operator_err_control(t_data *data)
 {
 	t_data *tmp_1;
@@ -88,7 +87,7 @@ int operator_err_control(t_data *data)
 void	mini_clear(t_env *env)
 {
 	pid_t	pid;
-	char	*clear_path; 
+	char	*clear_path;
 	char	*envp[2];
 
 	pid = fork();

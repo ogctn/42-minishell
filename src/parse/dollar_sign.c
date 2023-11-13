@@ -2,28 +2,28 @@
 
 static char is_editable(char *str, char c)
 {
-    int i;
-    char a;
+	int i;
+	char a;
 
-    i = 0;
-    while(str[i])
-    {
-        if(is_quote(str[i]))
-        {
-            a = str[i];
-            i++;
-            while (str[i] && str[i] != a)
-            {
-                if(str[i] == c && a != '\'' && str[i+1] && (ft_isalnum(str[i+1]) || str[i+1] == '_'))
-                    return(i);
-                i++;    
-            }  
-        }
-        else if(str[i] == c && str[i+1] && (ft_isalnum(str[i+1]) || str[i+1] == '_'))
-            return(i);
-        i++;
-    }
-    return(-1);
+	i = 0;
+	while(str[i])
+	{
+		if(is_quote(str[i]))
+		{
+			a = str[i];
+			i++;
+			while (str[i] && str[i] != a)
+			{
+				if(str[i] == c && a != '\'' && str[i+1] && (ft_isalnum(str[i+1]) || str[i+1] == '_'))
+					return(i);
+				i++;
+			}
+		}
+		else if(str[i] == c && str[i+1] && (ft_isalnum(str[i+1]) || str[i+1] == '_'))
+			return(i);
+		i++;
+	}
+	return(-1);
 
 }
 
@@ -37,52 +37,60 @@ static int find_after_dolar(char *str)
 }
 static int is_env_var(char *str, t_env *env)
 {
-    int i;
-    char *new;
+	int i;
+	char *new;
 
-    if (!env)
-        return(0);
-    new = ft_strjoin(str,"=");
-
-    i = 0;
-    while(env)
-    {
-        if(!ft_strncmp(new,env->content,ft_strlen(new)))
-            return(1);
-        env = env->next;
-    }
-    return(0);
+	if (!env)
+		return(0);
+	new = ft_strjoin(str,"=");
+	i = 0;
+	while(env)
+	{
+		if(!ft_strncmp(new,env->content,ft_strlen(new)))
+		{
+			free(new);
+			return(1);
+		}
+		env = env->next;
+	}
+	free(new);
+	return(0);
 }
 
 char *re_create_content(char *str,t_env *env)
 {
-    char *new_str;
-    char *var;
-    int i = 0;
-    int start;
+	char *new_str;
+	char *var;
+	int i = 0;
+	int start;
+	char *a;
 	start = find_after_dolar(str);
-    new_str = ft_substr(str,0,is_editable(str,'$'));
-    var = ft_substr(str,is_editable(str,'$')+1,start-is_editable(str,'$')-1);
+	new_str = ft_substr(str,0,is_editable(str,'$'));
+	var = ft_substr(str,is_editable(str,'$')+1,start-is_editable(str,'$')-1);
 	if(is_env_var(var,env))
-        new_str = ft_strjoin(new_str,get_env_value(env, var));
-	new_str = ft_strjoin(new_str,ft_substr(str,start,ft_strlen(str)-start));
-    return(new_str);
+		new_str = ft_strjoin_null(new_str, get_env_value(env, var), new_str);
+	a = ft_substr(str,start,ft_strlen(str)-start);
+	new_str = ft_strjoin_null(new_str,a,new_str);
+	free(a);
+	free(var);
+	return(new_str);
 }
 
 void env_variable(t_data **data,t_env *env)
 {
-    char *a;
-    t_data *tmp = (*data);
-    while(tmp)
-    {
-        if(is_editable(tmp->content,'$') != -1)
-        {
-            a = re_create_content(tmp->content,env);
-            free(tmp->content);
-            tmp->content = a;
-        }
+	char *a;
+	if (!(*data))
+		return;
+	t_data *tmp = (*data);
+	while(tmp)
+	{
+		if(is_editable(tmp->content,'$') != -1)
+		{
+			a = re_create_content(tmp->content,env);
+			free(tmp->content);
+			tmp->content = a;
+		}
 		else
-            tmp = tmp->next;
-    
-    }
+			tmp = tmp->next;
+	}
 }

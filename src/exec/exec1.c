@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 13:28:19 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:16:02 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	**data_to_double_arr(t_data *d)
 	int		i;
 
 	i = 0;
-	ret = malloc(sizeof(char *) * (ft_lstsize(d) + 1));
+	ret = ft_calloc(sizeof(char *), (ft_lstsize(d) + 1));
 	ret[ft_lstsize(d)] = NULL;
 	while (d && !(d->content[0] == '|' && d->content[1]))
 	{
@@ -47,7 +47,7 @@ char	**env_to_double_arr(t_env *env)
 	int		i;
 
 	i = 0;
-	ret = malloc(sizeof(char *) * (env_size(env) + 1));
+	ret = ft_calloc(sizeof(char *), (env_size(env) + 1));
 	ret[env_size(env)] = NULL;
 	while (env)
 	{

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:07:46 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:20:22 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_env	*node_new(void *content)
 {
 	t_env	*element;
 
-	element = malloc(sizeof(t_env));
+	element = ft_calloc(sizeof(t_env), 1);
 	if (!element)
 		return (NULL);
 	element->content = content;
@@ -55,6 +55,8 @@ void	init_env_all_data_nodes(t_data **d, t_env *env_list)
 {
 	t_data	*iter;
 
+	if (!d || !*d)
+		return ;
 	iter = *d;
 	while (iter)
 	{
@@ -72,7 +74,7 @@ void	dup_env_list(t_env **dest_env, t_env *src_env)
 	last_env = NULL;
 	while (src_env)
 	{
-		new_env = malloc(sizeof(t_env));
+		new_env = ft_calloc(sizeof(t_env), 1);
 		if (!new_env)
 			return ;
 		new_env->content = strdup(src_env->content);

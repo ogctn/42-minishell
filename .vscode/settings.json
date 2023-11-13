@@ -9,6 +9,8 @@
 		"history.h": "c",
 		"rltypedefs.h": "c",
 		"stdlib.h": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"locale": "c",
+		"iterator": "c"
 	}
 }

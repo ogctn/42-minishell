@@ -1,6 +1,6 @@
 NAME	=	minishell
 CC		=	gcc
-FLAGS	=	#-Wall -Wextra -Werror -g -fsanitize=address
+FLAGS	=	#-g -fsanitize=address#-Wall -Wextra -Werror  
 RM		=	rm -rf
 LIBFT	=	lib/libft/libft.a
 RDLINE	=	lib/readline
@@ -26,7 +26,8 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/builtin/ft_exit.c \
 			$(SRC_DIR)/builtin/ft_export.c \
 			$(SRC_DIR)/builtin/ft_pwd.c \
-			$(SRC_DIR)/builtin/ft_unset.c
+			$(SRC_DIR)/builtin/ft_unset.c \
+			$(SRC_DIR)/redirections/redir.c
 
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
@@ -43,6 +44,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/parse
 	@mkdir -p $(OBJ_DIR)/exec
 	@mkdir -p $(OBJ_DIR)/builtin
+	@mkdir -p $(OBJ_DIR)/redirections
 
 $(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@ -I${PWD}/lib/readline/include/

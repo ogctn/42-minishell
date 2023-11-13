@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/10 13:30:35 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 15:02:28 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <fcntl.h>
 # include <sys/stat.h>
 
 # define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
@@ -33,6 +34,14 @@ typedef struct s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct s_redir
+{
+	int		out_fd;
+	int		out_flag;
+	char	*input_name;
+	int		in_flag;
+}	t_redir;
+
 typedef struct s_data
 {
 	char			*content;
@@ -40,6 +49,7 @@ typedef struct s_data
 	t_env			*env;
 	struct s_data	*next;
 }					t_data;
+
 
 typedef struct s_path
 {
@@ -114,5 +124,7 @@ char	*get_env_value(t_env *env, char *key);
 void	set_env_value(t_env *env, char *key, char *value);
 int		ft_cd(t_data *d);
 int		ft_export(t_data *d);
+
+int		redir_in(t_data **d);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/09 17:08:48 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:16:22 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,9 @@ t_data	*ft_create(char *str)
 {
 	t_data	*new;
 
-	new = malloc(sizeof(t_data));
+	new = ft_calloc(sizeof(t_data), 1);
 	new->content = str;
 	new->next = NULL;
-	new->type = 0;
 	return (new);
 }
 

@@ -3,7 +3,7 @@
 int which_operator(char *a)
 {
 	if(!ft_strcmp(a,"|"))
-		return(2);
+		return(1);
 	else if(!ft_strcmp(a,"<"))
 		return(2);
 	else if(!ft_strcmp(a,"<<"))
@@ -11,9 +11,9 @@ int which_operator(char *a)
 	else if(!ft_strcmp(a,">"))
 		return(4);
 	else if(!ft_strcmp(a,">>"))
-		return (6);
+		return (5);
 	else
-		return(2);
+		return(0);
 }
 
 void assign_type(t_data **total_line)
@@ -27,16 +27,9 @@ void assign_type(t_data **total_line)
 		return;
 	if(is_operate(*(tmp->content)))
 		tmp->type = which_operator(next_data->content);
-	else
-		tmp->type = 0;
 	while(next_data)
     {
-        if(is_operate(*(next_data->content)))
-			next_data->type = which_operator(next_data->content);
-		else if(is_operate(*(tmp->content)))
-			next_data->type = 0;
-		else
-			next_data->type = 1;
+		next_data->type = which_operator(next_data->content);
 		next_data = next_data->next;
         tmp = tmp->next;
     }

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/09 17:08:37 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:31:22 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static char	**ft_string(char const *s, char **ptr)
 	{
 		while (s[start] == ' ')
 			start++;
+		if (!s[start])
+			return(0); 
 		end = start;
 		if(s[start] == '"' || s[start] == '\'')
 			ft_update(s,start,&end);
@@ -114,7 +116,7 @@ char	**ft_spc_split(char const *s)
 		ptr[0] = 0;
 		return (ptr);
 	}
-	ptr = (char **)malloc(sizeof(char *) * (ft_counter(s) + 1));
+	ptr = (char **)ft_calloc(sizeof(char *), (ft_counter(s) + 1));
 	if (!ptr)
 		return (NULL);
 	return (ft_string(s,ptr));

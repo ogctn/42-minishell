@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 02:13:16 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 02:16:45 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable)
 	if (!s1 || !s2)
 		return (0);
 	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
-	ret = (char *)malloc(len * sizeof(char));
+	ret = (char *)ft_calloc(len , sizeof(char));
 	if (!ret)
 		return (0);
 	ft_strlcpy(ret, s1, ft_strlen(s1) + 1);
