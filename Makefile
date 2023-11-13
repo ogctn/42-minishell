@@ -65,9 +65,11 @@ clean:
 fclean	:	clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
-	#$(RM) $(RDLINE)
+	$(RM) $(RDLINE)
 
 re: fclean all
+
+git_me: install_readline $(NAME)
 
 tn: all clean
 	./$(NAME)
