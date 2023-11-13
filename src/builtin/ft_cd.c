@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:04:38 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 22:52:50 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_there_home_in_env(t_env *env)
 
 int	are_valid_cd_params(t_data *d)
 {
-	if (d->next)
+	if (d->next && d->next->type != 1)
 	{
 		if (!d->next->content)
 			return (0);
@@ -63,7 +63,7 @@ static char	*arg_special_chars(t_data *d)
 {
 	char	*path;
 
-	if (d->next)
+	if (d->next && d->next->type != 1)
 	{
 		if (d->next->content[0] == '-')
 		{
@@ -78,7 +78,7 @@ static char	*arg_special_chars(t_data *d)
 		else
 			path = d->next->content;
 	}
-	else
+	else if (!d->next || d->next->type == 1)
 		path = get_env_value(d->env, "HOME");
 	return (path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 22:44:25 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/13 23:12:56 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,9 @@ void	update_pipeline(t_data **d)
 
 int	executer(t_data *data)
 {
-	int		pipe_count;
-	//int		redir_count;
-	//int		redir_type;
-
-
-	//exec_simple(data);
-	//update_pipeline(&data);
+	redir_out(&data);
+	exec_simple(data);
+	update_pipeline(&data);
 
 	return (0);
 }

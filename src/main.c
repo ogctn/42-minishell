@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 20:25:16 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 22:49:07 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ void	main_loop(t_env *env_list)
 		if (check_if_null(line) || is_missing_quoted(line))
 			continue ;
 		ft_parser(line, &data, env_list);
-		//printit(data);
-		//redir_out(data);
-
-
-		//redir_in(&data);
-
-
-		//printit(data);
-		//
 		executer(data);
 		free(line);
 		free_data(data);

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 13:40:15 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 22:54:57 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	are_valid_env_parameters(t_data *d)
 	int		i;
 
 	d = d->next;
-	if (!d)
+	if (!d || d->type == 1)
 		return (1);
 	str = d->content;
 	if (str[0] == '-' && str[1])
@@ -27,7 +27,7 @@ int	are_valid_env_parameters(t_data *d)
 		printf("usage: env [name=value ...] [name=value ...] ...\n");
 		return (0);
 	}
-	while (d)
+	while (d && d->type != 1)
 	{
 		str = d->content;
 		if (!ft_strchr(str, '='))
@@ -56,7 +56,7 @@ int	ft_env(t_data *data)
 	{
 		if (data->env)
 			print_env(data->env);
-		while (data->next)
+		while (data->next && data->next->type != 1)
 		{
 			data = data->next;
 			printf("%s\n", data->content);

@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/09 20:05:45 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 22:56:31 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,19 +162,19 @@ int	is_valid_export_parameter(char *str)
 
 int	ft_export(t_data *d)
 {
-	if (!d->next)
+	if (!d->next || d->next->type == 1)
 	{
 		print_export(d->env);
 		return (0);
 	}
 	d = d->next;
-	if (d && d->content[0] == '-' && d->content[1])
+	if (d && d->content[0] == '-' && d->content[1] && d->type != 1)
 	{
 		printf("minishell: export: %s: [tnoyan] there are \
 no parameter option!\n", d->content);
 		d = d->next;
 	}
-	while (d && !(is_operate(d->content[0]) && !d->content[1]))
+	while (d && d->type != 1)
 	{
 		if (is_valid_export_parameter(d->content))
 			add_to_env(&d->env, ft_strdup(d->content));

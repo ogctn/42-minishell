@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/11 19:16:29 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/13 23:12:31 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,15 @@ int	unset_single_env(t_data *data, char *target)
 				prev->next = tmp->next;
 			else
 			{
-				tmp = data->env->next;
+				free(tmp->content);
+				data->env = data->env->next;
 			}
-			free(to_find);
-			return (0);
+			return (free(to_find), 0);
 		}
 		prev = tmp;
 		tmp = tmp->next;
-	}
-	free(to_find);
-	return (1);
+	
+	return (free(to_find), 1);
 }
 
 int	ft_unset(t_data *d)
@@ -72,7 +71,7 @@ int	ft_unset(t_data *d)
 no parameter option!\n", d->content);
 		d = d->next;
 	}
-	while (d && !(is_operate(d->content[0]) && !d->content[1]))
+	while (d && d->type != 1)
 	{
 		if (is_valid_unset_parameter(d->content))
 			unset_single_env(d, d->content);
