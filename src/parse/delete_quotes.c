@@ -4,17 +4,21 @@ void re_create_quote(char *str, char **new, int i)
 {
 	int start;
 	char a;
+	char *dnm;
 
 	start = i;
 	while(str[i] && !is_quote(str[i]))
-	    i++;
-	(*new) = ft_strjoin_null((*new), ft_substr(str,start,i-start),(*new));
+		i++;
+	dnm = ft_substr(str,start,i-start);
+	(*new) = ft_strjoin_null((*new), dnm,(*new));
 	a = str[i];
 	i++;
 	start = i;
 	while (str[i] && str[i] != a)
-	    i++;
-	*new = ft_strjoin_null(*new, ft_substr(str,start,i-start),(*new));
+		i++;
+	free(dnm);
+	dnm = ft_substr(str,start,i-start);
+	(*new) = ft_strjoin_null((*new),dnm, (*new));
 	i++;
 	start = i;
 	while (str[i])
@@ -26,7 +30,10 @@ void re_create_quote(char *str, char **new, int i)
 		}
 		i++;
 	}
-	*new = ft_strjoin_null(*new, ft_substr(str,start,i-start),(*new));
+	free(dnm);
+	dnm = ft_substr(str,start,i-start);
+	(*new) = ft_strjoin_null((*new),dnm, (*new));
+	free(dnm);
 }
 
 
@@ -49,4 +56,5 @@ void delete_quotes(t_data **data)
 		}
 		tmp = tmp->next;
 	}
+	free(new);
 }

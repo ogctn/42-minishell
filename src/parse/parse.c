@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 19:06:50 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/13 22:09:23 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ int ft_parser(char *str,t_data **total_line, t_env *env_list)
 		ft_split_2(ptr[i],total_line);
 	if(!(*total_line))
 		return(free_2d(ptr), 0);
-	//free_2d(ptr);
+	free_2d(ptr);
 	assign_type(total_line);
 	init_env_all_data_nodes(total_line, env_list);
 	env_variable(total_line, env_list);
-	//delete_quotes(total_line);
-	//printit(*total_line);
+	delete_quotes(total_line);
+	printit(*total_line);
 	add_history(str);
 	return(operator_err_control(*total_line));
 }

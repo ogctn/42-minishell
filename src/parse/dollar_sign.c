@@ -79,9 +79,10 @@ char *re_create_content(char *str,t_env *env)
 void env_variable(t_data **data,t_env *env)
 {
 	char *a;
+	t_data *tmp;
 	if (!(*data))
 		return;
-	t_data *tmp = (*data);
+	tmp = (*data);
 	while(tmp)
 	{
 		if(is_editable(tmp->content,'$') != -1)
