@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 13:53:52 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 02:15:21 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 01:38:57 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	get_default_env(t_env **env_list, char **env)
+void	get_default_env(t_env **env_list, char **env, int *ercode)
 {
 	t_env	*new_env;
 	t_env	*last_env;
@@ -27,6 +27,7 @@ void	get_default_env(t_env **env_list, char **env)
 		if (!new_env)
 			exit(127);
 		new_env->content = strdup(env[i]);
+		new_env->exit_code=ercode;
 		new_env->next = NULL;
 		if (*env_list == NULL)
 			*env_list = new_env;

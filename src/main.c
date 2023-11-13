@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 22:49:07 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 01:54:24 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ void	main_loop(t_env *env_list)
 			exit(write(1, "exit\n", 5) - 5);
 		if (check_if_null(line) || is_missing_quoted(line))
 			continue ;
-		ft_parser(line, &data, env_list);
-		executer(data);
+		*(data->env->exit_code) = ft_parser(line, &data, env_list);
+		if(*(data->env->exit_code) == 0)
+			executer(data);
 		free(line);
 		free_data(data);
 	}
@@ -35,11 +36,14 @@ void	main_loop(t_env *env_list)
 int	main(int ac, char **av, char **env)
 {
 	t_env	*env_list;
+	int		ercode;
+
+	ercode = 0;
 
 	if (ac != 1 || av[1] != NULL || !env || !(*env))
 		return (1);
 	get_signals();
-	get_default_env(&env_list, env);
+	get_default_env(&env_list, env, &ercode);
 	mini_clear(env_list);
 	main_loop(env_list);
 	return (0);

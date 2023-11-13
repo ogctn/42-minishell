@@ -12,6 +12,8 @@ int which_operator(char *a)
 		return(4);
 	else if(!ft_strcmp(a,">>"))
 		return (5);
+	else if(!ft_strcmp(a,"||"))
+		return (6);
 	else
 		return(0);
 }

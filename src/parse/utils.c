@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 17:46:35 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 01:10:14 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	ft_lstsize(t_data *lst)
 void list_add(char *str, t_data **total_line)
 {
 	t_data *tmp;
+	if(str && *str)
+	{
 	if((*total_line))
 	{
 		tmp = ft_last(*total_line);
@@ -81,4 +83,5 @@ void list_add(char *str, t_data **total_line)
 	}
 	else
 		(*total_line) = ft_create(str);
+	}
 }

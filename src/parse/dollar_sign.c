@@ -61,7 +61,7 @@ static int is_env_var(char *str, t_env *env)
 	return(0);
 }
 
-char *re_create_content(char *str,t_env *env)
+static char *re_create_content(char *str,t_env *env, t_data *data)
 {
 	char *new_str;
 	char *var;
@@ -76,7 +76,7 @@ char *re_create_content(char *str,t_env *env)
 	{
 		if(is_env_var(var,env)==2)
 		{
-			b = ft_itoa(0);
+			b = ft_itoa(*(data->env->exit_code));
 			new_str = ft_strjoin_null(new_str, b, new_str);
 			free(b);
 		}
@@ -99,7 +99,7 @@ void env_variable(t_data **data,t_env *env)
 	{
 		if(is_editable(tmp->content,'$') != -1)
 		{
-			a = re_create_content(tmp->content,env);
+			a = re_create_content(tmp->content,env,(*data));
 			free(tmp->content);
 			tmp->content = a;
 		}

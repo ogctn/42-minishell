@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 23:12:56 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 02:00:11 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,9 +134,10 @@ void	update_pipeline(t_data **d)
 
 int	executer(t_data *data)
 {
-	redir_out(&data);
-	exec_simple(data);
-	update_pipeline(&data);
-
+	*(data->env->exit_code) =redir_out(&data);
+	if(*(data->env->exit_code) == 0)
+		*(data->env->exit_code) = exec_simple(data);
+	if(*(data->env->exit_code) == 0)
+		update_pipeline(&data);
 	return (0);
 }
