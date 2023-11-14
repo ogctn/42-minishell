@@ -47,7 +47,7 @@ $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)/redirections
 
 $(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c
-	$(CC) $(CFLAGS) -c $< -o $@ -I${PWD}/lib/readline/include/
+	$(CC) $(FLAGS) -c $< -o $@ -I${PWD}/lib/readline/include/
 
 install_readline	:
 	@cd lib && curl -O https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz

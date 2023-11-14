@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 22:52:50 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 19:34:21 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ int	ft_cd(t_data *d)
 {
 	char	*path;
 	char	*tmp;
-	char	*abs_path;
 
 	path = arg_special_chars(d);
 	if (!are_valid_cd_params(d) || !path)

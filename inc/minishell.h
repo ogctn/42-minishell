@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 16:31:22 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 17:51:29 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	mini_clear(t_env *env);
 void	get_signals(void);
 
 int		check_if_null(char *str);
-int		is_missing_quoted(char *str);
+int		is_missing_quoted(char *str, t_env *env);
 int		is_there_a_slash(char *str);
 void	free_data(t_data *d);
 

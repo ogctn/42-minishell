@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 15:22:09 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 22:54:57 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 19:34:29 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	are_valid_env_parameters(t_data *d)
 {
 	char	*str;
-	int		i;
 
 	d = d->next;
 	if (!d || d->type == 1)

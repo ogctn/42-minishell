@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 01:10:14 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:41:59 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,28 +35,32 @@ t_data	*ft_create(char *str)
 	return (new);
 }
 
-int is_operate(char s)
+int	is_operate(char s)
 {
-	if ( s == '<' || s == '>' ||s == '|')
-		return(1);
-	return(0);
+	if (s == '<' || s == '>' || s == '|')
+		return (1);
+	return (0);
 }
-int is_quote(char s)
+
+int	is_quote(char s)
 {
-	if ( s == '\'' || s == '"')
-		return(1);
-	return(0);
+	if (s == '\'' || s == '"')
+		return (1);
+	return (0);
 }
-int in_quote(char *s)
+
+int	in_quote(char *s)
 {
-	int i = 0;
+	in	i;
+
+	i = 0;
 	while (s[i])
 	{
-		if ( s[i] == '\'' || s[i] == '"' )
-			return(1);
+		if (s[i] == '\'' || s[i] == '"')
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	ft_lstsize(t_data *lst)
@@ -71,17 +75,19 @@ int	ft_lstsize(t_data *lst)
 	}
 	return (i);
 }
-void list_add(char *str, t_data **total_line)
+
+void	list_add(char *str, t_data **total_line)
 {
-	t_data *tmp;
-	if(str && *str)
+	t_data	*tmp;
+
+	if (str && *str)
 	{
-	if((*total_line))
-	{
-		tmp = ft_last(*total_line);
-		tmp->next = ft_create(str);
-	}
-	else
-		(*total_line) = ft_create(str);
+		if ((*total_line))
+		{
+			tmp = ft_last(*total_line);
+			tmp->next = ft_create(str);
+		}
+		else
+			(*total_line) = ft_create(str);
 	}
 }

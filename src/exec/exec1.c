@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 16:31:00 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 18:12:04 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,11 @@ void	get_reason(char *path)
 	if (access(path, F_OK) != 0)
 	{
 		if (!is_there_a_slash(path))
-			printf("minishell: %s: command not found\n", path);
+			{
+				printf("minishell: %s: command not found\n", path);
+				exit(127);
+
+			}
 		else if (is_there_a_slash(path))
 			printf("minishell: %s: No such file or directory\n", path);
 		return ;
@@ -90,6 +94,7 @@ int	exec_simple(t_data *d)
 	char	**args;
 	char	*cmd_path;
 	pid_t	pid;
+	int status;
 
 	if (is_builtin(d->content))
 		return (exec_builtin(d));
@@ -111,8 +116,10 @@ int	exec_simple(t_data *d)
 			exit(1);
 		}
 	}
-	else
-		wait(NULL);
+	else {
+        waitpid(pid, &status, 0);
+        *(d->env->exit_code) = WEXITSTATUS(status);
+    }
 	return (0);
 }
 
@@ -148,12 +155,12 @@ void	redirect_and_execute(t_data **data, int *default_fds)
 {
 	redir_out(data);
 	redir_in(data);
-	*((*data)->env->exit_code) = exec_simple(*data);
+	exec_simple(*data);
 }
 int	executer(t_data *data)
 {
 	int	default_fds[2];
-	
+
 	//while start
 	//fork gelse
 	init_default_fd(&default_fds[0], &default_fds[1]);
