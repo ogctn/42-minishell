@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 22:46:58 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:34:53 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,18 @@ int redir_out(t_data **d)
 {
 	t_data  *tmp;
 	t_data  *to_delete;
-	int fd;
-		tmp = *d;
+	int 	fd;
+
+	tmp = *d;
 	while (tmp && tmp->type != 1)
 	{
 		if (tmp->type == 4 || tmp->type == 5)
 		{
 			if (tmp->type == 4)
-				fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_TRUNC, 0644);
-			if (tmp->type == 5)
-				fd = open(tmp->next->content, O_RDONLY | O_CREAT | O_APPEND, 0644);
-			dup2(fd, 0);
+				fd = open(tmp->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			else if (tmp->type == 5)
+				fd = open(tmp->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			dup2(fd, STDOUT_FILENO);
 			close(fd);
 			to_delete = tmp;
 			tmp = tmp->next->next;
@@ -63,62 +64,35 @@ int redir_out(t_data **d)
 	return 0;
 }
 
-// int redir_out(t_data **d)
-// {
-// 	int		fd;
-//     t_data	*current;
-// 	t_data	*temp;
+int redir_in(t_data **d)
+{
+	t_data  *tmp;
+	t_data  *to_delete;
+	int 	fd;
 
-// 	current = *d;
-//     while (current && current->type != 1)
-//     {
-//         if (current->type == 4 || current->type == 5)
-//         {
-// 			if (current->type == 4)
-//             	fd = open(current->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 			if (current->type == 5)
-//             	fd = open(current->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
-//             dup2(fd, 1);
-//             close(fd);
-//             temp = current->next;
-//             current->next = temp->next;
-//             free(temp->content);
-//             free(temp);
-//             temp = current->next;
-//             current->next = temp->next;
-//             free(temp->content);
-//             free(temp);
-// 		}
-//         else
-//             current = current->next;
-//     }
-//     return (0);
-// }
-
-// int		redir_out(t_data *d)
-// {
-// 	int		fd;
-// 	int		i;
-// 	int		j;
-// 	char	*file;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (d)
-// 	{
-// 		if (d->type == 4 || d->type == 5)
-// 		{
-// 			file = ft_strdup(d->next->content);
-// 			if (d->type == 5)
-// 				fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
-// 			else
-// 				fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
-// 			dup2(fd, 1);
-// 			close(fd);
-// 			free(file);
-// 		}
-// 		d = d->next;
-// 	}
-// 	return (0);
-// }
-
+	tmp = *d;
+	while (tmp && tmp->type != 1)
+	{
+		if (tmp->type == 2 || tmp->type == 3)
+		{
+			if (tmp->type == 2)
+			{
+				fd = open(tmp->next->content, O_RDONLY, 0644);
+				if (fd == -1)
+					return (printf("minishell: %s: \
+					No such file or directory\n", tmp->next->content), -1);
+			}
+			//else if (tmp->type == 5)
+				//heredoc will be implemented
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+			to_delete = tmp;
+			tmp = tmp->next->next;
+			unlink_node_pair(d, to_delete);
+			continue;
+		}
+		else
+			tmp = tmp->next;
+	}
+	return 0;
+}

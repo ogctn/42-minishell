@@ -18,5 +18,13 @@ Düzenlenecek:
 		boşluklarla yaptığın işlemi libft ft_isprint fonksiyonunda eklemen gerek.
 
 
-redir_out(&data); sadece 0 return ediyor?
 builtin çıktılarını aldım execve fonksiyonunu değiştirdim
+
+NOTE(1)
+bash-3.2$ lksdf
+bash: lksdf: command not found
+bash-3.2$ echo $?
+127
+bash-3.2$ lksdf | ls
+bash: lksdf: command not found
+Makefile        README.md       inc             leaks.sh        lib             minishell       src

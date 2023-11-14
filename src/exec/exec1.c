@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 02:00:11 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 16:31:00 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,13 +131,35 @@ void	update_pipeline(t_data **d)
 		*d = (*d)->next;
 	}
 }
+void	init_default_fd(int *default_in, int *default_out)
+{
+	*default_in = dup(STDIN_FILENO);
+	*default_out = dup(STDOUT_FILENO);
+}
 
+void	restore_defaults(int default_fds[2])
+{
+	dup2(default_fds[0], STDIN_FILENO);
+	dup2(default_fds[1], STDOUT_FILENO);
+	close(default_fds[0]);
+	close(default_fds[1]);
+}
+void	redirect_and_execute(t_data **data, int *default_fds)
+{
+	redir_out(data);
+	redir_in(data);
+	*((*data)->env->exit_code) = exec_simple(*data);
+}
 int	executer(t_data *data)
 {
-	*(data->env->exit_code) =redir_out(&data);
-	if(*(data->env->exit_code) == 0)
-		*(data->env->exit_code) = exec_simple(data);
-	if(*(data->env->exit_code) == 0)
-		update_pipeline(&data);
+	int	default_fds[2];
+	
+	//while start
+	//fork gelse
+	init_default_fd(&default_fds[0], &default_fds[1]);
+	redirect_and_execute(&data, default_fds); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
+	restore_defaults(default_fds);
+	update_pipeline(&data);
+	//while end
 	return (0);
 }
