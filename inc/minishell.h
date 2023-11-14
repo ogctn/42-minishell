@@ -6,10 +6,9 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 22:47:17 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 01:46:33 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHELL_H
 # define  MINISHELL_H
@@ -31,6 +30,7 @@
 typedef struct s_env
 {
 	char			*content;
+	int				*exit_code;
 	struct s_env	*next;
 }					t_env;
 
@@ -66,8 +66,6 @@ int		which_operator(char *a);
 int		operator_err_control(t_data *data);
 
 void 	env_variable(t_data **data,t_env *env);
-char 	*re_create_content(char *str,t_env *env);
-
 void 	delete_quotes(t_data **data);
 
 t_data	*ft_last(t_data *lst);
@@ -95,11 +93,11 @@ char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable);
 char	**split_env_path(t_env *env);
 void	free_2d(char **d);
 char	*path_finder(char *full_cmd, t_env *env);
-void	get_default_env(t_env **env_list, char **env);
+void	get_default_env(t_env **env_list, char **env, int *ercode);
 char	**env_to_double_arr(t_env *env);
 
 t_env	*node_get_last(t_env *env);
-t_env	*node_new(void *content);
+t_env	*node_new(void *content, int *ercode);
 void	node_add_back(t_env **lst, char *content);
 void	init_env_all_data_nodes(t_data **d, t_env *env);
 void	dup_env_list(t_env **dest_env, t_env *src_env);

@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/13 22:44:15 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 01:12:41 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void ft_split_2(char *str, t_data **total_line)
 	int counter = 0;
 	int start = 0;
 	int j = 0;
-	t_data *tmp;
 	if(in_quote(str))
 	{
 		if(ft_strlen(str) > 2)
@@ -31,7 +30,6 @@ void ft_split_2(char *str, t_data **total_line)
 		{
 			if(ft_isprint(str[i-1]) && !is_operate(str[i-1]))
 				list_add(ft_substr(str,start,i-start), total_line);
-			tmp = ft_last(*total_line);
 			if(str[i] == str[i+1])
 			{
 				list_add(ft_substr(str,i,2),total_line);
@@ -78,6 +76,7 @@ int ft_parser(char *str,t_data **total_line, t_env *env_list)
 	init_env_all_data_nodes(total_line, env_list);
 	env_variable(total_line, env_list);
 	delete_quotes(total_line);
+	//printit(*total_line);
 	add_history(str);
 	return(operator_err_control(*total_line));
 }

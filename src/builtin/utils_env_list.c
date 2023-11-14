@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/13 02:20:22 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/14 01:41:19 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_env	*node_get_last(t_env *env)
 	return (iter);
 }
 
-t_env	*node_new(void *content)
+t_env	*node_new(void *content, int *ercode)
 {
 	t_env	*element;
 
@@ -30,6 +30,7 @@ t_env	*node_new(void *content)
 	if (!element)
 		return (NULL);
 	element->content = content;
+	element->exit_code = ercode;
 	element->next = NULL;
 	return (element);
 }
@@ -39,7 +40,7 @@ void	node_add_back(t_env **lst, char *content)
 	t_env	*last;
 	t_env	*new;
 
-	new = node_new(content);
+	new = node_new(content,(*lst)->exit_code);
 	if (!new)
 		return ;
 	if (!(*lst))

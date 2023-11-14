@@ -8,7 +8,7 @@ type numaraları
 3-> <<
 4-> >
 5-> >>
-
+6-> ||
 
 Düzenlenecek:
 	Parse:
@@ -17,3 +17,6 @@ Düzenlenecek:
 		baktığında -96 veya -100 gibi değerler görürsün bu whitespace. Parse kısmında
 		boşluklarla yaptığın işlemi libft ft_isprint fonksiyonunda eklemen gerek.
 
+
+redir_out(&data); sadece 0 return ediyor?
+builtin çıktılarını aldım execve fonksiyonunu değiştirdim
