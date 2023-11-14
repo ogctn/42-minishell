@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 19:37:37 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 19:55:31 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,17 +71,11 @@ int	operator_err_control(t_data *data)
 
 	tmp_1 = data;
 	if (tmp_1->type == 1)
-	{
-		printf("minishell$ syntax error near unexpected token '%s'\n",
-			tmp_1->content);
-		return (127);
-	}
+		return (printf("minishell$ syntax error near unexpected token '%s'\n",
+				tmp_1->content), 127);
 	if (ft_last(tmp_1)->type <= 5 && ft_last(tmp_1)->type >= 1)
-	{
-		printf("minishell$ syntax error near unexpected token '%s'\n",
-			ft_last(tmp_1)->content);
-		return (127);
-	}
+		return (printf("minishell$ syntax error near unexpected token '%s'\n",
+				ft_last(tmp_1)->content), 127);
 	while (tmp_1)
 	{
 		if (tmp_1->type != 0)
@@ -89,30 +83,10 @@ int	operator_err_control(t_data *data)
 			tmp_2 = tmp_1->next;
 			if (!ft_strncmp(tmp_1->content, "||", 2)
 				|| (tmp_2 && tmp_2->type != 0))
-			{
-				printf("minishell$ syntax error near unexpected token '%s'\n",
-					tmp_1->content);
-				return (127);
-			}
+				return (printf("minishell$ syntax error near unexpected \
+token '%s'\n", tmp_1->content), 127);
 		}
 		tmp_1 = tmp_1->next;
 	}
 	return (0);
-}
-
-void	mini_clear(t_env *env)
-{
-	pid_t	pid;
-	char	*clear_path;
-
-	pid = fork();
-	if (pid == -1)
-		exit(1);
-	if (pid == 0)
-	{
-		clear_path = path_finder("clear", env);
-		execve(clear_path, NULL, env_to_double_arr(env));
-	}
-	else
-		wait(NULL);
 }

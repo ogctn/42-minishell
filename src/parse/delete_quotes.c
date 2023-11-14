@@ -6,47 +6,47 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 19:00:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 19:01:04 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 20:07:42 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static void	join_quote(char *str, int start, int i, char **new)
+{
+	char	*dnm;
+
+	dnm = ft_substr(str, start, i - start);
+	(*new) = ft_strjoin_null((*new), dnm, (*new));
+	free(dnm);
+}
+
+
 void	re_create_quote(char *str, char **new, int i)
 {
 	int		start;
 	char	a;
-	char	*dnm;
 
 	start = i;
 	while (str[i] && !is_quote(str[i]))
 		i++;
-	dnm = ft_substr(str, start, i - start);
-	(*new) = ft_strjoin_null((*new), dnm, (*new));
+	join_quote(str, start, i, new);
 	a = str[i];
-	i++;
-	start = i;
+	start = i + 1;
 	while (str[i] && str[i] != a)
 		i++;
-	free(dnm);
-	dnm = ft_substr(str, start, i - start);
-	(*new) = ft_strjoin_null((*new), dnm, (*new));
-	i++;
-	start = i;
+	join_quote(str, start, i, new);
+	start = i + 1;
 	while (str[i])
 	{
 		if (is_quote(str[i]))
 		{
-			free(dnm);
 			re_create_quote(str, new, start);
 			return ;
 		}
 		i++;
 	}
-	free(dnm);
-	dnm = ft_substr(str, start, i - start);
-	(*new) = ft_strjoin_null((*new), dnm, (*new));
-	free(dnm);
+	join_quote(str, start, i, new);
 }
 
 void	delete_quotes(t_data **data)

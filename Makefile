@@ -11,6 +11,7 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/parse/utils.c \
 			$(SRC_DIR)/parse/own_split.c \
 			$(SRC_DIR)/parse/utils_line.c \
+			$(SRC_DIR)/parse/utils_data.c \
 			$(SRC_DIR)/parse/assign_type.c \
 			$(SRC_DIR)/parse/dollar_sign.c \
 			$(SRC_DIR)/parse/delete_quotes.c \

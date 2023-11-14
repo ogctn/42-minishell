@@ -6,34 +6,11 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 19:41:59 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/14 20:08:59 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-t_data	*ft_last(t_data *lst)
-{
-	while (lst)
-	{
-		if (lst->next)
-			lst = lst->next;
-		else
-			return (lst);
-	}
-	return (NULL);
-}
-
-t_data	*ft_create(char *str)
-{
-	t_data	*new;
-
-	new = ft_calloc(sizeof(t_data), 1);
-	new->content = str;
-	new->type = 0;
-	new->next = NULL;
-	return (new);
-}
 
 int	is_operate(char s)
 {
@@ -51,7 +28,7 @@ int	is_quote(char s)
 
 int	in_quote(char *s)
 {
-	in	i;
+	int	i;
 
 	i = 0;
 	while (s[i])
@@ -63,31 +40,19 @@ int	in_quote(char *s)
 	return (0);
 }
 
-int	ft_lstsize(t_data *lst)
+void	mini_clear(t_env *env)
 {
-	int	i;
+	pid_t	pid;
+	char	*clear_path;
 
-	i = 0;
-	while (lst)
+	pid = fork();
+	if (pid == -1)
+		exit(1);
+	if (pid == 0)
 	{
-		i++;
-		lst = lst->next;
+		clear_path = path_finder("clear", env);
+		execve(clear_path, NULL, env_to_double_arr(env));
 	}
-	return (i);
-}
-
-void	list_add(char *str, t_data **total_line)
-{
-	t_data	*tmp;
-
-	if (str && *str)
-	{
-		if ((*total_line))
-		{
-			tmp = ft_last(*total_line);
-			tmp->next = ft_create(str);
-		}
-		else
-			(*total_line) = ft_create(str);
-	}
+	else
+		wait(NULL);
 }
