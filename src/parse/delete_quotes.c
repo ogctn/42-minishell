@@ -32,11 +32,13 @@ void	re_create_quote(char *str, char **new, int i)
 		i++;
 	join_quote(str, start, i, new);
 	a = str[i];
-	start = i + 1;
+	i++;
+	start = i;
 	while (str[i] && str[i] != a)
 		i++;
 	join_quote(str, start, i, new);
-	start = i + 1;
+	i++;
+	start = i;
 	while (str[i])
 	{
 		if (is_quote(str[i]))
