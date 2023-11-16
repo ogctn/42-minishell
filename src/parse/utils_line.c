@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 19:55:31 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:29:38 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,32 @@ void	free_data(t_data *d)
 	}
 }
 
+static int	is_error(t_data *data)
+{
+	t_data	*tmp_1;
+	t_data	*tmp_2;
+
+	tmp_1 = data;
+	while (tmp_1)
+	{
+		if (tmp_1->type == 6)
+			return (printf("minishell$ syntax error near unexpected \
+token '%s'\n", tmp_1->content), 1);
+		tmp_2 = tmp_1->next;
+		if (tmp_1->type == 1)
+		{
+			if (tmp_2 && tmp_2->type == 1)
+				return (printf("minishell$ syntax error near unexpected \
+token '%s'\n", tmp_1->content), 1);
+		}
+		else if (tmp_1->type != 0 && tmp_2 && tmp_2->type != 0)
+			return (printf("minishell$ syntax error near unexpected \
+token '%s'\n", tmp_2->content), 1);
+		tmp_1 = tmp_1->next;
+	}
+	return (0);
+}
+
 int	operator_err_control(t_data *data)
 {
 	t_data	*tmp_1;
@@ -76,17 +102,7 @@ int	operator_err_control(t_data *data)
 	if (ft_last(tmp_1)->type <= 5 && ft_last(tmp_1)->type >= 1)
 		return (printf("minishell$ syntax error near unexpected token '%s'\n",
 				ft_last(tmp_1)->content), 127);
-	while (tmp_1)
-	{
-		if (tmp_1->type != 0)
-		{
-			tmp_2 = tmp_1->next;
-			if (!ft_strncmp(tmp_1->content, "||", 2)
-				|| (tmp_2 && tmp_2->type != 0))
-				return (printf("minishell$ syntax error near unexpected \
-token '%s'\n", tmp_1->content), 127);
-		}
-		tmp_1 = tmp_1->next;
-	}
+	if (is_error(data))
+		return (127);
 	return (0);
 }
