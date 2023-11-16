@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 15:54:57 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:20:38 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	main_loop(t_env *env_list)
 			exit(write(1, "exit\n", 5) - 5);
 		if (check_if_null(line) || is_missing_quoted(line, env_list))
 			continue ;
-		add_history(line);
 		a = ft_parser(line, &data, env_list);
-		if (a == -1)
-			continue ;
-		*(data->env->exit_code) = a;
-		if (*(data->env->exit_code) == 0)
-			executer(data);
+		if (a != -1)
+		{
+			*(data->env->exit_code) = a;
+			if (*(data->env->exit_code) == 0)
+				executer(data);
+		}
 		free(line);
 		free_data(data);
 	}

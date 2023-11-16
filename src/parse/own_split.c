@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 19:41:38 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:04:08 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static void	ft_update(const char *s, int start, int *end)
 	start++;
 	while (s[start] && s[start] != c)
 		start++;
-	start++;
+	if (s[start])
+		start++;
 	while (s[start] && s[start] != ' ' && !is_operate(s[start]))
 	{
 		if (is_quote(s[start]))

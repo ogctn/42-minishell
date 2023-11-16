@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 15:36:59 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:21:06 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_split_2(char *str, t_data **total_line)
 	{
 		if (is_operate(str[i]))
 		{
-			if (ft_isprint(str[i - 1]) && !is_operate(str[i - 1]))
+			if (i && ft_isprint(str[i - 1]) && !is_operate(str[i - 1]))
 				list_add(ft_substr(str, start, i - start), total_line);
 			if (str[i] == str[i + 1])
 			{
@@ -65,6 +65,7 @@ int	ft_parser(char *str, t_data **total_line, t_env *env_list)
 	int		i;
 
 	i = -1;
+	add_history(str);
 	ptr = ft_spc_split(str);
 	if (!ptr || !(*ptr))
 		return (free_2d(ptr), -1);

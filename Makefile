@@ -33,7 +33,7 @@ SRCS	=	$(SRC_DIR)/main.c \
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all		:	$(NAME) #install_readline $(NAME)
+all		: $(NAME) #install_readline $(NAME)
 
 $(NAME)	:	$(OBJ_DIR) $(OBJS)
 	@make bonus -C lib/libft
@@ -66,7 +66,7 @@ clean:
 fclean	:	clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
-	$(RM) $(RDLINE)
+#	$(RM) $(RDLINE)
 
 re: fclean all
 
