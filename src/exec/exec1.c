@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 21:04:43 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 22:58:49 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	env_size(t_env *env)
 	return (i);
 }
 
-void	get_reason(char *path)
+int	get_reason(char *path)
 {
 	struct stat	buffer;
 
@@ -33,25 +33,24 @@ void	get_reason(char *path)
 	if (access(path, F_OK) != 0)
 	{
 		if (!is_there_a_slash(path))
-			printf("minishell: %s: command not found\n", path);
+			return (printf("minishell: %s: command not found\n", path), 127);
 		else if (is_there_a_slash(path))
-			printf("minishell: %s: No such file or directory\n", path);
-		return ;
+			return (printf("minishell: %s: No such file or directory\n",
+					path), 1);
+		return (1);
+	}
+	if (stat(path, &buffer) == 0)
+	{
+		if (buffer.st_mode & S_IFDIR)
+			return (printf("minishell: %s: is a directory\n", path), 1);
+		else if (!(buffer.st_mode & S_IXUSR))
+			return (printf("minishell: cd: %s: Permission denied\n", path), 1);
+		else
+			return (1);
 	}
 	else
-	{
-		if (stat(path, &buffer) == 0)
-		{
-			if (buffer.st_mode & S_IFDIR)
-				printf("minishell: %s: is a directory\n", path);
-			else if (!(buffer.st_mode & S_IXUSR))
-				printf("minishell: cd: %s: Permission denied\n", path);
-			else
-				return ;
-		}
-		else
-			printf("minishell: cd: %s: No such file or directory\n", path);
-	}
+		return (printf("minishell: cd: %s: No such file or directory\n", path)
+			, 1);
 }
 
 int	exec_simple(t_data *d)
@@ -59,6 +58,7 @@ int	exec_simple(t_data *d)
 	char	**args;
 	char	*cmd_path;
 	pid_t	pid;
+	int		status;
 
 	if (is_builtin(d->content))
 		return (exec_builtin(d));
@@ -73,15 +73,18 @@ int	exec_simple(t_data *d)
 			{
 				cmd_path = d->content;
 				if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
-					get_reason(d->content);
+					exit(get_reason(d->content));
 			}
 			else
-				get_reason(d->content);
+				exit(get_reason(d->content));
 		}
 		exit(1);
 	}
 	else
-		wait(NULL);
+	{
+		waitpid(pid, &status, 0);
+		return (WEXITSTATUS(status));
+	}
 	return (0);
 }
 
@@ -95,7 +98,7 @@ void	redirect_and_execute(t_data **data, int default_fds[2])
 		if (tmp->type == 2 || tmp->type == 3
 			|| tmp->type == 5 || tmp->type == 4)
 		{
-			if (tmp->type == 2 || tmp->type == 3
+			if ((tmp->type == 2 || tmp->type == 3)
 				&& redir_in(data, tmp, default_fds))
 				return ;
 			else if (tmp->type == 4 || tmp->type == 5)

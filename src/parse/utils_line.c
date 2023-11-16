@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 21:29:38 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:46:05 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ int	operator_err_control(t_data *data)
 	tmp_1 = data;
 	if (tmp_1->type == 1)
 		return (printf("minishell$ syntax error near unexpected token '%s'\n",
-				tmp_1->content), 127);
+				tmp_1->content), 258);
 	if (ft_last(tmp_1)->type <= 5 && ft_last(tmp_1)->type >= 1)
 		return (printf("minishell$ syntax error near unexpected token '%s'\n",
-				ft_last(tmp_1)->content), 127);
+				ft_last(tmp_1)->content), 258);
 	if (is_error(data))
-		return (127);
+		return (258);
 	return (0);
 }
