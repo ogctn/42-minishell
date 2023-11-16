@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 18:12:04 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:43:52 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,7 @@ void	get_reason(char *path)
 	if (access(path, F_OK) != 0)
 	{
 		if (!is_there_a_slash(path))
-			{
-				printf("minishell: %s: command not found\n", path);
-				exit(127);
-
-			}
+			printf("minishell: %s: command not found\n", path);
 		else if (is_there_a_slash(path))
 			printf("minishell: %s: No such file or directory\n", path);
 		return ;
@@ -94,7 +90,6 @@ int	exec_simple(t_data *d)
 	char	**args;
 	char	*cmd_path;
 	pid_t	pid;
-	int status;
 
 	if (is_builtin(d->content))
 		return (exec_builtin(d));
@@ -113,13 +108,11 @@ int	exec_simple(t_data *d)
 			}
 			else
 				get_reason(d->content);
-			exit(1);
 		}
+		exit(1);
 	}
-	else {
-        waitpid(pid, &status, 0);
-        *(d->env->exit_code) = WEXITSTATUS(status);
-    }
+	else
+		wait(NULL);
 	return (0);
 }
 
@@ -138,7 +131,7 @@ void	update_pipeline(t_data **d)
 		*d = (*d)->next;
 	}
 }
-void	init_default_fd(int *default_in, int *default_out)
+void	copy_default_fd(int *default_in, int *default_out)
 {
 	*default_in = dup(STDIN_FILENO);
 	*default_out = dup(STDOUT_FILENO);
@@ -151,22 +144,92 @@ void	restore_defaults(int default_fds[2])
 	close(default_fds[0]);
 	close(default_fds[1]);
 }
-void	redirect_and_execute(t_data **data, int *default_fds)
+void	redirect_and_execute(t_data **data)
 {
-	redir_out(data);
-	redir_in(data);
-	exec_simple(*data);
+	t_data  *tmp;
+
+	tmp = *data;
+	while (tmp && tmp->type != 1)
+	{
+		if (tmp->type == 2 || tmp->type == 3 || tmp->type == 5 || tmp->type == 4)
+		{
+			if (tmp->type == 2 || tmp->type == 3)
+			{
+				if (redir_in(data, tmp))
+					return ;
+			}
+			else if (tmp->type == 4 || tmp->type == 5)
+				redir_out(data, tmp);
+			tmp = *data;
+		}
+		else
+			tmp = tmp->next;
+	}
+	*((*data)->env->exit_code) = exec_simple(*data);
 }
+
+int	count_pipes(t_data *d)
+{
+	int	count;
+
+	count = 0;
+	while (d)
+	{
+		if (d->type == 1)
+			count++;
+		d = d->next;
+	}
+	return (count);
+}
+
 int	executer(t_data *data)
 {
 	int	default_fds[2];
+	int	pipe_count;
+	int	pipe_fd[2];
+	int	pid;
 
-	//while start
-	//fork gelse
-	init_default_fd(&default_fds[0], &default_fds[1]);
-	redirect_and_execute(&data, default_fds); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
-	restore_defaults(default_fds);
-	update_pipeline(&data);
-	//while end
+	pipe_count = count_pipes(data);
+	if(pipe_count== 0)
+	{
+		redirect_and_execute(&data);
+	}
+	else
+	{
+		
+
+	while (pipe_count >= 0)
+	{
+		copy_default_fd(&default_fds[0], &default_fds[1]);
+		if (pipe_count > 0)
+			pipe(pipe_fd);
+		pid = fork();
+		if (pid == 0)
+		{
+			if (pipe_count > 0)
+			{
+				dup2(pipe_fd[1], STDOUT_FILENO);
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
+			}
+			redirect_and_execute(&data); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
+			exit(0);
+		}
+		else
+		{
+			if (pipe_count > 0)
+			{
+				dup2(pipe_fd[0], STDIN_FILENO);
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
+			}
+			else
+				restore_defaults(default_fds);
+			update_pipeline(&data);
+		}
+		wait(NULL); // denenecek
+		pipe_count--;
+	}
+	}
 	return (0);
 }

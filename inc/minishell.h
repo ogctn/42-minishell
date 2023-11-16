@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 17:51:29 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:47:08 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,9 @@ void	set_env_value(t_env *env, char *key, char *value);
 int		ft_cd(t_data *d);
 int		ft_export(t_data *d);
 
-int		redir_out(t_data **d);
-int		redir_in(t_data **d);
+int		redir_in(t_data **head, t_data *current);
+int		redir_out(t_data **head, t_data *current);
+void	copy_default_fd(int *default_in, int *default_out);
+void	restore_defaults(int default_fds[2]);
 
 #endif

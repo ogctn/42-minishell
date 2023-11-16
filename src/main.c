@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 13:11:35 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:49:22 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@ void	main_loop(t_env *env_list)
 {
 	t_data	*data;
 	char	*line;
-
+	int		default_fds[2];
+	copy_default_fd(&default_fds[0], &default_fds[1]);
 	while (1)
 	{
+		restore_defaults(default_fds);
 		data = NULL;
 		line = readline(MINISHELL);
 		if (!line)
