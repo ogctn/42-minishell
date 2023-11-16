@@ -16,6 +16,7 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/parse/dollar_sign.c \
 			$(SRC_DIR)/parse/delete_quotes.c \
 			$(SRC_DIR)/exec/exec1.c \
+			$(SRC_DIR)/exec/exec_utils.c \
 			$(SRC_DIR)/exec/path_finder.c \
 			$(SRC_DIR)/exec/signals.c \
 			$(SRC_DIR)/builtin/env.c \
@@ -23,9 +24,12 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/builtin/builtin1.c \
 			$(SRC_DIR)/builtin/ft_echo.c \
 			$(SRC_DIR)/builtin/ft_cd.c \
+			$(SRC_DIR)/builtin/ft_cd_utils.c \
 			$(SRC_DIR)/builtin/ft_env.c \
+			$(SRC_DIR)/builtin/env_to_2d.c \
 			$(SRC_DIR)/builtin/ft_exit.c \
 			$(SRC_DIR)/builtin/ft_export.c \
+			$(SRC_DIR)/builtin/ft_export_utils.c \
 			$(SRC_DIR)/builtin/ft_pwd.c \
 			$(SRC_DIR)/builtin/ft_unset.c \
 			$(SRC_DIR)/redirections/redir.c

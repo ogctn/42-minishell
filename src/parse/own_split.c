@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 22:38:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 18:04:08 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:16:52 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,13 @@ static int	ft_counter(char const	*s)
 
 static void	ft_update(const char *s, int start, int *end)
 {
-	int		end_idx;
 	char	c;
 
-	end_idx = *end;
-	c = s[end_idx];
+	c = s[(*end)];
 	if (!is_quote(s[start]))
 	{
-		while (!is_operate(s[start]) && s[start] != c)
-			start++;
-		if (end_idx != start)
-		{
-			(*end) = start + 1;
+		if (find_end_1(&start, s, end, c))
 			return ;
-		}
 	}
 	start++;
 	while (s[start] && s[start] != c)
@@ -74,6 +67,30 @@ static void	ft_update(const char *s, int start, int *end)
 	(*end) = start;
 }
 
+static int	split_loop(char const *s, int *start, int *end)
+{
+	while (s[(*start)] == ' ')
+		(*start)++;
+	if (!s[(*start)])
+		return (1);
+	*end = *start;
+	if (s[(*start)] == '"' || s[(*start)] == '\'')
+		ft_update(s, (*start), end);
+	else
+	{
+		while (s[*end] && s[*end] != ' ')
+		{
+			if (s[*end] == '"' || s[*end] == '\'')
+			{
+				ft_update(s, (*start), end);
+				break ;
+			}
+			(*end)++;
+		}
+	}
+	return (0);
+}
+
 static char	**ft_string(char const *s, char **ptr)
 {
 	int	end;
@@ -84,25 +101,8 @@ static char	**ft_string(char const *s, char **ptr)
 	i = 0;
 	while (s[start])
 	{
-		while (s[start] == ' ')
-			start++;
-		if (!s[start])
+		if (split_loop(s, &start, &end))
 			break ;
-		end = start;
-		if (s[start] == '"' || s[start] == '\'')
-			ft_update(s, start, &end);
-		else
-		{
-			while (s[end] != ' ' && s[end])
-			{
-				if (s[end] == '"' || s[end] == '\'')
-				{
-					ft_update(s, start, &end);
-					break ;
-				}
-				end++;
-			}
-		}
 		ptr[i] = ft_substr(s, start, end - start);
 		start = end;
 		i++;

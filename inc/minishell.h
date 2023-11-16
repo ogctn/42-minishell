@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 15:19:54 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:14:40 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_path
 int		ft_parser(char *str, t_data **total_line, t_env *env_list);
 char	**ft_spc_split(char const *s);
 void	ft_split_2(char *str, t_data **total_line);
+int		find_end_1(int *start, const char *s, int *end, char c);
 
 void	assign_type(t_data **total_line);
 int		which_operator(char *a);
@@ -93,6 +94,7 @@ void	free_2d(char **d);
 char	*path_finder(char *full_cmd, t_env *env);
 void	get_default_env(t_env **env_list, char **env, int *ercode);
 char	**env_to_double_arr(t_env *env);
+int		env_size(t_env *env);
 
 t_env	*node_get_last(t_env *env);
 t_env	*node_new(void *content, int *ercode);
@@ -100,13 +102,12 @@ void	node_add_back(t_env **lst, char *content);
 void	init_env_all_data_nodes(t_data **d, t_env *env);
 void	dup_env_list(t_env **dest_env, t_env *src_env);
 
-char	**list_to_double_arr(t_data *d);
+char	**data_to_double_arr(t_data *d);
 int		exec_simple(t_data *d);
-void	count_char(char *read_line, char c, int *counter);
+int		count_pipes(t_data *d);
 int		executer(t_data *data);
 int		exec_builtin(t_data *data);
-
-void	printit(t_data *d);
+void	update_pipeline(t_data **d);
 
 int		ft_echo(t_data *d);
 void	print_env(t_env *env_list);
@@ -115,11 +116,16 @@ int		ft_exit(t_data *d);
 int		ft_pwd(void);
 int		is_valid_unset_parameter(char *content);
 int		is_valid_export_parameter(char *content);
+int		is_env_exist(t_env *env, char *content);
+void	update_env_content(t_env **env, char *new);
 int		ft_unset(t_data *d);
 char	*get_env_value(t_env *env, char *key);
 void	set_env_value(t_env *env, char *key, char *value);
 int		ft_cd(t_data *d);
+int		are_valid_cd_params(t_data *d);
 int		ft_export(t_data *d);
+void	env_swap(t_env *a, t_env *b, int *swap_flag);
+int		find_len_content(char *content);
 
 int		redir_in(t_data **head, t_data *current);
 int		redir_out(t_data **head, t_data *current);

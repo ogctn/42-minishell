@@ -6,11 +6,26 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 18:21:06 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:14:22 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	find_end_1(int *start, const char *s, int *end, char c)
+{
+	int		end_idx;
+
+	end_idx = *end;
+	while (!is_operate(s[*start]) && s[*start] != c)
+		(*start)++;
+	if (end_idx != (*start))
+	{
+		(*end) = (*start) + 1;
+		return (1);
+	}
+	return (0);
+}
 
 void	ft_split_2(char *str, t_data **total_line)
 {

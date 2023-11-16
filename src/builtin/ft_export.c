@@ -6,32 +6,11 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 17:24:10 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 18:58:56 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-static int	find_len_content(char *content)
-{
-	int	len;
-
-	if (ft_strchr(content, '='))
-		len = ft_strchr(content, '=') - content;
-	else
-		len = ft_strlen(content);
-	return (len);
-}
-
-void	env_swap(t_env *a, t_env *b, int *swap_flag)
-{
-	char	*tmp;
-
-	tmp = a->content;
-	a->content = b->content;
-	b->content = tmp;
-	*swap_flag = 1;
-}
 
 void	sorter_function(t_env **env)
 {
@@ -102,79 +81,12 @@ void	print_export(t_env *env)
 	}
 }
 
-int	is_env_exist(t_env *env, char *content)
-{
-	int	len_to_equal;
-	int	len_content;
-
-	len_content = find_len_content(content);
-	while (env)
-	{
-		if (ft_strchr(env->content, '='))
-			len_to_equal = ft_strchr(env->content, '=') - env->content;
-		else
-			len_to_equal = ft_strlen(env->content);
-		if (ft_strncmp(env->content, content, len_to_equal) == 0 \
-			&& len_to_equal == len_content)
-			return (1);
-		env = env->next;
-	}
-	return (0);
-}
-
-void	update_env_content(t_env **env, char *new)
-{
-	int	len_to_equal;
-	int	len_content;
-
-	len_content = find_len_content(new);
-	while (*env)
-	{
-		if (ft_strchr((*env)->content, '='))
-			len_to_equal = ft_strchr((*env)->content, '=') - (*env)->content;
-		else
-			len_to_equal = ft_strlen((*env)->content);
-		if (ft_strncmp((*env)->content, new, len_to_equal) == 0
-			&& len_content == len_to_equal)
-		{
-			if (ft_strchr((*env)->content, '=') && !ft_strchr(new, '='))
-				return ;
-			free((*env)->content);
-			(*env)->content = ft_strdup(new);
-			return ;
-		}
-		*env = (*env)->next;
-	}
-}
-
 void	add_to_env(t_env **env, char *content)
 {
 	if (is_env_exist(*env, content))
 		update_env_content(env, content);
 	else
 		node_add_back(env, content);
-}
-
-int	is_valid_export_parameter(char *str)
-{
-	int	i;
-
-	if (!str[0] || !(ft_isalpha(str[0]) || str[0] == '_'))
-	{
-		printf("minishell: export: `%s': not a valid identifier\n", str);
-		return (0);
-	}
-	i = 1;
-	while (str[i] && str[i] != '=')
-	{
-		if (!ft_isalnum(str[i]) && str[i] != '_')
-		{
-			printf("minishell: export: `%s': not a valid identifier\n", str);
-			return (0);
-		}
-		i++;
-	}
-	return (1);
 }
 
 int	ft_export(t_data *d)
