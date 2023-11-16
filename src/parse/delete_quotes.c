@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 19:00:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 20:07:42 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:13:04 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	join_quote(char *str, int start, int i, char **new)
 	(*new) = ft_strjoin_null((*new), dnm, (*new));
 	free(dnm);
 }
-
 
 void	re_create_quote(char *str, char **new, int i)
 {

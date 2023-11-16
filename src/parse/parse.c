@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 19:31:17 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:11:27 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	ft_split_2(char *str, t_data **total_line)
 	start = 0;
 	if (in_quote(str))
 	{
-		if (ft_strlen(str) > 2)
-			list_add(ft_strdup(str), total_line);
+		list_add(ft_strdup(str), total_line);
 		return ;
 	}
 	while (str[i])

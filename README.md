@@ -18,7 +18,7 @@ Düzenlenecek:
 		boşluklarla yaptığın işlemi libft ft_isprint fonksiyonunda eklemen gerek.
 
 
-builtin çıktılarını aldım execve fonksiyonunu değiştirdim
+add history kontrol et
 
 NOTE(1)
 bash-3.2$ lksdf

@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 19:02:59 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 19:40:58 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:16:43 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static char	is_editable(char *str, char c)
 	{
 		if (is_quote(str[i]))
 		{
-			a = str[i];
-			i++;
+			a = str[i++];
 			while (str[i] && str[i] != a)
 			{
 				if (str[i] == c && a != '\'' && str[i + 1]
