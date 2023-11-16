@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 13:44:52 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:24:15 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void    unlink_node_pair(t_data **head, t_data *redir_node)
+void	unlink_node_pair(t_data **head, t_data *redir_node)
 {
-	t_data  *after_file_node;
-	t_data  *file_name;
-	t_data  *tmp;
+	t_data	*after_file_node;
+	t_data	*file_name;
+	t_data	*tmp;
 
 	file_name = redir_node->next;
 	after_file_node = redir_node->next->next;
@@ -35,9 +35,9 @@ void    unlink_node_pair(t_data **head, t_data *redir_node)
 	free(redir_node);
 }
 
-int redir_out(t_data **head, t_data *d)
+int	redir_out(t_data **head, t_data *d)
 {
-	int 	fd;
+	int	fd;
 
 	if (d->type == 4)
 		fd = open(d->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -47,14 +47,14 @@ int redir_out(t_data **head, t_data *d)
 		return (ft_putstr_fd("minishell: file open error.\n", 2), -1);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
-	unlink_node_pair(head , d);
+	unlink_node_pair(head, d);
 	return (0);
 }
 
-int redir_in(t_data **head, t_data *d)
+int	redir_in(t_data **head, t_data *d)
 {
-	t_data  *to_delete;
-	int 	fd;
+	t_data	*to_delete;
+	int		fd;
 
 	if (d->type == 2)
 	{

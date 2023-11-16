@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 13:47:08 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:19:54 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-# define  MINISHELL_H
+# define MINISHELL_H
 
-#include <termios.h>
-
+# include <termios.h>
 # include "../lib/libft/libft.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -25,7 +24,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
+# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
 
 typedef struct s_env
 {
@@ -50,32 +49,31 @@ typedef struct s_data
 	struct s_data	*next;
 }					t_data;
 
-
 typedef struct s_path
 {
 	char	**sp_env;
 	char	*full_path;
 }			t_path;
 
-int		ft_parser(char *str,t_data **total_line, t_env *env_list);
+int		ft_parser(char *str, t_data **total_line, t_env *env_list);
 char	**ft_spc_split(char const *s);
-void 	ft_split_2(char *str, t_data **total_line);
+void	ft_split_2(char *str, t_data **total_line);
 
-void 	assign_type(t_data **total_line);
+void	assign_type(t_data **total_line);
 int		which_operator(char *a);
 int		operator_err_control(t_data *data);
 
-void 	env_variable(t_data **data,t_env *env);
-void 	delete_quotes(t_data **data);
+void	env_variable(t_data **data, t_env *env);
+void	delete_quotes(t_data **data);
 
 t_data	*ft_last(t_data *lst);
 t_data	*ft_create(char *str);
-void 	list_add(char *str, t_data **total_line);
+void	list_add(char *str, t_data **total_line);
 int		ft_lstsize(t_data *lst);
 
-int 	is_operate(char s);
-int 	is_quote(char s);
-int 	in_quote(char *s);
+int		is_operate(char s);
+int		is_quote(char s);
+int		in_quote(char *s);
 
 void	mini_clear(t_env *env);
 void	get_signals(void);

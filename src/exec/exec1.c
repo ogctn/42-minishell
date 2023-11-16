@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 14:17:26 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:28:31 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	redirect_and_execute(t_data **data)
 	tmp = *data;
 	while (tmp && tmp->type != 1)
 	{
-		if (tmp->type == 2 || tmp->type == 3 
+		if (tmp->type == 2 || tmp->type == 3
 			|| tmp->type == 5 || tmp->type == 4)
 		{
 			if (tmp->type == 2 || tmp->type == 3)
@@ -209,7 +209,7 @@ int	executer(t_data *data)
 					close(pipe_fd[0]);
 					close(pipe_fd[1]);
 				}
-				redirect_and_execute(&data); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
+				redirect_and_execute(&data);
 				exit(0);
 			}
 			else
