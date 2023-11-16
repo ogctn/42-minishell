@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 13:43:52 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/16 14:17:26 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ void	update_pipeline(t_data **d)
 		*d = (*d)->next;
 	}
 }
+
 void	copy_default_fd(int *default_in, int *default_out)
 {
 	*default_in = dup(STDIN_FILENO);
@@ -144,14 +145,16 @@ void	restore_defaults(int default_fds[2])
 	close(default_fds[0]);
 	close(default_fds[1]);
 }
+
 void	redirect_and_execute(t_data **data)
 {
-	t_data  *tmp;
+	t_data	*tmp;
 
 	tmp = *data;
 	while (tmp && tmp->type != 1)
 	{
-		if (tmp->type == 2 || tmp->type == 3 || tmp->type == 5 || tmp->type == 4)
+		if (tmp->type == 2 || tmp->type == 3 
+			|| tmp->type == 5 || tmp->type == 4)
 		{
 			if (tmp->type == 2 || tmp->type == 3)
 			{
@@ -190,46 +193,43 @@ int	executer(t_data *data)
 	int	pid;
 
 	pipe_count = count_pipes(data);
-	if(pipe_count== 0)
+	if (pipe_count > 0)
 	{
-		redirect_and_execute(&data);
-	}
-	else
-	{
-		
-
-	while (pipe_count >= 0)
-	{
-		copy_default_fd(&default_fds[0], &default_fds[1]);
-		if (pipe_count > 0)
-			pipe(pipe_fd);
-		pid = fork();
-		if (pid == 0)
+		while (pipe_count > 0)
 		{
+			copy_default_fd(&default_fds[0], &default_fds[1]);
 			if (pipe_count > 0)
+				pipe(pipe_fd);
+			pid = fork();
+			if (pid == 0)
 			{
-				dup2(pipe_fd[1], STDOUT_FILENO);
-				close(pipe_fd[0]);
-				close(pipe_fd[1]);
-			}
-			redirect_and_execute(&data); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
-			exit(0);
-		}
-		else
-		{
-			if (pipe_count > 0)
-			{
-				dup2(pipe_fd[0], STDIN_FILENO);
-				close(pipe_fd[0]);
-				close(pipe_fd[1]);
+				if (pipe_count > 0)
+				{
+					dup2(pipe_fd[1], STDOUT_FILENO);
+					close(pipe_fd[0]);
+					close(pipe_fd[1]);
+				}
+				redirect_and_execute(&data); // if *(data->env->exit_code) kısmını sildim README->NOTE(1)
+				exit(0);
 			}
 			else
-				restore_defaults(default_fds);
-			update_pipeline(&data);
+			{
+				if (pipe_count > 0)
+				{
+					dup2(pipe_fd[0], STDIN_FILENO);
+					close(pipe_fd[0]);
+					close(pipe_fd[1]);
+				}
+				else
+					restore_defaults(default_fds);
+				update_pipeline(&data);
+			}
+			wait(NULL); // denenecek
+			pipe_count--;
 		}
-		wait(NULL); // denenecek
-		pipe_count--;
 	}
-	}
+	copy_default_fd(&default_fds[0], &default_fds[1]);
+	redirect_and_execute(&data);
+	restore_defaults(default_fds);
 	return (0);
 }

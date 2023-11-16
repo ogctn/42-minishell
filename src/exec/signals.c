@@ -6,7 +6,7 @@
 /*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:01:36 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/10 02:52:33 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/16 13:58:21 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	sig_handler(int signal)
 		return ;
 	}
 }
+
 void	get_signals(void)
 {
 	suppress_output();

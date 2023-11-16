@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_finder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:14:53 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 13:11:45 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:59:25 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strjoin_null(char const *s1, char const *s2, void *freeable)
 	if (!s1 || !s2)
 		return (0);
 	len = (ft_strlen(s1) + ft_strlen(s2) + 1);
-	ret = (char *)ft_calloc(len , sizeof(char));
+	ret = (char *)ft_calloc(len, sizeof(char));
 	if (!ret)
 		return (0);
 	ft_strlcpy(ret, s1, ft_strlen(s1) + 1);
@@ -94,7 +94,7 @@ int	is_there_a_slash(char *str)
 // 	while (path.sp_env[++i])
 // 	{
 // 		path.full_path = ft_strjoin_null(path.sp_env[i], "/", NULL);
-// 		path.full_path = \
+// 		path.full_path = "\"
 // 			ft_strjoin_null(path.full_path, path.sp_cmd[0], path.full_path);
 // 		if (access(path.full_path, F_OK) == 0)
 // 		{

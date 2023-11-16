@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env_list.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 14:13:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 01:41:19 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 13:55:18 by ogcetin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	node_add_back(t_env **lst, char *content)
 	t_env	*last;
 	t_env	*new;
 
-	new = node_new(content,(*lst)->exit_code);
+	new = node_new(content, (*lst)->exit_code);
 	if (!new)
 		return ;
 	if (!(*lst))
