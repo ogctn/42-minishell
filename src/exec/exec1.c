@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 19:19:42 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:04:43 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	get_reason(char *path)
 {
 	struct stat	buffer;
 
+	dup2(2, STDOUT_FILENO);
 	if (access(path, F_OK) != 0)
 	{
 		if (!is_there_a_slash(path))
@@ -84,7 +85,7 @@ int	exec_simple(t_data *d)
 	return (0);
 }
 
-void	redirect_and_execute(t_data **data)
+void	redirect_and_execute(t_data **data, int default_fds[2])
 {
 	t_data	*tmp;
 
@@ -94,11 +95,9 @@ void	redirect_and_execute(t_data **data)
 		if (tmp->type == 2 || tmp->type == 3
 			|| tmp->type == 5 || tmp->type == 4)
 		{
-			if (tmp->type == 2 || tmp->type == 3)
-			{
-				if (redir_in(data, tmp))
-					return ;
-			}
+			if (tmp->type == 2 || tmp->type == 3
+				&& redir_in(data, tmp, default_fds))
+				return ;
 			else if (tmp->type == 4 || tmp->type == 5)
 				redir_out(data, tmp);
 			tmp = *data;
@@ -115,45 +114,48 @@ int	executer(t_data *data)
 	int	pipe_count;
 	int	pipe_fd[2];
 	int	pid;
+	int	i;
 
+	i = 0;
+	copy_default_fd(&default_fds[0], &default_fds[1]);
 	pipe_count = count_pipes(data);
-	if (pipe_count > 0)
+	while (pipe_count > 0)
 	{
-		while (pipe_count > 0)
+		pipe(pipe_fd);
+		pid = fork();
+		if (pid == 0)
 		{
-			copy_default_fd(&default_fds[0], &default_fds[1]);
-			if (pipe_count > 0)
-				pipe(pipe_fd);
-			pid = fork();
-			if (pid == 0)
+			if (i == 0)
 			{
-				if (pipe_count > 0)
-				{
-					dup2(pipe_fd[1], STDOUT_FILENO);
-					close(pipe_fd[0]);
-					close(pipe_fd[1]);
-				}
-				redirect_and_execute(&data);
-				exit(0);
+				dup2(default_fds[0], STDIN_FILENO);
+				dup2(pipe_fd[1], STDOUT_FILENO);
+				close(pipe_fd[0]);
 			}
 			else
 			{
-				if (pipe_count > 0)
-				{
-					dup2(pipe_fd[0], STDIN_FILENO);
-					close(pipe_fd[0]);
-					close(pipe_fd[1]);
-				}
-				else
-					restore_defaults(default_fds);
-				update_pipeline(&data);
+				dup2(pipe_fd[0], STDIN_FILENO);
+				dup2(pipe_fd[1], STDOUT_FILENO);
+				close(pipe_fd[0]);
+				close(pipe_fd[1]);
 			}
-			wait(NULL);
-			pipe_count--;
+			redirect_and_execute(&data, default_fds);
+			exit(0);
 		}
+		else
+			wait(NULL);
+		update_pipeline(&data);
+		pipe_count--;
+		i++;
 	}
-	copy_default_fd(&default_fds[0], &default_fds[1]);
-	redirect_and_execute(&data);
+	if (1)
+	{
+		dup2(pipe_fd[0], STDIN_FILENO);
+		dup2(default_fds[1], STDOUT_FILENO);
+		close(pipe_fd[1]);
+	}
+	redirect_and_execute(&data, default_fds);
+	close(pipe_fd[0]);
 	restore_defaults(default_fds);
+	unlink("./src/builtin/heredoc_tmpfile.txt");
 	return (0);
 }

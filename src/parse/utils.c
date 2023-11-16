@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:00 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/14 20:08:59 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 20:44:12 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	mini_clear(t_env *env)
 	{
 		clear_path = path_finder("clear", env);
 		execve(clear_path, NULL, env_to_double_arr(env));
+		exit(0);
 	}
 	else
 		wait(NULL);

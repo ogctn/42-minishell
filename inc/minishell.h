@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 20:14:40 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:00:24 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int		ft_export(t_data *d);
 void	env_swap(t_env *a, t_env *b, int *swap_flag);
 int		find_len_content(char *content);
 
-int		redir_in(t_data **head, t_data *current);
+int		redir_in(t_data **head, t_data *d, int default_fds[2]);
 int		redir_out(t_data **head, t_data *current);
 void	copy_default_fd(int *default_in, int *default_out);
 void	restore_defaults(int default_fds[2]);

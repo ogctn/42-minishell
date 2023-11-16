@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 15:24:15 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/16 21:07:05 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,49 @@ int	redir_out(t_data **head, t_data *d)
 	return (0);
 }
 
-int	redir_in(t_data **head, t_data *d)
+void	heredoc_create_infile(t_data *d, int default_fds[2])
 {
-	t_data	*to_delete;
 	int		fd;
+	int		tmp_fd[2];
+	char	*line;
+	int		pid;
+
+	copy_default_fd(&tmp_fd[0], &tmp_fd[1]);
+	pid = fork();
+	if (pid == 0)
+	{
+		dup2(default_fds[0], STDIN_FILENO);
+		dup2(default_fds[1], STDOUT_FILENO);
+		fd = open("./src/builtin/heredoc_tmpfile.txt", O_WRONLY
+				| O_CREAT | O_TRUNC, 0644);
+		if (fd == -1)
+		{
+			ft_putstr_fd("minishell: file open error.\n", 2);
+			exit(1);
+		}
+		while (1)
+		{
+			line = readline("> ");
+			if (!ft_strncmp(line, d->next->content, ft_strlen(d->next->content))
+				&& ft_strlen(line) == ft_strlen(d->next->content))
+			{
+				free(line);
+				break ;
+			}
+			ft_putendl_fd(line, fd);
+			free(line);
+		}
+		close(fd);
+		exit(0);
+	}
+	wait(NULL);
+	restore_defaults(tmp_fd);
+}
+
+int	redir_in(t_data **head, t_data *d, int default_fds[2])
+{
+	t_data		*to_delete;
+	int			fd;
 
 	if (d->type == 2)
 	{
@@ -65,8 +104,13 @@ int	redir_in(t_data **head, t_data *d)
 			return (printf("minishell: %s: \
 No such file or directory\n", d->next->content), 1);
 	}
-	//else if ((*d)->type == 3)
-		//heredoc will be implemented
+	else if (d->type == 3)
+	{
+		heredoc_create_infile(d, default_fds);
+		fd = open("./src/builtin/heredoc_tmpfile.txt", O_RDONLY, 0644);
+		if (fd == -1)
+			return (1);
+	}
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	unlink_node_pair(head, d);

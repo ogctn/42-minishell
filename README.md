@@ -10,13 +10,6 @@ type numaraları
 5-> >>
 6-> ||
 
-Düzenlenecek:
-	Parse:
-		Whitespace alıyor. Command+Space basınca whitespace atar. Readline ile komut
-		alırken arrayin indexlerini gezsin "printf("%d\n", readline.input);" böyle
-		baktığında -96 veya -100 gibi değerler görürsün bu whitespace. Parse kısmında
-		boşluklarla yaptığın işlemi libft ft_isprint fonksiyonunda eklemen gerek.
-
 
 add history kontrol et
 
