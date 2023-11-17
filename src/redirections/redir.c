@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 21:07:05 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:14:18 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@ void	unlink_node_pair(t_data **head, t_data *redir_node)
 
 	file_name = redir_node->next;
 	after_file_node = redir_node->next->next;
-	free(file_name->content);
-	free(redir_node->content);
-	free(file_name);
 	if (*head == redir_node)
 		*head = after_file_node;
 	else
@@ -32,7 +29,6 @@ void	unlink_node_pair(t_data **head, t_data *redir_node)
 			tmp = tmp->next;
 		tmp->next = after_file_node;
 	}
-	free(redir_node);
 }
 
 int	redir_out(t_data **head, t_data *d)
@@ -44,7 +40,7 @@ int	redir_out(t_data **head, t_data *d)
 	else if (d->type == 5)
 		fd = open(d->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		return (ft_putstr_fd("minishell: file open error.\n", 2), -1);
+		return (ft_putstr_fd("minishell: file open error.\n", 2), 1);
 	dup2(fd, STDOUT_FILENO);
 	close(fd);
 	unlink_node_pair(head, d);
@@ -98,10 +94,11 @@ int	redir_in(t_data **head, t_data *d, int default_fds[2])
 	if (d->type == 2)
 	{
 		if (!d->next->content[0])
-			return (ft_putstr_fd("minishell: ambiguous redirect\n", 2), 1);
+			return (dup2(2, STDOUT_FILENO),
+				ft_putstr_fd("minishell: ambiguous redirect\n", 2), 1);
 		fd = open(d->next->content, O_RDONLY, 0644);
 		if (fd == -1)
-			return (printf("minishell: %s: \
+			return (dup2(2, STDOUT_FILENO), printf("minishell: %s: \
 No such file or directory\n", d->next->content), 1);
 	}
 	else if (d->type == 3)

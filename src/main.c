@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:24:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/16 18:20:38 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:13:37 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	main_loop(t_env *env_list)
 		data = NULL;
 		line = readline(MINISHELL);
 		if (!line)
-			exit(write(1, "exit\n", 5) - 5);
+			exit(printf("\n\033[A%sexit\n", MINISHELL) - 62);
 		if (check_if_null(line) || is_missing_quoted(line, env_list))
 			continue ;
 		a = ft_parser(line, &data, env_list);
