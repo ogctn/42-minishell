@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 20:05:31 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/16 21:46:05 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:17:51 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ token '%s'\n", tmp_2->content), 1);
 int	operator_err_control(t_data *data)
 {
 	t_data	*tmp_1;
-	t_data	*tmp_2;
 
 	tmp_1 = data;
 	if (tmp_1->type == 1)

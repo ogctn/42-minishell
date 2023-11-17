@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 03:14:18 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:21:45 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	redir_out(t_data **head, t_data *d)
 
 	if (d->type == 4)
 		fd = open(d->next->content, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	else if (d->type == 5)
+	else
 		fd = open(d->next->content, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return (ft_putstr_fd("minishell: file open error.\n", 2), 1);
@@ -88,9 +88,9 @@ void	heredoc_create_infile(t_data *d, int default_fds[2])
 
 int	redir_in(t_data **head, t_data *d, int default_fds[2])
 {
-	t_data		*to_delete;
 	int			fd;
 
+	fd = 0;
 	if (d->type == 2)
 	{
 		if (!d->next->content[0])

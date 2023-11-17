@@ -1,6 +1,6 @@
 NAME	=	minishell
 CC		=	gcc
-FLAGS	=	#-g -fsanitize=address#-Wall -Wextra -Werror
+FLAGS	=	-g -fsanitize=address -Wall -Wextra #-Werror
 RM		=	rm -rf
 LIBFT	=	lib/libft/libft.a
 RDLINE	=	lib/readline
