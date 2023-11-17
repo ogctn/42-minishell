@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ogcetin <ogcetin@student.42istanbul.com    +#+  +:+       +#+        */
+/*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 21:41:50 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/14 08:59:00 by ogcetin          ###   ########.fr       */
+/*   Updated: 2023/11/17 04:58:34 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,8 @@ int	unset_single_env(t_data *data, char *target)
 			if (prev)
 				prev->next = tmp->next;
 			else
-			{
-				free(tmp->content);
 				data->env = data->env->next;
-			}
-			return (free(to_find), 0);
+			return (free(to_find), free(tmp->content), free(tmp), 0);
 		}
 		prev = tmp;
 		tmp = tmp->next;

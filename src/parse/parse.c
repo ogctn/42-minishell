@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 22:49:51 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/17 00:54:47 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:27:17 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,22 +52,6 @@ void	ft_split_2(char *str, t_data **total_line)
 	}
 	if (str[start])
 		list_add(ft_substr(str, start, i - start), total_line);
-}
-
-void	printit(t_data *d, char *s)
-{
-	int	i;
-
-	i = 0;
-	dprintf(2, "---------	%s	----------\n", s);
-	while (d)
-	{
-		dprintf(2, "eleman:%d --->\t_%s_\n", i, d->content);
-		dprintf(2, "type: %d\n", d->type);
-		d = d->next;
-		i++;
-	}
-	dprintf(2, "------------------------\n");
 }
 
 int	ft_parser(char *str, t_data **total_line, t_env *env_list)

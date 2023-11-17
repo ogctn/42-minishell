@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/17 00:54:31 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 04:26:56 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,6 @@ typedef struct s_path
 	char	**sp_env;
 	char	*full_path;
 }			t_path;
-
-
-void	printit(t_data *d, char *s);
 
 int		ft_parser(char *str, t_data **total_line, t_env *env_list);
 char	**ft_spc_split(char const *s);

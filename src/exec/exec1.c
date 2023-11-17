@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 03:13:03 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 03:45:23 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,12 +158,9 @@ int	executer(t_data *data)
 		pipe_count--;
 		i++;
 	}
-	if (1)
-	{
-		dup2(pipe_fd[0], STDIN_FILENO);
-		dup2(default_fds[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
-	}
+	dup2(pipe_fd[0], STDIN_FILENO);
+	dup2(default_fds[1], STDOUT_FILENO);
+	close(pipe_fd[1]);
 	redirect_and_execute(&data, default_fds);
 	close(pipe_fd[0]);
 	restore_defaults(default_fds);
