@@ -56,7 +56,7 @@ $(OBJ_DIR):
 $(OBJ_DIR)/%.o	:	$(SRC_DIR)/%.c
 	$(CC) $(FLAGS) -c $< -o $@ -I${PWD}/lib/readline/include/
 
-install_readline	:
+install_readline	:	
 	@cd lib && curl -O https://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
 	@tar -xvf lib/readline-8.2.tar.gz -C lib/
 	@$(RM) lib/readline-8.2.tar.gz

@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 10:12:20 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/17 11:31:35 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:45:22 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	heredoc_loop(char *content, int fd)
 	{
 		line = readline("> ");
 		if (!line)
-			break;
+			break ;
 		if (!ft_strncmp(line, content, ft_strlen(content))
 			&& ft_strlen(line) == ft_strlen(content))
 		{
