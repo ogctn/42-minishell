@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 00:04:22 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 04:37:31 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 09:57:32 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,21 @@ t_env	*get_listed_env(t_env *env)
 void	print_export(t_env *env)
 {
 	t_env	*listed_env;
+	t_env	*tmp;
 	char	*key;
 
 	listed_env = get_listed_env(env);
 	if (!listed_env)
 		return ;
+	tmp = listed_env;
 	while (listed_env)
 	{
-		if (ft_strchr(listed_env->content, '='))
-		{
-			key = ft_substr(listed_env->content, 0, \
-			ft_strchr(listed_env->content, '=') - listed_env->content);
-			printf("declare -x %s=\"%s\"\n", key, \
-			ft_strchr(listed_env->content, '=') + 1);
-		}
-		else
-		{
-			key = ft_strdup(listed_env->content);
-			printf("declare -x %s\n", key);
-		}
+		print_norm(listed_env->content, &key);
 		free(key);
-		listed_env = listed_env->next;
+		tmp = listed_env->next;
+		free(listed_env->content);
+		free(listed_env);
+		listed_env = tmp;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/01 01:17:44 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 03:45:23 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 10:27:49 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ int	get_reason(char *path)
 
 int	exec_simple(t_data *d)
 {
-	char	**args;
-	char	*cmd_path;
 	pid_t	pid;
 	int		status;
 
@@ -66,22 +64,7 @@ int	exec_simple(t_data *d)
 		return (exec_builtin(d));
 	pid = fork();
 	if (pid == 0)
-	{
-		args = data_to_double_arr(d);
-		cmd_path = path_finder(d->content, d->env);
-		if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
-		{
-			if (access(d->content, F_OK) == 0)
-			{
-				cmd_path = d->content;
-				if (execve(cmd_path, args, env_to_double_arr(d->env)) == -1)
-					exit(get_reason(d->content));
-			}
-			else
-				exit(get_reason(d->content));
-		}
-		exit(1);
-	}
+		child_part(d);
 	else
 	{
 		waitpid(pid, &status, 0);
@@ -118,52 +101,26 @@ void	redirect_and_execute(t_data **data, int default_fds[2])
 
 int	executer(t_data *data)
 {
-	int	default_fds[2];
-	int	pipe_count;
-	int	pipe_fd[2];
-	int	pid;
-	int	i;
+	t_norm_exec	a;
 
-	i = 0;
-	copy_default_fd(&default_fds[0], &default_fds[1]);
-	pipe_count = count_pipes(data);
-	while (pipe_count > 0)
+	a.i = 0;
+	copy_default_fd(&a.default_fds[0], &a.default_fds[1]);
+	a.pipe_count = count_pipes(data);
+	while (a.pipe_count > 0)
 	{
-		pipe(pipe_fd);
-		pid = fork();
-		if (pid == 0)
-		{
-			if (i == 0)
-			{
-				dup2(default_fds[0], STDIN_FILENO);
-				dup2(pipe_fd[1], STDOUT_FILENO);
-				close(pipe_fd[0]);
-			}
-			else
-			{
-				dup2(pipe_fd[0], STDIN_FILENO);
-				dup2(pipe_fd[1], STDOUT_FILENO);
-				close(pipe_fd[0]);
-				close(pipe_fd[1]);
-			}
-			redirect_and_execute(&data, default_fds);
-			exit(0);
-		}
+		pipe(a.pipe_fd);
+		a.pid = fork();
+		if (a.pid == 0)
+			sub_exec(data, a.i, a.pipe_fd, a.default_fds);
 		else
 			wait(NULL);
 		if (data->type != 1)
 			update_pipeline(&data);
 		else
 			data = data->next;
-		pipe_count--;
-		i++;
+		a.pipe_count--;
+		a.i++;
 	}
-	dup2(pipe_fd[0], STDIN_FILENO);
-	dup2(default_fds[1], STDOUT_FILENO);
-	close(pipe_fd[1]);
-	redirect_and_execute(&data, default_fds);
-	close(pipe_fd[0]);
-	restore_defaults(default_fds);
-	unlink("./src/builtin/heredoc_tmpfile.txt");
+	sub_exec2(data, a.pipe_fd, a.default_fds);
 	return (0);
 }

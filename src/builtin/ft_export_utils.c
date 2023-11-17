@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 18:54:36 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/17 04:48:29 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 08:58:00 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ void	update_env_content(t_env **env, char *new)
 			&& len_content == len_to_equal)
 		{
 			if (ft_strchr((*env)->content, '=') && !ft_strchr(new, '='))
+			{
+				free(new);
 				return ;
+			}
 			free((*env)->content);
 			(*env)->content = new;
 			return ;

@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 12:03:00 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 03:22:30 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 10:31:36 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static char	*arg_special_chars(t_data *d)
 	}
 	else if (!d->next || d->next->type == 1)
 		path = get_env_value(d->env, "HOME");
+	else
+		path = NULL;
 	return (path);
 }
 

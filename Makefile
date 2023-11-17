@@ -1,6 +1,6 @@
 NAME	=	minishell
 CC		=	gcc
-FLAGS	=	#-g -fsanitize=address #-Wall -Wextra -Werror
+FLAGS	=	-Wall -Wextra -Werror -fsanitize=address
 RM		=	rm -rf
 LIBFT	=	lib/libft/libft.a
 RDLINE	=	lib/readline
@@ -17,6 +17,7 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/parse/delete_quotes.c \
 			$(SRC_DIR)/exec/exec1.c \
 			$(SRC_DIR)/exec/exec_utils.c \
+			$(SRC_DIR)/exec/exec_utils2.c \
 			$(SRC_DIR)/exec/path_finder.c \
 			$(SRC_DIR)/exec/signals.c \
 			$(SRC_DIR)/builtin/env.c \
@@ -32,12 +33,13 @@ SRCS	=	$(SRC_DIR)/main.c \
 			$(SRC_DIR)/builtin/ft_export_utils.c \
 			$(SRC_DIR)/builtin/ft_pwd.c \
 			$(SRC_DIR)/builtin/ft_unset.c \
-			$(SRC_DIR)/redirections/redir.c
+			$(SRC_DIR)/redirections/redir.c \
+			$(SRC_DIR)/redirections/redir_utils.c
 
 OBJ_DIR	=	obj
 OBJS	=	$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all		: $(NAME) #install_readline $(NAME)
+all		: install_readline $(NAME)
 
 $(NAME)	:	$(OBJ_DIR) $(OBJS)
 	@make bonus -C lib/libft
@@ -70,7 +72,7 @@ clean:
 fclean	:	clean
 	$(RM) $(NAME)
 	$(RM) $(LIBFT)
-#	$(RM) $(RDLINE)
+	$(RM) $(RDLINE)
 
 re: fclean all
 

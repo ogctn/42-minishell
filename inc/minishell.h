@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 20:23:32 by sgundogd          #+#    #+#             */
-/*   Updated: 2023/11/17 04:26:56 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:39:22 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <fcntl.h>
 # include <sys/stat.h>
 
-# define MINISHELL "\e[5m\e[48;5;175;52m miniHELL \e[25m\e[100;114m--> \e[0m"
+# define MINISHELL "\e[48;5;175;52m miniHELL \e[100;114m--> \e[0m"
 
 typedef struct s_env
 {
@@ -54,6 +54,15 @@ typedef struct s_path
 	char	**sp_env;
 	char	*full_path;
 }			t_path;
+
+typedef struct s_norm_exec
+{
+	int	default_fds[2];
+	int	pipe_count;
+	int	pipe_fd[2];
+	int	pid;
+	int	i;
+}		t_norm_exec;
 
 int		ft_parser(char *str, t_data **total_line, t_env *env_list);
 char	**ft_spc_split(char const *s);
@@ -107,13 +116,19 @@ int		exec_simple(t_data *d);
 int		count_pipes(t_data *d);
 int		executer(t_data *data);
 int		exec_builtin(t_data *data);
+void	child_part(t_data *d);
+void	sub_exec(t_data *d, int i, int pipe_fd[2], int default_fds[2]);
+void	sub_exec2(t_data *d, int pipe_fd[2], int default_fds[2]);
 void	update_pipeline(t_data **d);
+int		get_reason(char *path);
+char	*heredoc_create_infile(t_data *d, int default_fds[2]);
 
 int		ft_echo(t_data *d);
 void	print_env(t_env *env_list);
 int		ft_env(t_data *data);
 int		ft_exit(t_data *d);
 int		ft_pwd(void);
+void	print_norm(char *content, char **key);
 int		is_valid_unset_parameter(char *content);
 int		is_valid_export_parameter(char *content);
 int		is_env_exist(t_env *env, char *content);
@@ -129,7 +144,10 @@ int		find_len_content(char *content);
 
 int		redir_in(t_data **head, t_data *d, int default_fds[2]);
 int		redir_out(t_data **head, t_data *current);
+void	redir_in_continued(int type, char *path_here, int fd);
+void	redirect_and_execute(t_data **data, int default_fds[2]);
 void	copy_default_fd(int *default_in, int *default_out);
 void	restore_defaults(int default_fds[2]);
+void	heredoc_loop(char *content, int fd);
 
 #endif

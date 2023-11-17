@@ -6,7 +6,7 @@
 /*   By: sgundogd <sgundogd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:22:35 by ogcetin           #+#    #+#             */
-/*   Updated: 2023/11/17 03:21:45 by sgundogd         ###   ########.fr       */
+/*   Updated: 2023/11/17 11:06:56 by sgundogd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ void	unlink_node_pair(t_data **head, t_data *redir_node)
 	}
 }
 
+void	ft_error_here(void)
+{
+	ft_putstr_fd("minishell: file open error.\n", 2);
+	exit(1);
+}
+
 int	redir_out(t_data **head, t_data *d)
 {
 	int	fd;
@@ -47,50 +53,40 @@ int	redir_out(t_data **head, t_data *d)
 	return (0);
 }
 
-void	heredoc_create_infile(t_data *d, int default_fds[2])
+char	*heredoc_create_infile(t_data *d, int default_fds[2])
 {
 	int		fd;
 	int		tmp_fd[2];
-	char	*line;
 	int		pid;
+	char	*path_here;
 
 	copy_default_fd(&tmp_fd[0], &tmp_fd[1]);
+	path_here = get_env_value(d->env, "HOME");
+	path_here = ft_strjoin(path_here, "/heredoc_tmpfile.txt");
 	pid = fork();
 	if (pid == 0)
 	{
 		dup2(default_fds[0], STDIN_FILENO);
 		dup2(default_fds[1], STDOUT_FILENO);
-		fd = open("./src/builtin/heredoc_tmpfile.txt", O_WRONLY
-				| O_CREAT | O_TRUNC, 0644);
+		fd = open(path_here, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-		{
-			ft_putstr_fd("minishell: file open error.\n", 2);
-			exit(1);
-		}
-		while (1)
-		{
-			line = readline("> ");
-			if (!ft_strncmp(line, d->next->content, ft_strlen(d->next->content))
-				&& ft_strlen(line) == ft_strlen(d->next->content))
-			{
-				free(line);
-				break ;
-			}
-			ft_putendl_fd(line, fd);
-			free(line);
-		}
+			ft_error_here();
+		heredoc_loop(d->next->content, fd);
 		close(fd);
 		exit(0);
 	}
 	wait(NULL);
 	restore_defaults(tmp_fd);
+	return (path_here);
 }
 
 int	redir_in(t_data **head, t_data *d, int default_fds[2])
 {
-	int			fd;
+	int		fd;
+	char	*path_here;
 
 	fd = 0;
+	path_here = NULL;
 	if (d->type == 2)
 	{
 		if (!d->next->content[0])
@@ -103,13 +99,12 @@ No such file or directory\n", d->next->content), 1);
 	}
 	else if (d->type == 3)
 	{
-		heredoc_create_infile(d, default_fds);
-		fd = open("./src/builtin/heredoc_tmpfile.txt", O_RDONLY, 0644);
+		path_here = heredoc_create_infile(d, default_fds);
+		fd = open(path_here, O_RDONLY, 0644);
 		if (fd == -1)
-			return (1);
+			return (free(path_here), 1);
 	}
-	dup2(fd, STDIN_FILENO);
-	close(fd);
+	redir_in_continued(d->type, path_here, fd);
 	unlink_node_pair(head, d);
 	return (0);
 }
